@@ -3,6 +3,7 @@ import React from 'react';
 
 import { Screen } from '@shoutem/ui';
 import { HomeScreen } from './screens/home';
+import {LoginScreen} from "./screens/LoginScreen";
 
 class App extends React.Component {
   state = {
@@ -34,7 +35,7 @@ class App extends React.Component {
 
     return (
       <Screen>
-        <HomeScreen />
+        <LoginScreen />
       </Screen>
     );
   }
