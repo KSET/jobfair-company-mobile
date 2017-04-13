@@ -30,6 +30,11 @@ export class HomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
+    this.scanQR = this.scanQR.bind(this);
+  }
+
+  scanQR() {
+    this.props.navigator.push('barCode');
   }
 
   render() {
@@ -56,6 +61,7 @@ export class HomeScreen extends React.Component {
         <Button
           title="Scan QR code"
           styleName="full-width inflexible"
+          onPress={this.scanQR}
         >
           <Text>Scan QR code</Text>
         </Button>
