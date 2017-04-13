@@ -12,13 +12,9 @@ import {
   ScrollView
 } from '@shoutem/ui';
 import { connectStyle } from '@shoutem/theme';
-import {NavigationExperimental} from "react-native";
 import {Image} from "@shoutem/ui/components/Image";
 
 const styles = {
-  navigationBarOffset: {
-    paddingTop: NavigationExperimental.Header.HEIGHT,
-  },
 
   fillParent: {
     position: 'absolute',
@@ -46,7 +42,7 @@ class LoginScreen extends React.Component {
   }
 
   performLogin() {
-
+    this.props.navigator.push('home');
   }
 
   renderLoginComponent() {
