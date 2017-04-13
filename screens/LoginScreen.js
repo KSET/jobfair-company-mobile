@@ -13,6 +13,7 @@ import {
 } from '@shoutem/ui';
 import { connectStyle } from '@shoutem/theme';
 import {NavigationExperimental} from "react-native";
+import {Image} from "@shoutem/ui/components/Image";
 
 const styles = {
   navigationBarOffset: {
@@ -37,6 +38,7 @@ const styles = {
 };
 
 class LoginScreen extends React.Component {
+
   constructor(props) {
     super(props);
 
@@ -91,10 +93,19 @@ class LoginScreen extends React.Component {
   render() {
     const styles = this.props.style;
 
+    const screen = Dimensions.get('window');
+
     return (
-      <View styleName="flexible" style={styles.container}>
-        {this.renderLoginComponent()}
-      </View>
+      <Screen>
+        <Image
+          style={{ width: screen.width, height: screen.height }}
+          styleName="flexible fill-parent"
+          source={require('../assets/background.png')}
+        />
+        <View styleName="flexible" style={styles.container}>
+          {this.renderLoginComponent()}
+        </View>
+      </Screen>
     );
   }
 }

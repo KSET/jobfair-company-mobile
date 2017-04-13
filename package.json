@@ -6,6 +6,7 @@
   "private": true,
   "main": "main.js",
   "dependencies": {
+    "@expo/ex-navigation": "^2.10.0",
     "@shoutem/theme": "^0.9.0",
     "@shoutem/ui": "^0.12.0",
     "expo": "^15.0.2",

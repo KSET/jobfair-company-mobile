@@ -1,10 +1,7 @@
 import Expo from 'expo';
 import React from 'react';
-import {Dimensions} from 'react-native';
-
-import { Screen, Image, View } from '@shoutem/ui';
-import { HomeScreen } from './screens/home';
-import LoginScreen from "./screens/LoginScreen";
+import { NavigationProvider, StackNavigation } from "@expo/ex-navigation/src/ExNavigation";
+import Router from "./navigation/Router";
 
 class App extends React.Component {
   state = {
@@ -34,17 +31,10 @@ class App extends React.Component {
         return <Expo.AppLoading />;
     }
 
-    const screen = Dimensions.get('window');
-
     return (
-      <Screen>
-        <Image
-          style={{ width: screen.width, height: screen.height }}
-          styleName="flexible fill-parent"
-          source={require('./assets/background.png')}
-        />
-        <LoginScreen />
-      </Screen>
+      <NavigationProvider router={Router}>
+        <StackNavigation initialRoute={Router.getRoute('login')} />
+      </NavigationProvider>
     );
   }
 }
