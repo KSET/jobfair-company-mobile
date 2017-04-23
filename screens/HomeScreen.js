@@ -6,6 +6,7 @@ import {Button} from "@shoutem/ui/components/Button";
 import {Dimensions} from 'react-native';
 import {Text} from "@shoutem/ui/components/Text";
 import { connectStyle } from '@shoutem/theme';
+import {Row} from "@shoutem/ui/components/Row";
 
 const styles = {
 
@@ -58,25 +59,25 @@ export class HomeScreen extends React.Component {
 
     return (
       <View styleName="flexible md-gutter">
-        <Button
-          title="Scan QR code"
-          styleName="full-width inflexible"
-          onPress={this.scanQR}
-        >
-          <Text>Scan QR code</Text>
-        </Button>
-        <Button
-          title="Coffee"
-          styleName="full-width inflexible"
-        >
-          <Text>Coffee</Text>
-        </Button>
-        <Button
-          title="Call help"
-          styleName="full-width inflexible"
-        >
-          <Text>Call help</Text>
-        </Button>
+        <Row style={{flex: 1, alignItems: 'center', justifyContent:'center'}}>
+          <Button styleName="clear">
+            <Image styleName="medium-square" source={require('../assets/icons/app-qr-icon.png')} />
+          </Button>
+        </Row>
+        <Row>
+          <Button styleName="clear stacked">
+            <Image styleName="small-avatar" style={{height: 65, width:65}} source={require('../assets/icons/app-coffee-icon.png')} />
+            <Text>Coffee</Text>
+          </Button>
+          <Button styleName="clear stacked">
+            <Image styleName="small-avatar" style={{height: 65, width:65}} source={require('../assets/icons/app-water-icon.png')} />
+            <Text>Water</Text>
+          </Button>
+          <Button styleName="clear stacked">
+            <Image styleName="small-avatar" style={{height: 65, width:65}} source={require('../assets/icons/app-assistance-icon.png')} />
+            <Text>Assistance</Text>
+          </Button>
+        </Row>
       </View>
     );
   }
