@@ -2,3 +2,5 @@ node_modules/**/*
 .expo/*
 npm-debug.*
 .idea
+env.js
+*.orig

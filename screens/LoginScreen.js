@@ -1,12 +1,13 @@
 import React from 'react';
 import {Dimensions, Alert} from 'react-native';
-
 import {
   View,
   Divider,
   TextInput,
   Button,
   Text,
+  Screen,
+  Image,
 } from '@shoutem/ui';
 import { connectStyle } from '@shoutem/theme';
 
@@ -18,13 +19,9 @@ const styles = {
 
   button: {
     backgroundColor: '#000022',
-    /*'shoutem.ui.Text': {
+    'shoutem.ui.Text': {
       color: "#FFFFFF",
-    }*/
-  },
-
-  buttonText: {
-    color: "#FFFFFF",
+    }
   },
 };
 
@@ -42,6 +39,8 @@ class LoginScreen extends React.Component {
   performLogin() {
     const { username, password } = this.state;
 
+    this.props.navigator.push('home');
+
     /*if (_.isEmpty(username) || _.isEmpty(password)) {
       Alert.alert('Error', errorMessages.EMPTY_FIELDS);
       return;
@@ -50,7 +49,6 @@ class LoginScreen extends React.Component {
 
   renderLoginComponent() {
     const styles = this.props.style;
-    const { handleSubmit, submitting } = this.props;
 
     return (
       <View styleName="flexible md-gutter">
@@ -59,6 +57,7 @@ class LoginScreen extends React.Component {
           autoCapitalize="none"
           autoCorrect={false}
           keyboardType="email-address"
+          keyboardAppearance="dark"
           returnKeyType="done"
           onChangeText={email => this.setState({ email })}
         />
@@ -69,6 +68,7 @@ class LoginScreen extends React.Component {
           placeholder="Password"
           autoCapitalize="none"
           autoCorrect={false}
+          keyboardAppearance="dark"
           secureTextEntry
           returnKeyType="done"
           onChangeText={password => this.setState({ password })}
@@ -80,10 +80,10 @@ class LoginScreen extends React.Component {
         <Button
           title="Log in"
           styleName="full-width inflexible"
-          style={styles.button}
           onPress={this.performLogin}
+          style={styles.button}
         >
-          <Text style={styles.buttonText}>LOG IN</Text>
+          <Text>LOG IN</Text>
         </Button>
       </View>
     );
@@ -91,11 +91,20 @@ class LoginScreen extends React.Component {
 
   render() {
     const styles = this.props.style;
+    const screen = Dimensions.get('window');
 
     return (
-      <View styleName="flexible" style={styles.container}>
-        {this.renderLoginComponent()}
-      </View>
+      <Screen>
+        <Image
+          style={{width: screen.width, height: screen.height}}
+          styleName="flexible fill-parent"
+          source={require('../assets/background.png')}
+        />
+
+        <View styleName="flexible" style={styles.container}>
+          {this.renderLoginComponent()}
+        </View>
+      </Screen>
     );
   }
 }
