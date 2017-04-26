@@ -1,16 +1,17 @@
 import React from "react";
+import {Dimensions} from 'react-native';
+import Toast from 'react-native-easy-toast'
+
 import {
   Image,
   View,
   Screen,
   Button,
   Text,
-  Row
 } from '@shoutem/ui';
-import {Dimensions} from 'react-native';
 import { connectStyle } from '@shoutem/theme';
+
 import SlackService from "../services/SlackService";
-import Toast from 'react-native-easy-toast'
 
 const styles = {
   container: {
@@ -19,11 +20,14 @@ const styles = {
   },
 
   stackedButton: {
-    'shoutem.ui.Image': {
-      width: 65,
-      height: 65,
-    }
-  }
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+
+  icon: {
+    width: 65,
+    height: 65,
+  },
 };
 
 export class HomeScreen extends React.Component {
@@ -79,28 +83,30 @@ export class HomeScreen extends React.Component {
     const styles = this.props.style;
 
     return (
-      <View styleName="flexible md-gutter">
-        <Row style={{flex: 1, alignItems: 'center', justifyContent:'center'}}>
-          <Button onPress={this.scanQR} styleName="clear">
+      <View styleName="flexible md-gutter space-between">
+        <View styleName="horizontal h-center xl-gutter-top">
+          <Button style={styles.stackedButton} onPress={this.scanQR} styleName="clear">
             <Image styleName="medium-square" source={require('../assets/icons/app-qr-icon.png')} />
+            <Text>Scan QR</Text>
           </Button>
-        </Row>
-        <Row>
-          <Button styleName="clear stacked" style={styles.stackedButton} onPress={this.requestCoffee}>
-            <Image styleName="small-avatar" style={{width: 65, height: 65 }} source={require('../assets/icons/app-coffee-icon.png')} />
+        </View>
+
+        <View styleName="horizontal h-center">
+          <Button styleName="clear" style={styles.stackedButton} onPress={this.requestCoffee}>
+            <Image style={styles.icon} source={require('../assets/icons/app-coffee-icon.png')} />
             <Text>Coffee</Text>
           </Button>
 
-          <Button styleName="clear stacked" style={styles.stackedButton} onPress={this.requestWater}>
-            <Image styleName="small-avatar" style={{width: 65, height: 65 }} source={require('../assets/icons/app-water-icon.png')} />
+          <Button styleName="clear" style={styles.stackedButton} onPress={this.requestWater}>
+            <Image style={styles.icon} source={require('../assets/icons/app-water-icon.png')} />
             <Text>Water</Text>
           </Button>
 
-          <Button styleName="clear stacked" style={styles.stackedButton} onPress={this.requestAssistance}>
-            <Image styleName="small-avatar" style={{width: 65, height: 65 }} source={require('../assets/icons/app-assistance-icon.png')} />
+          <Button styleName="clear" style={styles.stackedButton} onPress={this.requestAssistance}>
+            <Image style={styles.icon} source={require('../assets/icons/app-assistance-icon.png')} />
             <Text>Assistance</Text>
           </Button>
-        </Row>
+        </View>
       </View>
     );
   }
