@@ -1,6 +1,6 @@
 import Expo from 'expo';
 import React from 'react';
-import {Dimensions} from 'react-native';
+import {Dimensions, StatusBar, Platform} from 'react-native';
 
 import { Screen, Image, View } from '@shoutem/ui';
 import { HomeScreen } from './screens/home';
@@ -35,11 +35,13 @@ class App extends React.Component {
     }
 
     const screen = Dimensions.get('window');
+    StatusBar.setHidden(false);
+    const imageMargin = Platform.OS == 'android' ? StatusBar.currentHeight : 0;
 
     return (
       <Screen>
         <Image
-          style={{ width: screen.width, height: screen.height }}
+          style={{ width: screen.width, height: screen.height, marginTop: imageMargin }}
           styleName="flexible fill-parent"
           source={require('./assets/background.png')}
         />

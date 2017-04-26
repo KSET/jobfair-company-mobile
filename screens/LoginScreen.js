@@ -1,39 +1,31 @@
 import React from 'react';
-import {Dimensions} from 'react-native';
+import {Dimensions, Alert} from 'react-native';
+
 import {
   View,
   Divider,
   TextInput,
   Button,
   Text,
-  TouchableOpacity,
-  Title,
-  Screen,
-  ScrollView
 } from '@shoutem/ui';
 import { connectStyle } from '@shoutem/theme';
-import {NavigationExperimental} from "react-native";
 
 const styles = {
-  navigationBarOffset: {
-    paddingTop: NavigationExperimental.Header.HEIGHT,
-  },
-
-  fillParent: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-
   container: {
     paddingTop: (Dimensions.get('window').height / 2) - 220,
     backgroundColor: 'transparent',
   },
 
-  input: {
-  }
+  button: {
+    backgroundColor: '#000022',
+    /*'shoutem.ui.Text': {
+      color: "#FFFFFF",
+    }*/
+  },
+
+  buttonText: {
+    color: "#FFFFFF",
+  },
 };
 
 class LoginScreen extends React.Component {
@@ -41,14 +33,24 @@ class LoginScreen extends React.Component {
     super(props);
 
     this.performLogin = this.performLogin.bind(this);
+    this.state = {
+      email: '',
+      password: '',
+    }
   }
 
   performLogin() {
+    const { username, password } = this.state;
 
+    /*if (_.isEmpty(username) || _.isEmpty(password)) {
+      Alert.alert('Error', errorMessages.EMPTY_FIELDS);
+      return;
+    }*/
   }
 
   renderLoginComponent() {
     const styles = this.props.style;
+    const { handleSubmit, submitting } = this.props;
 
     return (
       <View styleName="flexible md-gutter">
@@ -57,9 +59,8 @@ class LoginScreen extends React.Component {
           autoCapitalize="none"
           autoCorrect={false}
           keyboardType="email-address"
-          keyboardAppearance="dark"
           returnKeyType="done"
-          style={styles.input}
+          onChangeText={email => this.setState({ email })}
         />
 
         <Divider styleName="line"/>
@@ -68,10 +69,9 @@ class LoginScreen extends React.Component {
           placeholder="Password"
           autoCapitalize="none"
           autoCorrect={false}
-          keyboardAppearance="dark"
           secureTextEntry
           returnKeyType="done"
-          style={styles.input}
+          onChangeText={password => this.setState({ password })}
         />
 
         <Divider styleName="line"/>
@@ -80,9 +80,10 @@ class LoginScreen extends React.Component {
         <Button
           title="Log in"
           styleName="full-width inflexible"
+          style={styles.button}
           onPress={this.performLogin}
         >
-          <Text>LOG IN</Text>
+          <Text style={styles.buttonText}>LOG IN</Text>
         </Button>
       </View>
     );
@@ -98,4 +99,5 @@ class LoginScreen extends React.Component {
     );
   }
 }
+
 export default connectStyle('LoginScreen', styles)(LoginScreen);
