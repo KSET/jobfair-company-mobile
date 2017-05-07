@@ -2,7 +2,14 @@ import Expo from 'expo';
 import React from 'react';
 import { NavigationProvider, StackNavigation } from "@expo/ex-navigation/src/ExNavigation";
 
+import Store from './state/Store';
 import Router from "./navigation/Router";
+import NavigationContext from "@expo/ex-navigation/src/ExNavigationContext";
+
+const navigationContext = new NavigationContext({
+  router: Router,
+  store: Store,
+});
 
 class App extends React.Component {
   state = {
@@ -33,7 +40,7 @@ class App extends React.Component {
     }
 
     return (
-      <NavigationProvider router={Router}>
+      <NavigationProvider router={Router} context={navigationContext}>
         <StackNavigation initialRoute={Router.getRoute('login')} />
       </NavigationProvider>
     );

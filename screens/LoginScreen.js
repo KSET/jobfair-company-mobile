@@ -10,6 +10,9 @@ import {
   Image,
 } from '@shoutem/ui';
 import { connectStyle } from '@shoutem/theme';
+import Toast from 'react-native-easy-toast'
+import AuthService from "../services/AuthService";
+import * as _ from "lodash";
 
 const styles = {
   container: {
@@ -28,7 +31,7 @@ const styles = {
 class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
-
+    this.auth = new AuthService();
     this.performLogin = this.performLogin.bind(this);
     this.state = {
       email: '',
@@ -37,14 +40,20 @@ class LoginScreen extends React.Component {
   }
 
   performLogin() {
-    const { username, password } = this.state;
+    const { email, password } = this.state;
 
-    this.props.navigator.push('home');
-
-    /*if (_.isEmpty(username) || _.isEmpty(password)) {
-      Alert.alert('Error', errorMessages.EMPTY_FIELDS);
+    if (_.isEmpty(email) || _.isEmpty(password)) {
+      this.refs.toast.show('Username and password are required fields!');
       return;
-    }*/
+    }
+
+    this.auth.login(email, password)
+      .then((response) => {
+        this.props.navigator.push('home');
+      })
+      .catch((error) => {
+        this.refs.toast.show('Username or password is incorrect!');
+      }).done();
   }
 
   renderLoginComponent() {
@@ -104,6 +113,7 @@ class LoginScreen extends React.Component {
         <View styleName="flexible" style={styles.container}>
           {this.renderLoginComponent()}
         </View>
+        <Toast ref="toast" position="bottom"/>
       </Screen>
     );
   }
