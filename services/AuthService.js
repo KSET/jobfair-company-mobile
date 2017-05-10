@@ -1,20 +1,25 @@
 import {AsyncStorage} from 'react-native'
-import JobFairService from "./JobFairService";
-import Store from '../state/Store';
 import {NavigationActions} from '@expo/ex-navigation'
-import {Router} from '../navigation/Router'
+
+import Router from '../navigation/Router';
+import Store from '../state/Store';
+import { LOGIN_URL } from "./JobFairService";
 
 const AUTH = "@jfCardSharing:auth";
 
 export default class AuthService {
-
-  constructor() {
-    this.jfService = new JobFairService();
-  }
-
   async login(email, password) {
-    return this.jfService.login(email, password)
-      .then((response) => {
+    return fetch(LOGIN_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
+    })
+    .then((response) => {
         return response.json();
       })
       .then((response) => {
@@ -30,16 +35,21 @@ export default class AuthService {
       });
   }
 
+  redirectToLogin() {
+    let navigatorUID = Store.getState().navigation.currentNavigatorUID;
+    Store.dispatch(NavigationActions.push(navigatorUID, Router.getRoute('login')))
+  }
+
   async getAuthDetails() {
     let auth = await AsyncStorage.getItem(AUTH);
     if (auth === null) {
-      AuthService.redirectToLogin();
+      this.redirectToLogin();
     }
     return auth;
   }
 
-  async getAuthHeader() {
-    let auth = this.getAuthDetails();
+  getAuthHeader() {
+    const auth = this.getAuthDetails();
     return {
       "X-Auth-Token": auth["auth_token"],
       "X-User-Email": auth.email
@@ -63,11 +73,6 @@ export default class AuthService {
 
   static logout() {
     AsyncStorage.removeItem(AUTH);
-    AuthService.redirectToLogin();
-  }
-
-  static redirectToLogin() {
-    let navigatorUID = Store.getState().navigation.currentNavigatorUID;
-    Store.dispatch(NavigationActions.push(navigatorUID, Router.getRoute('login')))
+    this.redirectToLogin();
   }
 }

@@ -1,23 +1,28 @@
-import Environment from "../env";
+import { JOBFAIR_URL } from "../env";
+import AuthService from '../services/AuthService';
 
+const API_URL = `${JOBFAIR_URL}/api/v1`;
+export const LOGIN_URL = `${API_URL}/sessions`;
+const REVIEW_URL = `${API_URL}/users/resume/favorites`;
 
 export default class JobFairService {
 
   constructor() {
-    this.url = Environment.getJobFairWebUrl();
+    this.authService = new AuthService();
+    this.sendReview = this.sendReview.bind(this);
   }
 
-  login(email, password) {
-    return fetch(this.url+'/api/v1/sessions', {
+  sendReview(uid, note) {
+    return fetch(REVIEW_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        ...this.authService.getAuthHeader()
       },
       body: JSON.stringify({
-        email: email,
-        password: password
+        resume_id: uid,
+        note,
       })
     });
   }
-
 }

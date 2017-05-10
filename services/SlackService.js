@@ -1,12 +1,6 @@
-import Environment from "../env";
-
+import SLACK_HOOK_URL from '../env';
 
 export default class SlackService {
-
-  constructor() {
-    this.webhook_url = Environment.getSlackWebserviceHook();
-  }
-
   requestWater(company) {
     if (this.checkSpam('water')) return false;
     this.sendRequest(company.name, company.contact + ', '+company.name+' želi vodu na štandu ' + company.location + '!');
@@ -21,12 +15,12 @@ export default class SlackService {
 
   requestAssistance(company) {
     if (this.checkSpam('assistance')) return false;
-    this.sendRequest(company.name, company.contact + ', '+company.name+' želi pomoć na štandu ' + company.location + '!');
+    this.sendRequest(company.name, company.contact + ', '+company.name+' želi pomoć?! na štandu ' + company.location + '!');
     return true;
   }
 
   sendRequest(companyName, text) {
-    return fetch(this.webhook_url, {
+    return fetch(SLACK_HOOK_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
