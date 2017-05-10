@@ -4,6 +4,7 @@ import AuthService from '../services/AuthService';
 const API_URL = `${JOBFAIR_URL}/api/v1`;
 export const LOGIN_URL = `${API_URL}/sessions`;
 const REVIEW_URL = `${API_URL}/users/resume/favorites`;
+const COMPANY_URL = `${API_URL}/user/order/details`;
 
 export default class JobFairService {
 
@@ -23,6 +24,16 @@ export default class JobFairService {
         resume_id: uid,
         note,
       })
+    });
+  }
+
+  async getCompanyDetails() {
+    return fetch(COMPANY_URL, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        ...this.authService.getAuthHeader()
+      },
     });
   }
 }

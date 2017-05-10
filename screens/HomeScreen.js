@@ -12,6 +12,7 @@ import {
 import { connectStyle } from '@shoutem/theme';
 
 import SlackService from "../services/SlackService";
+import JobFairService from "../services/JobFairService";
 
 const styles = {
   container: {
@@ -39,6 +40,16 @@ export class HomeScreen extends React.Component {
     this.requestCoffee = this.requestCoffee.bind(this);
     this.requestWater = this.requestWater.bind(this);
     this.requestAssistance = this.requestAssistance.bind(this);
+    let jfService = new JobFairService();
+    let self = this;
+    jfService.getCompanyDetails().then(
+      (response) => {
+        response.json();
+      }
+    ).then(
+      (response) => {
+        self.company = response
+      });
   }
 
   scanQR() {
@@ -46,17 +57,17 @@ export class HomeScreen extends React.Component {
   }
 
   requestCoffee() {
-    this.slack.requestCoffee({"name": "Five", "location": "B41", "contact": "@mpetrunic"});
+    this.slack.requestCoffee({"name": this.company.name, "location": this.company.location, "contact": this.company.contact});
     this.refs.toast.show('Your coffee will be delivered as soon as possible!');
   }
 
   requestWater() {
-    this.slack.requestWater({"name": "Five", "location": "B41", "contact": "@mpetrunic"});
+    this.slack.requestWater({"name": this.company.name, "location": this.company.location, "contact": this.company.contact});
     this.refs.toast.show('Your water will be delivered as soon as possible!');
   }
 
   requestAssistance() {
-    this.slack.requestAssistance({"name": "Five", "location": "B41", "contact": "@mpetrunic"});
+    this.slack.requestAssistance({"name": this.company.name, "location": this.company.location, "contact": this.company.contact});
     this.refs.toast.show('Your contact person will attend you as soon as possible!');
 
   }

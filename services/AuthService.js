@@ -51,7 +51,7 @@ export default class AuthService {
   getAuthHeader() {
     const auth = this.getAuthDetails();
     return {
-      "X-Auth-Token": auth["auth_token"],
+      "X-User-Token": auth["auth_token"],
       "X-User-Email": auth.email
     };
   }
