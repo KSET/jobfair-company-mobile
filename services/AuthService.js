@@ -15,12 +15,19 @@ export default class AuthService {
   async login(email, password) {
     return this.jfService.login(email, password)
       .then((response) => {
+        return response.json();
+      })
+      .then((response) => {
         if ('user' in response) {
-          AsyncStorage.setItem(AUTH, response.user)
+          try {
+            AsyncStorage.setItem(AUTH, JSON.stringify(response.user));
+          } catch (error) {
+          }
+        } else {
+          return Promise.reject("Incorrect username or password");
         }
-        return response;
-      }).catch((error) =>
-        error);
+          return response;
+      });
   }
 
   async getAuthDetails() {
