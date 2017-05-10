@@ -38,6 +38,14 @@ export default class AuthService {
     return auth;
   }
 
+  async getAuthHeader() {
+    let auth = this.getAuthDetails();
+    return {
+      "X-Auth-Token": auth["auth_token"],
+      "X-User-Email": auth.email
+    };
+  }
+
   async getToken() {
     let auth = await this.getAuthDetails();
     return auth.auth_token;
