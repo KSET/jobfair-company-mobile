@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, Keyboard} from 'react-native';
+import { Dimensions, Keyboard } from 'react-native';
 import {
   View,
   Divider,
@@ -10,9 +10,9 @@ import {
   Image,
 } from '@shoutem/ui';
 import { connectStyle } from '@shoutem/theme';
-import Toast from 'react-native-easy-toast'
-import AuthService from "../services/AuthService";
-import * as _ from "lodash";
+import Toast from 'react-native-easy-toast';
+import AuthService from '../services/AuthService';
+import * as _ from 'lodash';
 
 const styles = {
   container: {
@@ -23,20 +23,25 @@ const styles = {
   button: {
     backgroundColor: '#000022',
     'shoutem.ui.Text': {
-      color: "#FFFFFF",
-    }
+      color: '#FFFFFF',
+    },
   },
 };
 
 class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.auth = new AuthService();
     this.performLogin = this.performLogin.bind(this);
+    this.redirectHome = this.redirectHome.bind(this);
+    this.auth = new AuthService();
+    this.auth.isAuthenticated().then((result) => {
+      console.log(result);
+      this.redirectHome();
+    });
     this.state = {
       email: '',
       password: '',
-    }
+    };
   }
 
   performLogin() {
@@ -51,12 +56,16 @@ class LoginScreen extends React.Component {
     }
 
     this.auth.login(email, password)
-      .then((response) => {
-        this.props.navigator.push('home');
+      .then(() => {
+        this.redirectHome();
       })
-      .catch((error) => {
+      .catch(() => {
         this.refs.toast.show('Username or password is incorrect!');
       }).done();
+  }
+
+  redirectHome() {
+    this.props.navigator.push('home');
   }
 
   renderLoginComponent() {
@@ -74,7 +83,7 @@ class LoginScreen extends React.Component {
           onChangeText={email => this.setState({ email })}
         />
 
-        <Divider styleName="line"/>
+        <Divider styleName="line" />
 
         <TextInput
           placeholder="Password"
@@ -86,7 +95,7 @@ class LoginScreen extends React.Component {
           onChangeText={password => this.setState({ password })}
         />
 
-        <Divider styleName="line"/>
+        <Divider styleName="line" />
         <Divider />
 
         <Button
@@ -108,7 +117,7 @@ class LoginScreen extends React.Component {
     return (
       <Screen>
         <Image
-          style={{width: screen.width, height: screen.height}}
+          style={{ width: screen.width, height: screen.height }}
           styleName="flexible fill-parent"
           source={require('../assets/background.png')}
         />
@@ -116,7 +125,7 @@ class LoginScreen extends React.Component {
         <View styleName="flexible" style={styles.container}>
           {this.renderLoginComponent()}
         </View>
-        <Toast ref="toast" position="bottom"/>
+        <Toast ref="toast" position="bottom" />
       </Screen>
     );
   }
