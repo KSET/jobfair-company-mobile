@@ -1,6 +1,6 @@
-import React from "react";
-import {Dimensions} from 'react-native';
-import Toast from 'react-native-easy-toast'
+import React from 'react';
+import { Dimensions } from 'react-native';
+import Toast from 'react-native-easy-toast';
 
 import {
   Image,
@@ -11,8 +11,8 @@ import {
 } from '@shoutem/ui';
 import { connectStyle } from '@shoutem/theme';
 
-import SlackService from "../services/SlackService";
-import JobFairService from "../services/JobFairService";
+import SlackService from '../services/SlackService';
+import JobFairService from '../services/JobFairService';
 
 const styles = {
   container: {
@@ -40,15 +40,15 @@ export class HomeScreen extends React.Component {
     this.requestCoffee = this.requestCoffee.bind(this);
     this.requestWater = this.requestWater.bind(this);
     this.requestAssistance = this.requestAssistance.bind(this);
-    let jfService = new JobFairService();
-    let self = this;
+    const jfService = new JobFairService();
+    const self = this;
     jfService.getCompanyDetails().then(
       (response) => {
         response.json();
-      }
+      },
     ).then(
       (response) => {
-        self.company = response
+        self.company = response;
       });
   }
 
@@ -57,19 +57,18 @@ export class HomeScreen extends React.Component {
   }
 
   requestCoffee() {
-    this.slack.requestCoffee({"name": this.company.name, "location": this.company.location, "contact": this.company.contact});
+    this.slack.requestCoffee({ name: this.company.name, location: this.company.location, contact: this.company.contact });
     this.refs.toast.show('Your coffee will be delivered as soon as possible!');
   }
 
   requestWater() {
-    this.slack.requestWater({"name": this.company.name, "location": this.company.location, "contact": this.company.contact});
+    this.slack.requestWater({ name: this.company.name, location: this.company.location, contact: this.company.contact });
     this.refs.toast.show('Your water will be delivered as soon as possible!');
   }
 
   requestAssistance() {
-    this.slack.requestAssistance({"name": this.company.name, "location": this.company.location, "contact": this.company.contact});
+    this.slack.requestAssistance({ name: this.company.name, location: this.company.location, contact: this.company.contact });
     this.refs.toast.show('Your contact person will attend you as soon as possible!');
-
   }
 
   render() {
@@ -78,13 +77,13 @@ export class HomeScreen extends React.Component {
     return (
       <Screen>
         <Image
-          style={{width: screen.width, height: screen.height}}
+          style={{ width: screen.width, height: screen.height }}
           styleName="flexible fill-parent"
           source={require('../assets/background.png')}
         />
         <View styleName="flexible" style={styles.container}>
           {this.renderHomeButtons()}
-          <Toast ref="toast" position="bottom"/>
+          <Toast ref="toast" position="bottom" />
         </View>
       </Screen>
     );
