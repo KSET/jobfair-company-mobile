@@ -46,11 +46,12 @@ export default class AuthService {
   }
 
   async getAuthDetails() {
-    return await AsyncStorage.getItem(AUTH);
+    const auth = await AsyncStorage.getItem(AUTH);
+    return JSON.parse(auth);
   }
 
-  getAuthHeader() {
-    const auth = this.getAuthDetails();
+  async getAuthHeader() {
+    const auth = await this.getAuthDetails();
     return {
       'X-User-Token': auth.auth_token,
       'X-User-Email': auth.email,

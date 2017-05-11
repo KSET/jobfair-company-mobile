@@ -13,12 +13,13 @@ export default class JobFairService {
     this.sendReview = this.sendReview.bind(this);
   }
 
-  sendReview(uid, note) {
+  async sendReview(uid, note) {
+    const headers = await this.authService.getAuthHeader();
     return fetch(REVIEW_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        ...this.authService.getAuthHeader(),
+        ...headers,
       },
       body: JSON.stringify({
         resume_id: uid,
@@ -28,11 +29,12 @@ export default class JobFairService {
   }
 
   async getCompanyDetails() {
+    const headers = await this.authService.getAuthHeader();
     return fetch(COMPANY_URL, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        ...this.authService.getAuthHeader(),
+        ...headers,
       },
     });
   }

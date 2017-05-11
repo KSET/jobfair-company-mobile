@@ -40,15 +40,15 @@ export class HomeScreen extends React.Component {
     this.requestCoffee = this.requestCoffee.bind(this);
     this.requestWater = this.requestWater.bind(this);
     this.requestAssistance = this.requestAssistance.bind(this);
-    const jfService = new JobFairService();
-    const self = this;
-    jfService.getCompanyDetails().then(
-      (response) => {
-        response.json();
-      },
+    this.jfService = new JobFairService();
+  }
+
+  componentWillMount() {
+    this.jfService.getCompanyDetails().then(
+      response => response.json(),
     ).then(
       (response) => {
-        self.company = response;
+        this.company = response;
       });
   }
 
@@ -57,18 +57,46 @@ export class HomeScreen extends React.Component {
   }
 
   requestCoffee() {
-    this.slack.requestCoffee({ name: this.company.name, location: this.company.location, contact: this.company.contact });
+    if (!this.isCompanyLoaded(this.company)) {
+      this.refs.toast.show('Please wait, company data is still loading!');
+      return;
+    }
+    this.slack.requestCoffee({
+      name: this.company.organisation,
+      location: this.company.location,
+      contact: this.company.contact_person,
+    });
     this.refs.toast.show('Your coffee will be delivered as soon as possible!');
   }
 
   requestWater() {
-    this.slack.requestWater({ name: this.company.name, location: this.company.location, contact: this.company.contact });
+    if (!this.isCompanyLoaded(this.company)) {
+      this.refs.toast.show('Please wait, company data is still loading!');
+      return;
+    }
+    this.slack.requestWater({
+      name: this.company.organisation,
+      location: this.company.location,
+      contact: this.company.contact_person,
+    });
     this.refs.toast.show('Your water will be delivered as soon as possible!');
   }
 
   requestAssistance() {
-    this.slack.requestAssistance({ name: this.company.name, location: this.company.location, contact: this.company.contact });
+    if (!this.isCompanyLoaded(this.company)) {
+      this.refs.toast.show('Please wait, company data is still loading!');
+      return;
+    }
+    this.slack.requestAssistance({
+      name: this.company.organisation,
+      location: this.company.location,
+      contact: this.company.contact_person,
+    });
     this.refs.toast.show('Your contact person will attend you as soon as possible!');
+  }
+
+  isCompanyLoaded(company) {
+    return company !== null;
   }
 
   render() {
