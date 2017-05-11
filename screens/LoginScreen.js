@@ -34,14 +34,16 @@ class LoginScreen extends React.Component {
     this.performLogin = this.performLogin.bind(this);
     this.redirectHome = this.redirectHome.bind(this);
     this.auth = new AuthService();
-    this.auth.isAuthenticated().then((result) => {
-      console.log(result);
-      this.redirectHome();
-    });
     this.state = {
       email: '',
       password: '',
     };
+  }
+
+  componentWillMount() {
+    this.auth.isAuthenticated().then((result) => {
+      this.redirectHome();
+    });
   }
 
   performLogin() {
