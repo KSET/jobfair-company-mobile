@@ -1,10 +1,3 @@
-export default class Environment {
+export const SLACK_HOOK_URL = "";
+export const JOBFAIR_URL = "https://jobfair.fer.unizg.hr";
 
-  static getSlackWebserviceHook() {
-    return "git webhook url";
-  }
-
-  static getJobFairWebUrl() {
-    return "git jobfair url";
-  }
-}

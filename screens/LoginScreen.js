@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, Alert} from 'react-native';
+import {Dimensions, Keyboard} from 'react-native';
 import {
   View,
   Divider,
@@ -41,6 +41,9 @@ class LoginScreen extends React.Component {
 
   performLogin() {
     const { email, password } = this.state;
+
+    // hide keyboard so alerts are visible
+    Keyboard.dismiss();
 
     if (_.isEmpty(email) || _.isEmpty(password)) {
       this.refs.toast.show('Username and password are required fields!');

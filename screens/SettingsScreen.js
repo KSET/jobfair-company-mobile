@@ -15,7 +15,7 @@ const styles = {
   container: {
     marginTop: NavigationExperimental.Header.HEIGHT,
   }
-}
+};
 
 
 class SettingsScreen extends React.Component {
