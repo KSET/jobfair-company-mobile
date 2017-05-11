@@ -25,7 +25,7 @@ export default class JobFairService {
   async getCompanyDetails() {
     let headers = this.auth.getAuthHeader();
     headers["Content-Type"] = 'application/json';
-    return fetch(this.url + '/api/v1/user/order/details', {
+    return fetch(this.url + '/api/v1/user/orders/details', {
       method: 'GET',
       headers: headers
     });
