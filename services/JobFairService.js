@@ -1,4 +1,4 @@
-import { JOBFAIR_URL } from "../env";
+import { JOBFAIR_URL } from '../env';
 import AuthService from '../services/AuthService';
 
 const API_URL = `${JOBFAIR_URL}/api/v1`;
@@ -18,12 +18,12 @@ export default class JobFairService {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        ...this.authService.getAuthHeader()
+        ...this.authService.getAuthHeader(),
       },
       body: JSON.stringify({
         resume_id: uid,
         note,
-      })
+      }),
     });
   }
 
@@ -32,7 +32,7 @@ export default class JobFairService {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        ...this.authService.getAuthHeader()
+        ...this.authService.getAuthHeader(),
       },
     });
   }
