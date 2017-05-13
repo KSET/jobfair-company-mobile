@@ -9,12 +9,12 @@ export class SideMenu extends React.Component {
       {
         name: 'Settings',
         onPress: () => this.props.navigator.push('settings'),
-        icon: { name:"menu" }
+        icon: { name: "settings" }
       },
       {
         name: 'Logout',
         onPress: () => AuthService.logout(),
-        icon: { name:"exit-to-app" }
+        icon: { name: "exit-to-app" }
       },
     ];
 

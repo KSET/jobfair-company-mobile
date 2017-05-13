@@ -49,7 +49,7 @@ class ChangePasswordScreen extends React.Component {
     const { oldPassword, password, repeatPassword } = this.state;
     Keyboard.dismiss();
 
-    if (!!oldPassword || !!password) {
+    if (oldPassword === "" || password === "") {
       this.refs.toast.show('Enter password.');
       return false;
     } else if (password !== repeatPassword) {
@@ -59,12 +59,13 @@ class ChangePasswordScreen extends React.Component {
 
     this.authService.changePassword(oldPassword, password)
       .then((response) => {
-        console.log(response);
-        this.refs.toast.show('Password successfully updated.');
-        this.props.navigator.push('home');
+        if (response.status === 200) {
+          this.refs.toast.show('Password successfully updated.');
+          this.props.navigator.push('home');
+        }
       })
       .catch((error) => {
-      console.log(error);
+        console.log(error);
         this.refs.toast.show('Error occurred.');
       }).done();
   }
@@ -126,9 +127,8 @@ class ChangePasswordScreen extends React.Component {
           >
             <Text>SUBMIT</Text>
           </Button>
-
-          <Toast ref="toast" position="bottom"/>
         </View>
+        <Toast ref="toast" position="bottom"/>
       </View>
     )
   }
