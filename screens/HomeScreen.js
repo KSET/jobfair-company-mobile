@@ -8,11 +8,13 @@ import {
   Screen,
   Button,
   Text,
+  NavigationBar,
 } from '@shoutem/ui';
 import { connectStyle } from '@shoutem/theme';
 
 import SlackService from '../services/SlackService';
 import JobFairService from '../services/JobFairService';
+import {SideMenu} from "../components/Menu";
 
 const styles = {
   container: {
@@ -98,24 +100,6 @@ export class HomeScreen extends React.Component {
     return company !== null;
   }
 
-  render() {
-    const screen = Dimensions.get('window');
-
-    return (
-      <Screen>
-        <Image
-          style={{ width: screen.width, height: screen.height }}
-          styleName="flexible fill-parent"
-          source={require('../assets/background.png')}
-        />
-        <View styleName="flexible" style={styles.container}>
-          {this.renderHomeButtons()}
-          <Toast ref="toast" position="bottom" />
-        </View>
-      </Screen>
-    );
-  }
-
   renderHomeButtons() {
     const styles = this.props.style;
 
@@ -145,6 +129,31 @@ export class HomeScreen extends React.Component {
           </Button>
         </View>
       </View>
+    );
+  }
+
+  render() {
+    const screen = Dimensions.get('window');
+
+    return (
+      <Screen>
+        <Image
+          style={{ width: screen.width, height: screen.height }}
+          styleName="flexible fill-parent"
+          source={require('../assets/background.png')}
+        />
+
+        <NavigationBar
+          styleName="clear"
+          style={{ zIndex: 999 }}
+          rightComponent={<SideMenu />}
+        />
+
+        <View styleName="flexible" style={styles.container}>
+          {this.renderHomeButtons()}
+          <Toast ref="toast" position="bottom" />
+        </View>
+      </Screen>
     );
   }
 }
