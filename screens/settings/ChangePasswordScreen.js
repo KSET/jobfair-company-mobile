@@ -1,6 +1,6 @@
 import React from 'react';
 import Toast from 'react-native-easy-toast';
-import { NavigationExperimental, Platform } from 'react-native';
+import { NavigationExperimental, Platform, Keyboard } from 'react-native';
 import { connectStyle } from '@shoutem/theme';
 import {
   NavigationBar,
@@ -10,6 +10,8 @@ import {
   Button,
   Text,
 } from '@shoutem/ui';
+
+import AuthService from "../../services/AuthService";
 
 const styles = {
   button: {
@@ -33,24 +35,38 @@ class ChangePasswordScreen extends React.Component {
     super(props);
 
     this.state = {
+      oldPassword: '',
       password: '',
       repeatPassword: '',
     };
 
+    this.authService = new AuthService();
     this.onPress = this.onPress.bind(this);
     this.goBack = this.goBack.bind(this);
   }
 
   onPress() {
-    const { password, repeatPassword } = this.state;
+    const { oldPassword, password, repeatPassword } = this.state;
+    Keyboard.dismiss();
 
-    if (password === "") {
+    if (!!oldPassword || !!password) {
       this.refs.toast.show('Enter password.');
       return false;
     } else if (password !== repeatPassword) {
       this.refs.toast.show('Fields are not equal.');
       return false;
     }
+
+    this.authService.changePassword(oldPassword, password)
+      .then((response) => {
+        console.log(response);
+        this.refs.toast.show('Password successfully updated.');
+        this.props.navigator.push('home');
+      })
+      .catch((error) => {
+      console.log(error);
+        this.refs.toast.show('Error occurred.');
+      }).done();
   }
 
   goBack() {
@@ -65,6 +81,18 @@ class ChangePasswordScreen extends React.Component {
         <NavigationBar styleName="flexible" title="Set password" hasHistory navigateBack={this.goBack} />
 
         <View style={styles.formContainer}>
+          <TextInput
+            placeholder="Old Password"
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardAppearance="dark"
+            secureTextEntry
+            returnKeyType="done"
+            onChangeText={oldPassword => this.setState({ oldPassword })}
+          />
+
+          <Divider styleName="line" />
+
           <TextInput
             placeholder="New Password"
             autoCapitalize="none"

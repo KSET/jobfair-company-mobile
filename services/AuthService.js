@@ -3,7 +3,7 @@ import { NavigationActions } from '@expo/ex-navigation';
 
 import Router from '../navigation/Router';
 import Store from '../state/Store';
-import { LOGIN_URL } from './JobFairService';
+import {LOGIN_URL, USERS_URL} from './routes';
 
 const AUTH = '@jfCardSharing:auth';
 
@@ -61,5 +61,21 @@ export default class AuthService {
   static logout() {
     AsyncStorage.removeItem(AUTH);
     this.redirectToLogin();
+  }
+
+  async changePassword(oldPassword, newPassword) {
+    const headers = await this.getAuthHeader();
+
+    return fetch(USERS_URL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        ...headers,
+      },
+      body: JSON.stringify({
+        'old_password': oldPassword,
+        'password': newPassword,
+      }),
+    })
   }
 }

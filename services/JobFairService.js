@@ -1,10 +1,6 @@
-import { JOBFAIR_URL } from '../env';
 import AuthService from '../services/AuthService';
+import { COMPANY_URL, REVIEW_URL } from "./routes";
 
-const API_URL = `${JOBFAIR_URL}/api/v1`;
-export const LOGIN_URL = `${API_URL}/sessions`;
-const REVIEW_URL = `${API_URL}/users/resume/favorites`;
-const COMPANY_URL = `${API_URL}/user/orders/details`;
 
 export default class JobFairService {
 
