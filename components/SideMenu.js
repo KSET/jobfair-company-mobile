@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableWithoutFeedback, View} from 'react-native';
+import { View } from 'react-native';
 import { SideMenu as RNESideMenu, ListItem, List } from 'react-native-elements';
 
 export class SideMenu extends React.Component {
@@ -8,10 +8,12 @@ export class SideMenu extends React.Component {
       {
         name: 'Settings',
         onPress: () => this.props.navigator.push('settings'),
+        icon: { name:"menu" }
       },
       {
         name: 'Logout',
         onPress: () => (alert("Press")),
+        icon: { name:"exit-to-app" }
       },
     ];
 
@@ -25,6 +27,8 @@ export class SideMenu extends React.Component {
                 onPress={item.onPress}
                 key={i}
                 title={item.name}
+                hideChevron={true}
+                leftIcon={item.icon}
               />
             ))
           }
@@ -37,6 +41,7 @@ export class SideMenu extends React.Component {
         isOpen={this.props.isOpen}
         onChange={this.props.onSideMenuChange}
         menu={MenuComponent}
+        menuPosition="right"
       >
         {this.props.children}
       </RNESideMenu>

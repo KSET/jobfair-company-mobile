@@ -1,6 +1,6 @@
 import React from 'react';
 import { connectStyle } from '@shoutem/theme';
-import {NavigationExperimental} from 'react-native';
+import { NavigationExperimental, Platform } from 'react-native';
 import {
   NavigationBar,
   View,
@@ -14,6 +14,10 @@ import {
 const styles = {
   container: {
     marginTop: NavigationExperimental.Header.HEIGHT,
+  },
+
+  'shoutem.ui.Screen': {
+    marginTop: (Platform.OS === 'android') ? 20 : 0,
   }
 };
 
@@ -39,7 +43,7 @@ class SettingsScreen extends React.Component {
 
     return (
       <Screen>
-        <NavigationBar styleName="flexible" title="Settings" hasHistory navigateBack={this.goBack} />
+        <NavigationBar title="Settings" hasHistory navigateBack={this.goBack} />
 
         <View style={styles.container}>
           <TouchableOpacity onPress={this.onPress}>

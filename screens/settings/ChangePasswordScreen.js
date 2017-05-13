@@ -1,9 +1,8 @@
 import React from 'react';
 import Toast from 'react-native-easy-toast';
-import {NavigationExperimental} from 'react-native';
+import { NavigationExperimental, Platform } from 'react-native';
 import { connectStyle } from '@shoutem/theme';
 import {
-  Screen,
   NavigationBar,
   View,
   Divider,
@@ -21,8 +20,12 @@ const styles = {
   },
 
   container: {
+    marginTop: (Platform.OS === 'android') ? 20 : 0,
+  },
+
+  formContainer: {
     marginTop: NavigationExperimental.Header.HEIGHT,
-  }
+  },
 };
 
 class ChangePasswordScreen extends React.Component {
@@ -32,8 +35,8 @@ class ChangePasswordScreen extends React.Component {
     this.state = {
       password: '',
       repeatPassword: '',
-    }
-    
+    };
+
     this.onPress = this.onPress.bind(this);
     this.goBack = this.goBack.bind(this);
   }
@@ -41,9 +44,12 @@ class ChangePasswordScreen extends React.Component {
   onPress() {
     const { password, repeatPassword } = this.state;
 
-    if (password !== repeatPassword) {
+    if (password === "") {
+      this.refs.toast.show('Enter password.');
+      return false;
+    } else if (password !== repeatPassword) {
       this.refs.toast.show('Fields are not equal.');
-      return;
+      return false;
     }
   }
 
@@ -55,10 +61,10 @@ class ChangePasswordScreen extends React.Component {
     const styles = this.props.style;
 
     return (
-      <Screen>
-        <NavigationBar styleName="flexible" title="Settings" hasHistory navigateBack={this.goBack} />
+      <View style={styles.container}>
+        <NavigationBar styleName="flexible" title="Set password" hasHistory navigateBack={this.goBack} />
 
-        <View style={styles.container}>
+        <View style={styles.formContainer}>
           <TextInput
             placeholder="New Password"
             autoCapitalize="none"
@@ -90,12 +96,12 @@ class ChangePasswordScreen extends React.Component {
             onPress={this.onPress}
             style={styles.button}
           >
-            <Text>CHANGE</Text>
+            <Text>SUBMIT</Text>
           </Button>
 
           <Toast ref="toast" position="bottom"/>
         </View>
-      </Screen>
+      </View>
     )
   }
 }

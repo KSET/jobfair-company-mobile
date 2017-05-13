@@ -30,7 +30,7 @@ class HomeContainer extends React.Component {
     this.setState({ isOpen });
   }
 
-  renderLeftComponent() {
+  renderRightComponent() {
     return (
       <TouchableOpacity onPress={this.onPress}>
         <Entypo name="menu" size={24} color="white" />
@@ -57,7 +57,7 @@ class HomeContainer extends React.Component {
           <NavigationBar
             styleName="clear"
             style={{ zIndex: 999 }}
-            leftComponent={this.renderLeftComponent()}
+            rightComponent={this.renderRightComponent()}
           />
 
           <HomeScreen navigator={this.props.navigator} />
