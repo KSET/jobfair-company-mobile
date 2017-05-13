@@ -14,11 +14,11 @@ import { connectStyle } from '@shoutem/theme';
 
 import SlackService from '../services/SlackService';
 import JobFairService from '../services/JobFairService';
-import {SideMenu} from "../components/Menu";
+import {SideMenu} from "../components/SideMenu";
 
 const styles = {
   container: {
-    paddingTop: (Dimensions.get('window').height / 2) - 220,
+    marginTop: (Dimensions.get('window').height / 2) - 220,
     backgroundColor: 'transparent',
   },
 
@@ -133,27 +133,11 @@ export class HomeScreen extends React.Component {
   }
 
   render() {
-    const screen = Dimensions.get('window');
-
     return (
-      <Screen>
-        <Image
-          style={{ width: screen.width, height: screen.height }}
-          styleName="flexible fill-parent"
-          source={require('../assets/background.png')}
-        />
-
-        <NavigationBar
-          styleName="clear"
-          style={{ zIndex: 999 }}
-          rightComponent={<SideMenu />}
-        />
-
-        <View styleName="flexible" style={styles.container}>
-          {this.renderHomeButtons()}
-          <Toast ref="toast" position="bottom" />
-        </View>
-      </Screen>
+      <View styleName="flexible" style={styles.container}>
+        {this.renderHomeButtons()}
+        <Toast ref="toast" position="bottom" />
+      </View>
     );
   }
 }
