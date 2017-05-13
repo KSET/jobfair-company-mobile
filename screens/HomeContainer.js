@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions } from "react-native";
+import { Dimensions, Platform } from "react-native";
 import {
   Screen,
   Image,
@@ -10,6 +10,12 @@ import { Entypo } from '@expo/vector-icons';
 import HomeScreen from "./HomeScreen";
 import {SideMenu} from "../components/SideMenu";
 import {connectStyle} from "@shoutem/theme";
+
+const styles = {
+  'shoutem.ui.Screen': {
+    marginTop: (Platform.OS === 'android') ? 20 : 0,
+  },
+};
 
 class HomeContainer extends React.Component {
   constructor(props){
@@ -67,4 +73,4 @@ class HomeContainer extends React.Component {
   }
 }
 
-export default connectStyle('HomeContainer', {})(HomeContainer);
+export default connectStyle('HomeContainer', styles)(HomeContainer);

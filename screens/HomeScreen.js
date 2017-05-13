@@ -5,16 +5,13 @@ import Toast from 'react-native-easy-toast';
 import {
   Image,
   View,
-  Screen,
   Button,
   Text,
-  NavigationBar,
 } from '@shoutem/ui';
 import { connectStyle } from '@shoutem/theme';
 
 import SlackService from '../services/SlackService';
 import JobFairService from '../services/JobFairService';
-import {SideMenu} from "../components/SideMenu";
 
 const styles = {
   container: {

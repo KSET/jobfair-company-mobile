@@ -9,6 +9,7 @@ import {
   TextInput,
   Button,
   Text,
+  Screen,
 } from '@shoutem/ui';
 
 import AuthService from "../../services/AuthService";
@@ -21,12 +22,12 @@ const styles = {
     }
   },
 
-  container: {
-    marginTop: (Platform.OS === 'android') ? 20 : 0,
-  },
-
   formContainer: {
     marginTop: NavigationExperimental.Header.HEIGHT,
+  },
+
+  'shoutem.ui.Screen': {
+    marginTop: (Platform.OS === 'android') ? 20 : 0,
   },
 };
 
@@ -78,7 +79,7 @@ class ChangePasswordScreen extends React.Component {
     const styles = this.props.style;
 
     return (
-      <View style={styles.container}>
+      <Screen styleName="paper">
         <NavigationBar styleName="flexible" title="Set password" hasHistory navigateBack={this.goBack} />
 
         <View style={styles.formContainer}>
@@ -129,7 +130,7 @@ class ChangePasswordScreen extends React.Component {
           </Button>
         </View>
         <Toast ref="toast" position="bottom"/>
-      </View>
+      </Screen>
     )
   }
 }
