@@ -35,11 +35,6 @@ export default class AuthService {
       });
   }
 
-  redirectToLogin() {
-    const navigatorUID = Store.getState().navigation.currentNavigatorUID;
-    Store.dispatch(NavigationActions.push(navigatorUID, Router.getRoute('login')));
-  }
-
   async isAuthenticated() {
     const auth = await this.getAuthDetails();
     return auth !== null;
@@ -58,9 +53,14 @@ export default class AuthService {
     };
   }
 
+  static redirectToLogin() {
+    const navigatorUID = Store.getState().navigation.currentNavigatorUID;
+    Store.dispatch(NavigationActions.push(navigatorUID, Router.getRoute('login')));
+  }
+
   static logout() {
     AsyncStorage.removeItem(AUTH);
-    this.redirectToLogin();
+    AuthService.redirectToLogin();
   }
 
   async changePassword(oldPassword, newPassword) {

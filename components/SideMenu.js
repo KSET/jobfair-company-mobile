@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { SideMenu as RNESideMenu, ListItem, List } from 'react-native-elements';
+import AuthService from "../services/AuthService";
 
 export class SideMenu extends React.Component {
   render() {
@@ -12,7 +13,7 @@ export class SideMenu extends React.Component {
       },
       {
         name: 'Logout',
-        onPress: () => (alert("Press")),
+        onPress: () => AuthService.logout(),
         icon: { name:"exit-to-app" }
       },
     ];
