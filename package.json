@@ -1,9 +1,9 @@
 {
   "name": "jf-card-sharing",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Hello Expo!",
-  "author": null,
-  "private": true,
+  "author": "KSET",
+  "private": false,
   "main": "main.js",
   "dependencies": {
     "@expo/ex-navigation": "^2.10.0",

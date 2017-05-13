@@ -1,8 +1,8 @@
 {
   "name": "Job Fair Company",
   "description": "Job Fair app for companies",
-  "slug": "jf-card-sharing",
-  "privacy": "unlisted",
+  "slug": "job-fair-company",
+  "privacy": "public",
   "sdkVersion": "15.0.0",
   "version": "1.0.0",
   "orientation": "portrait",
@@ -16,6 +16,7 @@
     "assetExts": ["ttf", "mp4"]
   },
   "ios": {
-    "supportsTablet": false
+    "supportsTablet": false,
+    "bundleIdentifier": "org.kset.jobfairCompany"
   }
 }
