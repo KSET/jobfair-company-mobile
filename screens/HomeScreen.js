@@ -133,7 +133,7 @@ export class HomeScreen extends React.Component {
     return (
       <View styleName="flexible" style={styles.container}>
         {this.renderHomeButtons()}
-        <Toast ref="toast" position="bottom" />
+        <Toast ref="toast" position="center" />
       </View>
     );
   }
