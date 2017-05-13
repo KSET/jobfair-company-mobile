@@ -15,6 +15,9 @@
   "packagerOpts": {
     "assetExts": ["ttf", "mp4"]
   },
+  "android": {
+    "package": "org.kset.jobfairCompany"
+  },
   "ios": {
     "supportsTablet": false,
     "bundleIdentifier": "org.kset.jobfairCompany"
