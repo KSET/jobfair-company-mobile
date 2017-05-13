@@ -1,21 +1,21 @@
 {
-  "name": "jf-card-sharing",
-  "description": "An empty new project",
+  "name": "Job Fair Company",
+  "description": "Job Fair app for companies",
   "slug": "jf-card-sharing",
-  "privacy": "public",
+  "privacy": "unlisted",
   "sdkVersion": "15.0.0",
   "version": "1.0.0",
   "orientation": "portrait",
   "primaryColor": "#cccccc",
   "icon": "./assets/icons/app.png",
   "loading": {
-    "icon": "./assets/icons/loading.png",
-    "hideExponentText": false
+    "backgroundImage": "./assets/splash.png",
+    "hideExponentText": true
   },
   "packagerOpts": {
     "assetExts": ["ttf", "mp4"]
   },
   "ios": {
-    "supportsTablet": true
+    "supportsTablet": false
   }
 }
