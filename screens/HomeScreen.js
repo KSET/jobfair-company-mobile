@@ -32,15 +32,15 @@ const styles = {
 };
 
 export class HomeScreen extends React.Component {
-
   constructor(props) {
     super(props);
     this.slack = new SlackService();
+    this.jfService = new JobFairService();
+
     this.scanQR = this.scanQR.bind(this);
     this.requestCoffee = this.requestCoffee.bind(this);
     this.requestWater = this.requestWater.bind(this);
     this.requestAssistance = this.requestAssistance.bind(this);
-    this.jfService = new JobFairService();
   }
 
   componentWillMount() {
@@ -49,11 +49,19 @@ export class HomeScreen extends React.Component {
     ).then(
       (response) => {
         this.company = response;
-      });
+    });
   }
 
   scanQR() {
     this.props.navigator.push('barCode');
+  }
+
+  readCompanyInfo(company) {
+    return {
+      name: company.organisation,
+      location: company.location,
+      contact: company['contact_person'],
+    }
   }
 
   requestCoffee() {
@@ -61,11 +69,8 @@ export class HomeScreen extends React.Component {
       this.refs.toast.show('Please wait, company data is still loading!');
       return;
     }
-    this.slack.requestCoffee({
-      name: this.company.organisation,
-      location: this.company.location,
-      contact: this.company.contact_person,
-    });
+
+    this.slack.requestCoffee(this.readCompanyInfo(this.company));
     this.refs.toast.show('Your coffee will be delivered as soon as possible!');
   }
 
@@ -74,11 +79,8 @@ export class HomeScreen extends React.Component {
       this.refs.toast.show('Please wait, company data is still loading!');
       return;
     }
-    this.slack.requestWater({
-      name: this.company.organisation,
-      location: this.company.location,
-      contact: this.company.contact_person,
-    });
+
+    this.slack.requestWater(this.readCompanyInfo(this.company));
     this.refs.toast.show('Your water will be delivered as soon as possible!');
   }
 
@@ -87,11 +89,8 @@ export class HomeScreen extends React.Component {
       this.refs.toast.show('Please wait, company data is still loading!');
       return;
     }
-    this.slack.requestAssistance({
-      name: this.company.organisation,
-      location: this.company.location,
-      contact: this.company.contact_person,
-    });
+
+    this.slack.requestAssistance(this.readCompanyInfo(this.company));
     this.refs.toast.show('Your contact person will attend you as soon as possible!');
   }
 

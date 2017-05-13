@@ -13,9 +13,15 @@ const navigationContext = new NavigationContext({
 });
 
 class App extends React.Component {
-  state = {
-    fontsAreLoaded: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.auth = new AuthService();
+    this.state = {
+      fontsAreLoaded: false,
+      initialRoute: null,
+    };
+  }
 
   async componentWillMount() {
     await Expo.Font.loadAsync({
@@ -31,13 +37,14 @@ class App extends React.Component {
       'Rubik-Regular': require('./node_modules/@shoutem/ui/fonts/Rubik-Regular.ttf'),
       'rubicon-icon-font': require('./node_modules/@shoutem/ui/fonts/rubicon-icon-font.ttf'),
     });
-    this.auth = new AuthService();
+
     const isAuthenticated = await this.auth.isAuthenticated();
     if (isAuthenticated) {
-      this.initialRoute = 'home';
+      this.setState({ initialRoute: 'home' });
     } else {
-      this.initialRoute = 'login';
+      this.setState({ initialRoute: 'login' });
     }
+
     this.setState({ fontsAreLoaded: true });
   }
 
@@ -48,7 +55,7 @@ class App extends React.Component {
 
     return (
       <NavigationProvider router={Router} context={navigationContext}>
-        <StackNavigation initialRoute={Router.getRoute(this.initialRoute)} />
+        <StackNavigation initialRoute={Router.getRoute(this.state.initialRoute)} />
       </NavigationProvider>
     );
   }
