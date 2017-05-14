@@ -1,6 +1,6 @@
 ![Logo](repo_banner.png)
 
-#Job Fair Company 
+# Job Fair Company 
 React Native app used on Job Fair for companies to scan students info cards and request hospitality.
 Application is built using [expo.io](https://expo.io/) platform.
 
