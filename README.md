@@ -2,7 +2,9 @@
 
 # Job Fair Company 
 React Native app used on Job Fair for companies to scan students info cards and request hospitality.
-Application is built using [expo.io](https://expo.io/) platform.
+Application is built using [expo.io](https://expo.io/) platform. UI is created using [shoutem UI](https://github.com/shoutem/ui)
+and [react-native-elements](https://github.com/react-native-training/react-native-elements) to be
+visually as similar as [jobfair mobile app](https://github.com/KSET/jobfair-mobile) for students.
 
 Job Fair is an associative effort of multiple members of KSET.
 
