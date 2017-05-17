@@ -18,7 +18,7 @@ export default class JobFairService {
         ...headers,
       },
       body: JSON.stringify({
-        resume_id: uid,
+        resume_uid: uid,
         note,
       }),
     });
