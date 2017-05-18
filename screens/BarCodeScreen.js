@@ -33,7 +33,11 @@ export class BarCodeScreen extends React.Component {
   }
 
   onBarCodeRead(data) {
-    this.props.navigator.push(Router.getRoute('review', data));
+    if(this.hasScanned) {
+      return;
+    }
+    this.hasScanned = true;
+    this.props.navigator.replace(Router.getRoute('review', data));
   }
 
   goBack() {
