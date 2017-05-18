@@ -43,7 +43,7 @@ class ReviewScreen extends React.Component {
   }
 
   onPress() {
-    const { uid } = this.props.data;
+    const { uid } = JSON.parse(this.props.data);
     const { note } = this.state;
 
     Keyboard.dismiss();
@@ -64,7 +64,7 @@ class ReviewScreen extends React.Component {
 
   render() {
     const { style, data } = this.props;
-    const { 'first_name': firstName, 'last_name': lastName, uid } = JSON.parse(data);
+    const { 'first_name': firstName, 'last_name': lastName } = JSON.parse(data);
 
     return (
       <Screen>
