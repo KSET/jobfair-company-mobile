@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "Job Fair Company",
+    "description": "Job Fair app for companies",
+    "slug": "job-fair-company",
+    "privacy": "public",
+    "sdkVersion": "23.0.0",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "primaryColor": "#cccccc",
+    "icon": "./assets/icons/app.png",
+    "loading": {
+      "backgroundImage": "./assets/splash.png",
+      "hideExponentText": true
+    },
+    "androidStatusBar": {
+      "barStyle": "light-content"
+    },
+    "packagerOpts": {
+      "assetExts": [
+        "ttf",
+        "mp4"
+      ]
+    },
+    "android": {
+      "package": "org.kset.jobfairCompany"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "org.kset.jobfairCompany"
+    }
+  }
+}
