@@ -1,15 +1,16 @@
 import { AsyncStorage } from 'react-native';
-import { NavigationActions } from '@expo/ex-navigation';
-
-import Router from '../navigation/Router';
-import Store from '../state/Store';
-import {LOGIN_URL, USERS_URL} from './routes';
+import { LOGIN_URL, USERS_URL } from './routes';
+import { DEBUG } from '../env';
 
 const AUTH = '@jfCardSharing:auth';
 
 export default class AuthService {
 
   async login(email, password) {
+    if(DEBUG) {
+      AsyncStorage.setItem(AUTH, JSON.stringify('debug'));
+      return new Promise();
+    }
     return fetch(LOGIN_URL, {
       method: 'POST',
       headers: {
@@ -20,7 +21,7 @@ export default class AuthService {
         password,
       }),
     })
-    .then(response => response.json())
+      .then(response => response.json())
       .then((response) => {
         if ('user' in response) {
           try {
@@ -54,8 +55,7 @@ export default class AuthService {
   }
 
   static redirectToLogin() {
-    const navigatorUID = Store.getState().navigation.currentNavigatorUID;
-    Store.dispatch(NavigationActions.push(navigatorUID, Router.getRoute('login')));
+    this.props.navigation.navigate('Login');
   }
 
   static logout() {
@@ -73,9 +73,9 @@ export default class AuthService {
         ...headers,
       },
       body: JSON.stringify({
-        'old_password': oldPassword,
-        'password': newPassword,
+        old_password: oldPassword,
+        password: newPassword,
       }),
-    })
+    });
   }
 }

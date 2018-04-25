@@ -54,7 +54,7 @@ class SettingsScreen extends React.Component {
           </TouchableOpacity>
         </View>
       </Screen>
-    )
+    );
   }
 }
 

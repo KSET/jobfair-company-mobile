@@ -2,9 +2,9 @@ import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { BarCodeScanner, Permissions } from 'expo';
 import { connectStyle } from '@shoutem/theme';
+import { NavigationBar, Screen } from '@shoutem/ui';
 
 import Router from '../navigation/Router';
-import {NavigationBar, Screen} from "@shoutem/ui";
 
 const styles = {
   barcodescanner: {
@@ -13,10 +13,10 @@ const styles = {
     right: 0,
     bottom: 0,
     left: 0,
-  }
+  },
 };
 
-export class BarCodeScreen extends React.Component {
+class BarCodeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,12 +28,12 @@ export class BarCodeScreen extends React.Component {
   }
 
   async componentWillMount() {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    const {status} = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({hasCameraPermission: status === 'granted'});
   }
 
   onBarCodeRead(data) {
-    if(this.hasScanned) {
+    if (this.hasScanned) {
       return;
     }
     this.hasScanned = true;
@@ -45,15 +45,15 @@ export class BarCodeScreen extends React.Component {
   }
 
   render() {
-    const { hasCameraPermission } = this.state;
+    const {hasCameraPermission} = this.state;
     if (hasCameraPermission === null) {
-      return <View />;
+      return <View/>;
     } else if (hasCameraPermission === false) {
       return <Text>No access to camera</Text>;
     } else {
       return (
         <Screen>
-          <NavigationBar styleName="flexible" title="Scan QR code" hasHistory navigateBack={this.goBack} />
+          <NavigationBar styleName="flexible" title="Scan QR code" hasHistory navigateBack={this.goBack}/>
           <View style={{flex: 1, top: 60}}>
             <BarCodeScanner
               onBarCodeRead={this.onBarCodeRead}

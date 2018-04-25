@@ -5,7 +5,7 @@ export default class SlackService {
     if (this.checkSpam('water')) return false;
     this.sendRequest(
       company.name,
-      `${company.contact}, ${company.name} želi vodu na štandu ${company.location}!`
+      `${company.contact}, ${company.name} želi vodu na štandu ${company.location}!`,
     );
     return true;
   }
@@ -14,7 +14,7 @@ export default class SlackService {
     if (this.checkSpam('coffee')) return false;
     this.sendRequest(
       company.name,
-      `${company.contact}, ${company.name} želi kavu na štandu ${company.location}!`
+      `${company.contact}, ${company.name} želi kavu na štandu ${company.location}!`,
     );
     return true;
   }
@@ -22,7 +22,7 @@ export default class SlackService {
   requestAssistance(company) {
     if (this.checkSpam('assistance')) return false;
     this.sendRequest(
-      company.name, `${company.contact}, ${company.name} želi pomoć?! na štandu ${company.location}!`
+      company.name, `${company.contact}, ${company.name} želi pomoć?! na štandu ${company.location}!`,
     );
     return true;
   }
@@ -39,7 +39,7 @@ export default class SlackService {
         link_names: 1,
       }),
     })
-      .then((slackResponse) => {
+      .then(() => {
         // TODO: write to db
       })
       .catch((error) => {

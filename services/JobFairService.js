@@ -1,5 +1,5 @@
 import AuthService from '../services/AuthService';
-import { COMPANY_URL, REVIEW_URL } from "./routes";
+import { COMPANY_URL, REVIEW_URL } from './routes';
 
 
 export default class JobFairService {

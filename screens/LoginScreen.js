@@ -1,32 +1,24 @@
 import React from 'react';
-import { Dimensions, Keyboard } from 'react-native';
-import {
-  View,
-  Divider,
-  TextInput,
-  Button,
-  Text,
-  Screen,
-  Image,
-} from '@shoutem/ui';
-import { connectStyle } from '@shoutem/theme';
-import Toast from 'react-native-easy-toast';
-import AuthService from '../services/AuthService';
+import { Keyboard } from 'react-native';
 import * as _ from 'lodash';
+import { PropTypes } from 'prop-types';
+import {
+  Container,
+  Header,
+  Title,
+  Content,
+  Right,
+  Body,
+  Text,
+  Form,
+  Input,
+  Item,
+  Label, Button,
+} from 'native-base';
+import Toast from 'react-native-root-toast';
 
-const styles = {
-  container: {
-    paddingTop: (Dimensions.get('window').height / 2) - 220,
-    backgroundColor: 'transparent',
-  },
+import AuthService from '../services/AuthService';
 
-  button: {
-    backgroundColor: '#000022',
-    'shoutem.ui.Text': {
-      color: '#FFFFFF',
-    },
-  },
-};
 
 class LoginScreen extends React.Component {
   constructor(props) {
@@ -41,6 +33,10 @@ class LoginScreen extends React.Component {
   }
 
 
+  componentWillUnmount() {
+    // Toast.toastInstance = null;
+  }
+
 
   performLogin() {
     const { email, password } = this.state;
@@ -49,84 +45,64 @@ class LoginScreen extends React.Component {
     Keyboard.dismiss();
 
     if (_.isEmpty(email) || _.isEmpty(password)) {
-      this.refs.toast.show('Username and password are required fields!');
+      Toast.show('Username and password are required fields!', {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      });
       return;
     }
-
     this.auth.login(email, password)
       .then(() => {
         this.redirectHome();
       })
       .catch(() => {
-        this.refs.toast.show('Username or password is incorrect!');
+        Toast.show('Username or password is incorrect!', {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+        });
       }).done();
   }
 
   redirectHome() {
-    this.props.navigator.push('home');
-  }
-
-  renderLoginComponent() {
-    const styles = this.props.style;
-
-    return (
-      <View styleName="flexible md-gutter">
-        <TextInput
-          placeholder="Email"
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType="email-address"
-          keyboardAppearance="dark"
-          returnKeyType="done"
-          onChangeText={email => this.setState({ email })}
-        />
-
-        <Divider styleName="line" />
-
-        <TextInput
-          placeholder="Password"
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardAppearance="dark"
-          secureTextEntry
-          returnKeyType="done"
-          onChangeText={password => this.setState({ password })}
-        />
-
-        <Divider styleName="line" />
-        <Divider />
-
-        <Button
-          title="Log in"
-          styleName="full-width inflexible"
-          onPress={this.performLogin}
-          style={styles.button}
-        >
-          <Text>LOG IN</Text>
-        </Button>
-      </View>
-    );
+    this.props.navigation.navigate('Home');
   }
 
   render() {
-    const styles = this.props.style;
-    const screen = Dimensions.get('window');
-
     return (
-      <Screen>
-        <Image
-          style={{ width: screen.width, height: screen.height }}
-          styleName="flexible fill-parent"
-          source={require('../assets/background.png')}
-        />
-
-        <View styleName="flexible" style={styles.container}>
-          {this.renderLoginComponent()}
-        </View>
-        <Toast ref="toast" position="bottom" />
-      </Screen>
+      <Container>
+        <Header>
+          <Body>
+            <Title>{this.props.navigation.state.routeName}</Title>
+          </Body>
+          <Right />
+        </Header>
+        <Content>
+          <Form style={{ padding: 10 }}>
+            <Item floatingLabel>
+              <Label>Username</Label>
+              <Input onChangeText={email => this.setState({ email })} />
+            </Item>
+            <Item floatingLabel style={{ marginBottom: 20 }}>
+              <Label>Password</Label>
+              <Input secureTextEntry onChangeText={password => this.setState({ password })} />
+            </Item>
+            <Button title="login" onPress={() => this.performLogin()} block>
+              <Text>Login</Text>
+            </Button>
+          </Form>
+        </Content>
+      </Container>
     );
   }
 }
 
-export default connectStyle('LoginScreen', styles)(LoginScreen);
+LoginScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+    state: PropTypes.shape({
+      routeName: PropTypes.string,
+    }),
+  }).isRequired,
+};
+
+export default LoginScreen;

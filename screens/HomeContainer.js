@@ -1,15 +1,10 @@
 import React from 'react';
-import { Dimensions, Platform } from "react-native";
-import {
-  Screen,
-  Image,
-  NavigationBar,
-  TouchableOpacity,
-} from "@shoutem/ui";
+import { Dimensions, Platform } from 'react-native';
+import { Image, NavigationBar, Screen, TouchableOpacity, } from '@shoutem/ui';
+import { connectStyle } from '@shoutem/theme';
 import { Entypo } from '@expo/vector-icons';
-import HomeScreen from "./HomeScreen";
-import {SideMenu} from "../components/SideMenu";
-import {connectStyle} from "@shoutem/theme";
+import { HomeScreen } from './HomeScreen';
+import { SideMenu } from '../components/SideMenu';
 
 const styles = {
   'shoutem.ui.Screen': {
@@ -18,7 +13,7 @@ const styles = {
 };
 
 class HomeContainer extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.onPress = this.onPress.bind(this);
@@ -29,17 +24,17 @@ class HomeContainer extends React.Component {
   }
 
   onPress() {
-    this.setState({ isOpen: !this.state.isOpen });
+    this.setState({isOpen: !this.state.isOpen});
   }
 
-  onSideMenuChange (isOpen) {
-    this.setState({ isOpen });
+  onSideMenuChange(isOpen) {
+    this.setState({isOpen});
   }
 
   renderRightComponent() {
     return (
       <TouchableOpacity onPress={this.onPress}>
-        <Entypo name="menu" size={24} color="white" />
+        <Entypo name="menu" size={24} color="white"/>
       </TouchableOpacity>
     )
   }
@@ -55,18 +50,18 @@ class HomeContainer extends React.Component {
       >
         <Screen>
           <Image
-            style={{ width: screen.width, height: screen.height }}
+            style={{width: screen.width, height: screen.height}}
             styleName="flexible fill-parent"
             source={require('../assets/background.png')}
           />
 
           <NavigationBar
             styleName="clear"
-            style={{ zIndex: 999 }}
+            style={{zIndex: 999}}
             rightComponent={this.renderRightComponent()}
           />
 
-          <HomeScreen navigator={this.props.navigator} />
+          <HomeScreen navigator={this.props.navigator}/>
         </Screen>
       </SideMenu>
     );

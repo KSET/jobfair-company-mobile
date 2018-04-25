@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationExperimental, Keyboard } from 'react-native';
+import { Keyboard } from 'react-native';
 import Toast from 'react-native-easy-toast'
 import { connectStyle } from '@shoutem/theme';
 import {
@@ -17,9 +17,6 @@ import {
 import JobFairService  from '../services/JobFairService';
 
 const styles = {
-  container: {
-    marginTop: NavigationExperimental.Header.HEIGHT,
-  },
 
   button: {
     backgroundColor: '#000022',
