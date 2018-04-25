@@ -1,21 +1,33 @@
-import {
-  createRouter
-} from '@expo/ex-navigation';
+import { StackNavigator } from 'react-navigation';
+import { Body, Header, Text } from 'native-base';
+import { React } from 'react-native';
+import LoginScreen from '../screens/LoginScreen';
 
-import LoginScreen from "../screens/LoginScreen";
-import HomeContainer from "../screens/HomeContainer";
-import BarCodeScreen from "../screens/BarCodeScreen";
-import SettingsScreen from "../screens/SettingsScreen";
-import ChangePasswordScreen from "../screens/settings/ChangePasswordScreen";
-import ReviewScreen from "../screens/ReviewScreen";
-
-const Router = createRouter(() => ({
-  login: () => LoginScreen,
-  home: () => HomeContainer,
-  barCode: () => BarCodeScreen,
-  settings: () => SettingsScreen,
-  changePassword: () => ChangePasswordScreen,
-  review: () => ReviewScreen,
-}));
+const Router = StackNavigator(
+  {
+    Login: {
+      screen: LoginScreen,
+    },
+    // Home: {
+    //   screen: HomeContainer,
+    // },
+    // BarCode: {
+    //   screen: BarCodeScreen,
+    // },
+    // ChangePassword: {
+    //   screen: ChangePasswordScreen,
+    // },
+    // Review: {
+    //   screen: ReviewScreen,
+    // },
+    // Settngs: {
+    //   screen: SettingsScreen,
+    // },
+  },
+  {
+    initialRouteName: 'Login',
+    headerMode: 'none',
+  },
+);
 
 export default Router;

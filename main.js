@@ -1,16 +1,10 @@
 import Expo from 'expo';
 import React from 'react';
-import { NavigationProvider, StackNavigation } from '@expo/ex-navigation/src/ExNavigation';
-
-import Store from './state/Store';
+import { Root, StyleProvider } from 'native-base';
 import Router from './navigation/Router';
-import NavigationContext from '@expo/ex-navigation/src/ExNavigationContext';
-import AuthService from './services/AuthService'
+import AuthService from './services/AuthService';
+import getTheme from './native-base-theme/components';
 
-const navigationContext = new NavigationContext({
-  router: Router,
-  store: Store,
-});
 
 class App extends React.Component {
   constructor(props) {
@@ -25,27 +19,19 @@ class App extends React.Component {
 
   async componentWillMount() {
     await Expo.Font.loadAsync({
-      'Rubik-Black': require('./node_modules/@shoutem/ui/fonts/Rubik-Black.ttf'),
-      'Rubik-BlackItalic': require('./node_modules/@shoutem/ui/fonts/Rubik-BlackItalic.ttf'),
-      'Rubik-Bold': require('./node_modules/@shoutem/ui/fonts/Rubik-Bold.ttf'),
-      'Rubik-BoldItalic': require('./node_modules/@shoutem/ui/fonts/Rubik-BoldItalic.ttf'),
-      'Rubik-Italic': require('./node_modules/@shoutem/ui/fonts/Rubik-Italic.ttf'),
-      'Rubik-Light': require('./node_modules/@shoutem/ui/fonts/Rubik-Light.ttf'),
-      'Rubik-LightItalic': require('./node_modules/@shoutem/ui/fonts/Rubik-LightItalic.ttf'),
-      'Rubik-Medium': require('./node_modules/@shoutem/ui/fonts/Rubik-Medium.ttf'),
-      'Rubik-MediumItalic': require('./node_modules/@shoutem/ui/fonts/Rubik-MediumItalic.ttf'),
-      'Rubik-Regular': require('./node_modules/@shoutem/ui/fonts/Rubik-Regular.ttf'),
-      'rubicon-icon-font': require('./node_modules/@shoutem/ui/fonts/rubicon-icon-font.ttf'),
+      Roboto: require('native-base/Fonts/Roboto.ttf'),
+      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+      Ionicons: require('@expo/vector-icons/fonts/Ionicons.ttf'),
     });
 
     const isAuthenticated = await this.auth.isAuthenticated();
     if (isAuthenticated) {
-      this.setState({ initialRoute: 'home' });
+      this.setState({initialRoute: 'home'});
     } else {
-      this.setState({ initialRoute: 'login' });
+      this.setState({initialRoute: 'login'});
     }
 
-    this.setState({ fontsAreLoaded: true });
+    this.setState({fontsAreLoaded: true});
   }
 
   render() {
@@ -54,10 +40,13 @@ class App extends React.Component {
     }
 
     return (
-      <NavigationProvider router={Router} context={navigationContext}>
-        <StackNavigation initialRoute={Router.getRoute(this.state.initialRoute)} />
-      </NavigationProvider>
+      <Root>
+        <StyleProvider style={getTheme()}>
+          <Router />
+        </StyleProvider>
+      </Root>
     );
   }
 }
+
 Expo.registerRootComponent(App);
