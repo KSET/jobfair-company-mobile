@@ -6,15 +6,16 @@
   "private": false,
   "main": "main.js",
   "dependencies": {
-    "@expo/ex-navigation": "^2.10.0",
-    "@shoutem/theme": "^0.9.0",
-    "@shoutem/ui": "^0.12.0",
-    "expo": "^15.0.2",
+    "@expo/vector-icons": "^6.3.1",
+    "expo": "^23.0.0",
     "lodash": "^4.17.4",
-    "react": "~15.4.0",
-    "react-native": "https://github.com/exponent/react-native/archive/sdk-15.0.0.tar.gz",
-    "react-native-easy-toast": "^1.0.5",
-    "react-native-elements": "^0.11.2"
+    "native-base": "^2.4.2",
+    "prop-types": "^15.6.1",
+    "react": "16.0.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-23.0.0.tar.gz",
+    "react-native-root-toast": "^3.0.1",
+    "react-navigation": "^1.5.11",
+    "redux": "^4.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^6.1.2",
