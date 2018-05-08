@@ -1,16 +1,15 @@
 import { StackNavigator } from 'react-navigation';
-import { Body, Header, Text } from 'native-base';
-import { React } from 'react-native';
 import LoginScreen from '../screens/LoginScreen';
+import HomeContainer from '../screens/HomeContainer'
 
 const Router = StackNavigator(
   {
     Login: {
       screen: LoginScreen,
     },
-    // Home: {
-    //   screen: HomeContainer,
-    // },
+    Home: {
+      screen: HomeContainer,
+    },
     // BarCode: {
     //   screen: BarCodeScreen,
     // },

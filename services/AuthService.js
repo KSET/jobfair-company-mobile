@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { AsyncStorage } from 'react-native';
 import { LOGIN_URL, USERS_URL } from './routes';
 import { DEBUG } from '../env';
@@ -7,9 +8,13 @@ const AUTH = '@jfCardSharing:auth';
 export default class AuthService {
 
   async login(email, password) {
-    if(DEBUG) {
+    if (DEBUG) {
       AsyncStorage.setItem(AUTH, JSON.stringify('debug'));
-      return new Promise();
+      return new Promise((resolve) => {
+        resolve({
+          debug: true,
+        })
+      })
     }
     return fetch(LOGIN_URL, {
       method: 'POST',

@@ -1,71 +1,31 @@
 import React from 'react';
-import { Dimensions, Platform } from 'react-native';
-import { Image, NavigationBar, Screen, TouchableOpacity, } from '@shoutem/ui';
-import { connectStyle } from '@shoutem/theme';
-import { Entypo } from '@expo/vector-icons';
-import { HomeScreen } from './HomeScreen';
-import { SideMenu } from '../components/SideMenu';
+import { Body, Container, Content, Header, Right, Title, Text } from 'native-base'
+import { PropTypes } from 'prop-types'
 
-const styles = {
-  'shoutem.ui.Screen': {
-    marginTop: (Platform.OS === 'android') ? 20 : 0,
-  },
-};
-
-class HomeContainer extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.onPress = this.onPress.bind(this);
-    this.onSideMenuChange = this.onSideMenuChange.bind(this);
-    this.state = {
-      isOpen: false,
-    };
-  }
-
-  onPress() {
-    this.setState({isOpen: !this.state.isOpen});
-  }
-
-  onSideMenuChange(isOpen) {
-    this.setState({isOpen});
-  }
-
-  renderRightComponent() {
-    return (
-      <TouchableOpacity onPress={this.onPress}>
-        <Entypo name="menu" size={24} color="white"/>
-      </TouchableOpacity>
-    )
-  }
+export default class HomeContainer extends React.Component {
 
   render() {
-    const screen = Dimensions.get('window');
-
     return (
-      <SideMenu
-        isOpen={this.state.isOpen}
-        onSideMenuChange={this.onSideMenuChange}
-        navigator={this.props.navigator}
-      >
-        <Screen>
-          <Image
-            style={{width: screen.width, height: screen.height}}
-            styleName="flexible fill-parent"
-            source={require('../assets/background.png')}
-          />
-
-          <NavigationBar
-            styleName="clear"
-            style={{zIndex: 999}}
-            rightComponent={this.renderRightComponent()}
-          />
-
-          <HomeScreen navigator={this.props.navigator}/>
-        </Screen>
-      </SideMenu>
+      <Container>
+        <Header>
+          <Body>
+          <Title>{this.props.navigation.state.routeName}</Title>
+          </Body>
+          <Right/>
+        </Header>
+        <Content>
+          <Text>Home</Text>
+        </Content>
+      </Container>
     );
   }
 }
 
-export default connectStyle('HomeContainer', styles)(HomeContainer);
+HomeContainer.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+    state: PropTypes.shape({
+      routeName: PropTypes.string,
+    }),
+  }).isRequired,
+}
