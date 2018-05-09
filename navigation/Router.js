@@ -1,6 +1,6 @@
 import { StackNavigator } from 'react-navigation';
 import LoginScreen from '../screens/LoginScreen';
-import HomeContainer from '../screens/HomeContainer'
+import HomeScreen from '../screens/HomeScreen'
 
 const Router = StackNavigator(
   {
@@ -8,7 +8,7 @@ const Router = StackNavigator(
       screen: LoginScreen,
     },
     Home: {
-      screen: HomeContainer,
+      screen: HomeScreen,
     },
     // BarCode: {
     //   screen: BarCodeScreen,
