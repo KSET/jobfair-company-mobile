@@ -21,9 +21,24 @@ export default class HomeContainer extends React.Component {
             />
           </Row>
           <Row size={1}>
-            <Col style={{backgroundColor: '#b7000e'}}/>
-            <Col style={{backgroundColor: '#b7000e'}}/>
-            <Col style={{backgroundColor: '#b7000e'}}/>
+            <Col style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+              <Thumbnail
+                style={{height: 80, width: 80}}
+                source={require('../assets/icons/app-water-icon.png')}
+              />
+            </Col>
+            <Col style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+              <Thumbnail
+                style={{height: 80, width: 80}}
+                source={require('../assets/icons/app-coffee-icon.png')}
+              />
+            </Col>
+            <Col style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+              <Thumbnail
+                style={{height: 80, width: 80}}
+                source={require('../assets/icons/app-assistance-icon.png')}
+              />
+            </Col>
           </Row>
         </Grid>
       </Container>
