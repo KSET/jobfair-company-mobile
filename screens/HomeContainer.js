@@ -1,5 +1,5 @@
 import React from 'react';
-import { Body, Container, Content, Header, Right, Title, Text } from 'native-base'
+import { Body, Container, Header, Right, Title, Grid, Col, Row, Thumbnail } from 'native-base'
 import { PropTypes } from 'prop-types'
 
 export default class HomeContainer extends React.Component {
@@ -13,9 +13,19 @@ export default class HomeContainer extends React.Component {
           </Body>
           <Right/>
         </Header>
-        <Content>
-          <Text>Home</Text>
-        </Content>
+        <Grid>
+          <Row size={3} style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+            <Thumbnail
+              style={{height: 200, width: 200}}
+              source={require('../assets/icons/app-qr-icon.png')}
+            />
+          </Row>
+          <Row size={1}>
+            <Col style={{backgroundColor: '#b7000e'}}/>
+            <Col style={{backgroundColor: '#b7000e'}}/>
+            <Col style={{backgroundColor: '#b7000e'}}/>
+          </Row>
+        </Grid>
       </Container>
     );
   }
@@ -28,4 +38,4 @@ HomeContainer.propTypes = {
       routeName: PropTypes.string,
     }),
   }).isRequired,
-}
+};
