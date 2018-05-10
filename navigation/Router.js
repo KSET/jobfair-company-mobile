@@ -1,6 +1,6 @@
 import { StackNavigator } from 'react-navigation';
 import LoginScreen from '../screens/LoginScreen';
-import HomeScreen from '../screens/HomeScreen'
+import HomeScreen from '../screens/Home/HomeScreen'
 
 const Router = StackNavigator(
   {

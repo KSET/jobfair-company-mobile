@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { StyleSheet } from 'react-native'
 import {
   Body,
@@ -9,12 +9,11 @@ import {
   Header,
   Right,
   Row,
-  Text,
   Thumbnail,
   Title,
 } from 'native-base'
 import { PropTypes } from 'prop-types'
-import Modal from 'react-native-modal'
+import WaterModal from './WaterModal'
 
 const styles = StyleSheet.create({
   verticalCenter: {
@@ -31,15 +30,7 @@ const styles = StyleSheet.create({
     height: 80,
     width: 80,
   },
-  modal: {
-    flex: 1,
-    marginHorizontal: 30,
-    marginVertical: 100,
-    padding: 25,
-    backgroundColor: 'white',
-    borderRadius: 10,
-  },
-})
+});
 
 export default class HomeScreen extends React.Component {
 
@@ -47,17 +38,13 @@ export default class HomeScreen extends React.Component {
     super(props)
     this.state = {
       waterModalVisible: false,
-    }
+    };
     this.requestWaterAction.bind(this)
   }
 
   requestWaterAction () {
     this.setState({waterModalVisible: true})
   }
-
-  _toggleWaterModal = () =>
-    this.setState({waterModalVisible: !this.state.waterModalVisible},
-    )
 
   render() {
     return (
@@ -72,7 +59,7 @@ export default class HomeScreen extends React.Component {
           <Row size={3} style={styles.verticalCenter}>
             <Thumbnail
               style={{height: 200, width: 200}}
-              source={require('../assets/icons/app-qr-icon.png')}
+              source={require('../../assets/icons/app-qr-icon.png')}
             />
           </Row>
           <Row size={1}>
@@ -84,15 +71,17 @@ export default class HomeScreen extends React.Component {
               >
                 <Thumbnail
                   style={styles.smallIcons}
-                  source={require('../assets/icons/app-water-icon.png')}
+                  source={require('../../assets/icons/app-water-icon.png')}
                 />
               </Button>
             </Col>
-            <Col style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}>
+            <Col
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
               <Button
                 style={styles.horizontalCenter, styles.smallIcons}
                 transparent
@@ -100,15 +89,17 @@ export default class HomeScreen extends React.Component {
               >
                 <Thumbnail
                   style={styles.smallIcons}
-                  source={require('../assets/icons/app-coffee-icon.png')}
+                  source={require('../../assets/icons/app-coffee-icon.png')}
                 />
               </Button>
             </Col>
-            <Col style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}>
+            <Col
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
               <Button
                 style={styles.horizontalCenter, styles.smallIcons}
                 transparent
@@ -116,23 +107,13 @@ export default class HomeScreen extends React.Component {
               >
                 <Thumbnail
                   style={styles.smallIcons}
-                  source={require('../assets/icons/app-assistance-icon.png')}
+                  source={require('../../assets/icons/app-assistance-icon.png')}
                 />
               </Button>
             </Col>
           </Row>
         </Grid>
-        <Modal
-          isVisible={this.state.waterModalVisible}
-          onSwipe={this._toggleWaterModal}
-          onBackdropPress={this._toggleWaterModal}
-          onBackButtonPress={this._toggleWaterModal}
-          swipeDirection="up"
-        >
-          <Container style={styles.modal}>
-            <Text>How much bottles do you need?</Text>
-          </Container>
-        </Modal>
+        <WaterModal isVisible={this.state.waterModalVisible}/>
       </Container>
     );
   }
