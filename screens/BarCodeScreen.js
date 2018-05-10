@@ -8,9 +8,9 @@ import {
   Header,
   Icon,
   Left,
-  Right,
+  Right, Text,
   Title,
-} from 'native-base';
+} from 'native-base'
 import { StyleSheet, View } from 'react-native'
 
 export default class BarCodeScreen extends React.Component {
@@ -34,8 +34,7 @@ export default class BarCodeScreen extends React.Component {
       return;
     }
     this.hasScanned = true;
-    console.log('scanned', data)
-    // this.props.navigator.replace(Router.getRoute('review', data));
+    this.props.navigation.navigate('Review', data)
   }
 
   goBack() {
@@ -87,5 +86,6 @@ BarCodeScreen.propTypes = {
     state: PropTypes.shape({
       routeName: PropTypes.string,
     }),
+    goBack: PropTypes.func.isRequired,
   }).isRequired,
 };
