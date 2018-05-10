@@ -43,6 +43,7 @@ export default class HomeScreen extends React.Component {
     };
     this.requestWaterAction.bind(this)
     this.requestCoffeeAction.bind(this)
+    this.scanQRCodeAction.bind(this)
     this.closeModals.bind(this)
   }
 
@@ -52,6 +53,10 @@ export default class HomeScreen extends React.Component {
 
   requestCoffeeAction () {
     this.setState({coffeeModalVisible: true})
+  }
+
+  scanQRCodeAction () {
+    this.props.navigation.navigate('BarCode')
   }
 
   closeModals = () => {
@@ -68,11 +73,18 @@ export default class HomeScreen extends React.Component {
           <Right/>
         </Header>
         <Grid>
-          <Row size={3} style={styles.verticalCenter}>
-            <Thumbnail
-              style={{height: 200, width: 200}}
-              source={require('../../assets/icons/app-qr-icon.png')}
-            />
+          <Row size={3}
+               style={{alignItems: 'center', justifyContent: 'center'}}>
+            <Button
+              style={{height: 200, width: 200, alignSelf: 'center'}}
+              transparent
+              onPress={() => this.scanQRCodeAction()} title="Scan QR code"
+            >
+              <Thumbnail
+                style={{height: 200, width: 200}}
+                source={require('../../assets/icons/app-qr-icon.png')}
+              />
+            </Button>
           </Row>
           <Row size={1}>
             <Col style={styles.horizontalCenter}>
@@ -127,10 +139,14 @@ export default class HomeScreen extends React.Component {
             </Col>
           </Row>
         </Grid>
-        <WaterModal isVisible={this.state.waterModalVisible}
-                    onClose={this.closeModals}/>
-        <CoffeeModal isVisible={this.state.coffeeModalVisible}
-                     onClose={this.closeModals}/>
+        <WaterModal
+          isVisible={this.state.waterModalVisible}
+          onClose={this.closeModals}
+        />
+        <CoffeeModal
+          isVisible={this.state.coffeeModalVisible}
+          onClose={this.closeModals}
+        />
       </Container>
     );
   }

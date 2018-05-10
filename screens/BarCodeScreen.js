@@ -1,22 +1,17 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
 import { BarCodeScanner, Permissions } from 'expo';
-import { connectStyle } from '@shoutem/theme';
-import { NavigationBar, Screen } from '@shoutem/ui';
+import { PropTypes } from 'prop-types'
+import {
+  Body, Button,
+  Container,
+  Content,
+  Header, Icon, Left,
+  Right,
+  Title,
+} from 'native-base'
+import { View, StyleSheet } from 'react-native'
 
-import Router from '../navigation/Router';
-
-const styles = {
-  barcodescanner: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-  },
-};
-
-class BarCodeScreen extends React.Component {
+export default class BarCodeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,8 +23,8 @@ class BarCodeScreen extends React.Component {
   }
 
   async componentWillMount() {
-    const {status} = await Permissions.askAsync(Permissions.CAMERA);
-    this.setState({hasCameraPermission: status === 'granted'});
+    const {status} = await Permissions.askAsync(Permissions.CAMERA)
+    this.setState({hasCameraPermission: status === 'granted'})
   }
 
   onBarCodeRead(data) {
@@ -37,33 +32,55 @@ class BarCodeScreen extends React.Component {
       return;
     }
     this.hasScanned = true;
-    this.props.navigator.replace(Router.getRoute('review', data));
+    console.log('scanned', data)
+    // this.props.navigator.replace(Router.getRoute('review', data));
   }
 
   goBack() {
-    this.props.navigator.pop();
+    this.props.navigation.goBack()
   }
 
   render() {
-    const {hasCameraPermission} = this.state;
+    const {hasCameraPermission} = this.state
     if (hasCameraPermission === null) {
-      return <View/>;
+      return <View/>
     } else if (hasCameraPermission === false) {
       return <Text>No access to camera</Text>;
-    } else {
-      return (
-        <Screen>
-          <NavigationBar styleName="flexible" title="Scan QR code" hasHistory navigateBack={this.goBack}/>
-          <View style={{flex: 1, top: 60}}>
-            <BarCodeScanner
-              onBarCodeRead={this.onBarCodeRead}
-              style={StyleSheet.absoluteFill}
-            />
-          </View>
-        </Screen>
-      );
     }
+    return (
+      <Container>
+        <Header>
+          <Left>
+            <Button
+              style={{paddingLeft: 10}}
+              transparent title="Back"
+              onPress={() => this.goBack()}
+            >
+              <Icon type="FontAwesome" name="angle-left"
+                    style={{color: 'white'}}/>
+            </Button>
+          </Left>
+          <Body>
+          <Title>Scan QR code</Title>
+          </Body>
+          <Right/>
+        </Header>
+        <View style={{flex: 1}}>
+          <BarCodeScanner
+            onBarCodeRead={this.onBarCodeRead}
+            style={StyleSheet.absoluteFill}
+          />
+        </View>
+      </Container>
+    )
   }
 }
 
-export default connectStyle('BarCodeScreen', styles)(BarCodeScreen);
+BarCodeScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+    state: PropTypes.shape({
+      routeName: PropTypes.string,
+    }),
+  }).isRequired,
+}
