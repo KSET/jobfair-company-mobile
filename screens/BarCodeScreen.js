@@ -2,14 +2,16 @@ import React from 'react';
 import { BarCodeScanner, Permissions } from 'expo';
 import { PropTypes } from 'prop-types'
 import {
-  Body, Button,
+  Body,
+  Button,
   Container,
-  Content,
-  Header, Icon, Left,
+  Header,
+  Icon,
+  Left,
   Right,
   Title,
-} from 'native-base'
-import { View, StyleSheet } from 'react-native'
+} from 'native-base';
+import { StyleSheet, View } from 'react-native'
 
 export default class BarCodeScreen extends React.Component {
   constructor(props) {
@@ -42,11 +44,6 @@ export default class BarCodeScreen extends React.Component {
 
   render() {
     const {hasCameraPermission} = this.state
-    if (hasCameraPermission === null) {
-      return <View/>
-    } else if (hasCameraPermission === false) {
-      return <Text>No access to camera</Text>;
-    }
     return (
       <Container>
         <Header>
@@ -56,8 +53,10 @@ export default class BarCodeScreen extends React.Component {
               transparent title="Back"
               onPress={() => this.goBack()}
             >
-              <Icon type="FontAwesome" name="angle-left"
-                    style={{color: 'white'}}/>
+              <Icon
+                type="FontAwesome" name="angle-left"
+                style={{color: 'white'}}
+              />
             </Button>
           </Left>
           <Body>
@@ -66,13 +65,19 @@ export default class BarCodeScreen extends React.Component {
           <Right/>
         </Header>
         <View style={{flex: 1}}>
-          <BarCodeScanner
-            onBarCodeRead={this.onBarCodeRead}
-            style={StyleSheet.absoluteFill}
-          />
+          {
+            hasCameraPermission === null ? (
+              <Text>No access to camera</Text>
+            ) : (
+              <BarCodeScanner
+                onBarCodeRead={this.onBarCodeRead}
+                style={StyleSheet.absoluteFill}
+              />
+            )
+          }
         </View>
       </Container>
-    )
+    );
   }
 }
 
@@ -83,4 +88,4 @@ BarCodeScreen.propTypes = {
       routeName: PropTypes.string,
     }),
   }).isRequired,
-}
+};
