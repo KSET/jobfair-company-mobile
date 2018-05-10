@@ -43,6 +43,7 @@ export default class HomeScreen extends React.Component {
     };
     this.requestWaterAction.bind(this)
     this.requestCoffeeAction.bind(this)
+    this.closeModals.bind(this)
   }
 
   requestWaterAction () {
@@ -51,6 +52,10 @@ export default class HomeScreen extends React.Component {
 
   requestCoffeeAction () {
     this.setState({coffeeModalVisible: true})
+  }
+
+  closeModals = () => {
+    this.setState({coffeeModalVisible: false, waterModalVisible: false})
   }
 
   render() {
@@ -122,8 +127,10 @@ export default class HomeScreen extends React.Component {
             </Col>
           </Row>
         </Grid>
-        <WaterModal isVisible={this.state.waterModalVisible}/>
-        <CoffeeModal isVisible={this.state.coffeeModalVisible}/>
+        <WaterModal isVisible={this.state.waterModalVisible}
+                    onClose={this.closeModals}/>
+        <CoffeeModal isVisible={this.state.coffeeModalVisible}
+                     onClose={this.closeModals}/>
       </Container>
     );
   }

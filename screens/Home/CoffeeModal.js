@@ -11,22 +11,24 @@ export default class CoffeeModal extends BaseModal {
     this.state = {
       espresso: 0,
       macchiato: 0,
-    }
+    };
   }
 
   canOrder = () => (this.state.espresso + this.state.macchiato) <= 0
 
   render () {
     return (
-      <BaseModal isVisible={this.props.isVisible}>
+      <BaseModal isVisible={this.props.isVisible} onClose={this.props.onClose}>
         <Text>Please select coffee you prefer:</Text>
         <List style={{width: '100%'}}>
-          <ListItem style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginLeft: 0,
-            paddingRight: 0
-          }}>
+          <ListItem
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginLeft: 0,
+              paddingRight: 0,
+            }}
+          >
             <Text>Espresso</Text>
             <NumericInput
               value={this.state.espresso}
@@ -43,12 +45,14 @@ export default class CoffeeModal extends BaseModal {
               leftButtonBackgroundColor="#3F51B5"
             />
           </ListItem>
-          <ListItem style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginLeft: 0,
-            paddingRight: 0
-          }}>
+          <ListItem
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginLeft: 0,
+              paddingRight: 0,
+            }}
+          >
             <Text>Macchiato</Text>
             <NumericInput
               value={this.state.macchiato}
@@ -74,10 +78,11 @@ export default class CoffeeModal extends BaseModal {
           <Text>Request coffee</Text>
         </Button>
       </BaseModal>
-    )
+    );
   }
 }
 
 CoffeeModal.propTypes = {
   isVisible: PropTypes.bool.isRequired,
-}
+  onClose: PropTypes.func.isRequired,
+};

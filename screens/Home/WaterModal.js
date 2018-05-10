@@ -15,7 +15,7 @@ export default class WaterModal extends BaseModal {
 
   render () {
     return (
-      <BaseModal isVisible={this.props.isVisible}>
+      <BaseModal isVisible={this.props.isVisible} onClose={this.props.onClose}>
         <Text>How many bottles do you need?</Text>
         <NumericInput
           value={this.state.value}
@@ -45,4 +45,5 @@ export default class WaterModal extends BaseModal {
 
 WaterModal.propTypes = {
   isVisible: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };

@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
   },
-})
+});
 
 export default class BaseModal extends React.Component {
 
@@ -23,7 +23,7 @@ export default class BaseModal extends React.Component {
     super(props)
     this.state = {
       modalVisible: this.props.isVisible,
-    }
+    };
   }
 
   componentWillReceiveProps (props) {
@@ -43,13 +43,14 @@ export default class BaseModal extends React.Component {
         onSwipe={this._toggleModal}
         onBackdropPress={this._toggleModal}
         onBackButtonPress={this._toggleModal}
+        onModalHide={this.props.onClose}
         swipeDirection="up"
       >
         <Container style={styles.modal}>
           {this.props.children}
         </Container>
       </Modal>
-    )
+    );
   }
 }
 
@@ -59,8 +60,9 @@ BaseModal.propTypes = {
     PropTypes.node,
   ]),
   isVisible: PropTypes.bool.isRequired,
-}
+  onClose: PropTypes.func.isRequired,
+};
 
 BaseModal.defaultProps = {
   children: [],
-}
+};
