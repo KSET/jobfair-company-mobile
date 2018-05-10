@@ -11,9 +11,10 @@ import {
   Row,
   Thumbnail,
   Title,
-} from 'native-base'
+} from 'native-base';
 import { PropTypes } from 'prop-types'
 import WaterModal from './WaterModal'
+import CoffeeModal from './CoffeeModal'
 
 const styles = StyleSheet.create({
   verticalCenter: {
@@ -38,12 +39,18 @@ export default class HomeScreen extends React.Component {
     super(props)
     this.state = {
       waterModalVisible: false,
+      coffeeModalVisible: false,
     };
     this.requestWaterAction.bind(this)
+    this.requestCoffeeAction.bind(this)
   }
 
   requestWaterAction () {
     this.setState({waterModalVisible: true})
+  }
+
+  requestCoffeeAction () {
+    this.setState({coffeeModalVisible: true})
   }
 
   render() {
@@ -85,7 +92,8 @@ export default class HomeScreen extends React.Component {
               <Button
                 style={styles.horizontalCenter, styles.smallIcons}
                 transparent
-                onPress={() => this.requestWaterAction()} title="Request water"
+                onPress={() => this.requestCoffeeAction()}
+                title="Request coffee"
               >
                 <Thumbnail
                   style={styles.smallIcons}
@@ -103,7 +111,8 @@ export default class HomeScreen extends React.Component {
               <Button
                 style={styles.horizontalCenter, styles.smallIcons}
                 transparent
-                onPress={() => this.requestWaterAction()} title="Request water"
+                onPress={() => this.requestWaterAction()}
+                title="Request assistance"
               >
                 <Thumbnail
                   style={styles.smallIcons}
@@ -114,6 +123,7 @@ export default class HomeScreen extends React.Component {
           </Row>
         </Grid>
         <WaterModal isVisible={this.state.waterModalVisible}/>
+        <CoffeeModal isVisible={this.state.coffeeModalVisible}/>
       </Container>
     );
   }

@@ -10,7 +10,7 @@ export default class WaterModal extends BaseModal {
     super(props)
     this.state = {
       value: 1,
-    }
+    };
   }
 
   render () {
@@ -32,15 +32,17 @@ export default class WaterModal extends BaseModal {
           rightButtonBackgroundColor="#3F51B5"
           leftButtonBackgroundColor="#3F51B5"
         />
-        <Button title="Request water"
-                onPress={() => console.log('requesting water')} block>
+        <Button
+          title="Request water"
+          onPress={() => console.log('requesting water')} block
+        >
           <Text>Request water</Text>
         </Button>
       </BaseModal>
-    )
+    );
   }
 }
 
 WaterModal.propTypes = {
   isVisible: PropTypes.bool.isRequired,
-}
+};
