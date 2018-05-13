@@ -40,6 +40,7 @@ jobs:
           command: |
             exp login -u kset -p $EXP_KSET_PASSWORD
 
+      - run: cp env.sample.js env.js
       - run:
           name: Publish code files to expo server
           command: |
