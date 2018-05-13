@@ -1,107 +1,106 @@
 import React from 'react';
-import { Keyboard } from 'react-native';
-import Toast from 'react-native-easy-toast'
-import { connectStyle } from '@shoutem/theme';
 import {
-  NavigationBar,
-  View,
-  Screen,
-  TextInput,
-  Divider,
+  Body,
   Button,
-  Text,
-  Row,
+  Container,
+  Form,
+  Header,
   Icon,
-} from '@shoutem/ui';
+  Label,
+  Left,
+  Right,
+  Text,
+  Textarea,
+  Title,
+} from 'native-base';
+import { PropTypes } from 'prop-types'
+import StarRating from 'react-native-star-rating'
 
-import JobFairService  from '../services/JobFairService';
-
-const styles = {
-
-  button: {
-    backgroundColor: '#000022',
-    'shoutem.ui.Text': {
-      color: "#FFFFFF",
-    },
-  },
-};
-
-class ReviewScreen extends React.Component {
+export default class ReviewScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       note: '',
+      intelligent: 0,
+      likeable: 0,
     };
 
-    this.onPress = this.onPress.bind(this);
     this.goBack = this.goBack.bind(this);
-    this.jobFairService = new JobFairService();
-  }
-
-  onPress() {
-    const { uid } = JSON.parse(this.props.data);
-    const { note } = this.state;
-
-    Keyboard.dismiss();
-
-    this.jobFairService.sendReview(uid, note)
-      .then((response) => {
-        this.refs.toast.show('Note successfully saved.');
-        this.props.navigator.push('home');
-      })
-      .catch((error) => {
-        this.refs.toast.show('Error occurred.');
-      }).done();
+    this.submitReview = this.submitReview.bind(this)
   }
 
   goBack() {
-    this.props.navigator.pop();
+    this.props.navigation.goBack()
+  }
+
+  submitReview () {
+    this.props.navigation.navigate('Home', {message: 'Successfully submitted review!'})
   }
 
   render() {
-    const { style, data } = this.props;
-    const { 'first_name': firstName, 'last_name': lastName } = JSON.parse(data);
+    const {data} = this.props.navigation.getParam('data')
+    const {first_name: firstName, last_name: lastName} = JSON.parse(data)
 
     return (
-      <Screen>
-        <NavigationBar styleName="flexible" title="Review" hasHistory navigateBack={this.goBack} />
-
-        <View style={style.container}>
-          <View>
-            <Row styleName="small">
-              <Icon name="user-profile" />
-              <Text>{firstName} {lastName}</Text>
-            </Row>
-          </View>
-
-          <View>
-            <TextInput
-              placeholder="Write a note..."
-              keyboardAppearance="dark"
-              returnKeyType="done"
-              multiline={true}
-              numberOfLines={4}
-              onChangeText={note => this.setState({ note })}
-            />
-
-            <Divider styleName="line"/>
-            <Divider />
-
+      <Container>
+        <Header>
+          <Left>
             <Button
-              title="Leave note"
-              styleName="full-width inflexible"
-              onPress={this.onPress}
-              style={style.button}
+              style={{paddingLeft: 10}}
+              transparent title="Back"
+              onPress={() => this.goBack()}
             >
-              <Text>LEAVE NOTE</Text>
+              <Icon
+                type="FontAwesome" name="angle-left"
+                style={{color: 'white'}}
+              />
             </Button>
-          </View>
-        </View>
-        <Toast ref="toast" position="bottom"/>
-      </Screen>
-    )
+          </Left>
+          <Body>
+          <Title>Review</Title>
+          </Body>
+          <Right/>
+        </Header>
+        <Container style={{justifyContent: 'space-between', padding: 20}}>
+          <Text>Student: {firstName} {lastName}</Text>
+          <Label>Likeable:</Label>
+          <StarRating
+            disabled={false}
+            maxStars={5}
+            rating={this.state.likeable}
+            selectedStar={likeable => this.setState({likeable})}
+          />
+          <Label>Intelligent:</Label>
+          <StarRating
+            disabled={false}
+            maxStars={5}
+            rating={this.state.intelligent}
+            selectedStar={intelligent => this.setState({intelligent})}
+          />
+          <Form style={{width: '100%'}}>
+            <Textarea style={{width: '100%'}} rowSpan={5} bordered
+                      placeholder="Note"/>
+          </Form>
+          <Button
+            title="Submit review"
+            onPress={() => this.submitReview()} block
+          >
+            <Text>Submit review</Text>
+          </Button>
+        </Container>
+      </Container>
+    );
   }
 }
 
-export default connectStyle('ReviewScreen', styles)(ReviewScreen);
+ReviewScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+    state: PropTypes.shape({
+      routeName: PropTypes.string,
+    }),
+    goBack: PropTypes.func.isRequired,
+    getParam: PropTypes.func.isRequired,
+  }).isRequired,
+}

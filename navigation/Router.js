@@ -2,6 +2,7 @@ import { StackNavigator } from 'react-navigation';
 import LoginScreen from '../screens/LoginScreen';
 import HomeScreen from '../screens/Home/HomeScreen'
 import BarCodeScreen from '../screens/BarCodeScreen'
+import ReviewScreen from '../screens/ReviewScreen'
 
 const Router = StackNavigator(
   {
@@ -17,9 +18,9 @@ const Router = StackNavigator(
     // ChangePassword: {
     //   screen: ChangePasswordScreen,
     // },
-    // Review: {
-    //   screen: ReviewScreen,
-    // },
+    Review: {
+      screen: ReviewScreen,
+    },
     // Settngs: {
     //   screen: SettingsScreen,
     // },

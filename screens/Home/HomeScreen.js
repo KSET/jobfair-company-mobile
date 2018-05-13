@@ -13,15 +13,12 @@ import {
   Title,
 } from 'native-base';
 import { PropTypes } from 'prop-types'
+import Toast from 'react-native-root-toast'
+
 import WaterModal from './WaterModal'
 import CoffeeModal from './CoffeeModal'
 
 const styles = StyleSheet.create({
-  verticalCenter: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   horizontalCenter: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -45,6 +42,17 @@ export default class HomeScreen extends React.Component {
     this.requestCoffeeAction.bind(this)
     this.scanQRCodeAction.bind(this)
     this.closeModals.bind(this)
+  }
+
+  componentDidMount () {
+    const message = this.props.navigation.getParam('message')
+    if (message) {
+      this.props.navigation.setParams({message: ''})
+      Toast.show(message, {
+        duration: Toast.durations.SHORT,
+        position: Toast.positions.BOTTOM,
+      })
+    }
   }
 
   requestWaterAction () {
@@ -73,8 +81,10 @@ export default class HomeScreen extends React.Component {
           <Right/>
         </Header>
         <Grid>
-          <Row size={3}
-               style={{alignItems: 'center', justifyContent: 'center'}}>
+          <Row
+            size={3}
+            style={{alignItems: 'center', justifyContent: 'center'}}
+          >
             <Button
               style={{height: 200, width: 200, alignSelf: 'center'}}
               transparent
@@ -158,5 +168,7 @@ HomeScreen.propTypes = {
     state: PropTypes.shape({
       routeName: PropTypes.string,
     }),
+    getParam: PropTypes.func.isRequired,
+    setParams: PropTypes.func.isRequired,
   }).isRequired,
 };
