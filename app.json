@@ -27,12 +27,12 @@
       "splash": {
         "backgroundColor": "#000022",
         "resizeMode": "cover",
-        "ldpi": "./assets/splash.png",
-        "mdpi": "./assets/splash.png",
-        "hdpi": "./assets/splash.png",
-        "xhdpi": "./assets/splash.png",
-        "xxhdpi": "./assets/splash.png",
-        "xxxhdpi": "./assets/splash.png"
+        "ldpi": "./assets/splash.ldpi.png",
+        "mdpi": "./assets/splash.mdpi.png",
+        "hdpi": "./assets/splash.hdpi.png",
+        "xhdpi": "./assets/splash.xhdpi.png",
+        "xxhdpi": "./assets/splash.xxhdpi.png",
+        "xxxhdpi": "./assets/splash.xxxhdpi.png"
       }
     },
     "ios": {
@@ -41,7 +41,7 @@
       "splash": {
         "backgroundColor": "#000022",
         "resizeMode": "cover",
-        "image": "./assets/splash.png"
+        "image": "./assets/splash.xxxhdpi.png"
       }
     }
   }
