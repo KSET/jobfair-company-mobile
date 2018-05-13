@@ -69,6 +69,8 @@ export default class ReviewScreen extends React.Component {
             disabled={false}
             maxStars={5}
             rating={this.state.likeable}
+            emptyStarColor="#191938"
+            fullStarColor="#191938"
             selectedStar={likeable => this.setState({ likeable })}
           />
           <Label>Intelligent:</Label>
@@ -76,6 +78,8 @@ export default class ReviewScreen extends React.Component {
             disabled={false}
             maxStars={5}
             rating={this.state.intelligent}
+            emptyStarColor="#191938"
+            fullStarColor="#191938"
             selectedStar={intelligent => this.setState({ intelligent })}
           />
           <Form style={{ width: '100%' }}>

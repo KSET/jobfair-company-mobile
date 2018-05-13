@@ -13,8 +13,8 @@ import {
   Form,
   Input,
   Item,
-  Label, Button,
-} from 'native-base';
+  Label, Button, Thumbnail,
+} from 'native-base'
 import Toast from 'react-native-root-toast';
 
 import AuthService from '../services/AuthService';
@@ -77,6 +77,7 @@ class LoginScreen extends React.Component {
           <Right />
         </Header>
         <Content>
+          <Thumbnail style={{ width: 200, marginTop: 40, alignSelf: 'center' }} source={require('../assets/jobfair.png')} />
           <Form style={{ padding: 10 }}>
             <Item floatingLabel>
               <Label>Username</Label>

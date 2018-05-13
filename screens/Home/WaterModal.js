@@ -29,8 +29,8 @@ export default class WaterModal extends BaseModal {
           valueType="integer"
           textColor="black"
           iconStyle={{ color: 'white' }}
-          rightButtonBackgroundColor="#3F51B5"
-          leftButtonBackgroundColor="#3F51B5"
+          rightButtonBackgroundColor="#191938"
+          leftButtonBackgroundColor="#191938"
         />
         <Button
           title="Request water"

@@ -6,11 +6,10 @@ import {
   Col,
   Container,
   Grid,
-  Header,
+  Header, Left,
   Right,
   Row,
   Thumbnail,
-  Title,
 } from 'native-base';
 import { PropTypes } from 'prop-types';
 import Toast from 'react-native-root-toast';
@@ -75,10 +74,11 @@ export default class HomeScreen extends React.Component {
     return (
       <Container>
         <Header>
-          <Body>
-            <Title>{this.props.navigation.state.routeName}</Title>
+          <Left style={{ flex: 1 }} />
+          <Body style={{ flex: 1, justifyContent: 'center', alignItems: 'center', width: 200 }}>
+            <Thumbnail style={{ width: 100, alignSelf: 'center' }} source={require('../../assets/jobfair-negative.png')} />
           </Body>
-          <Right />
+          <Right style={{ flex: 1 }} />
         </Header>
         <Grid>
           <Row
