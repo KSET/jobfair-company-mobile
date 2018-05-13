@@ -5,7 +5,7 @@
     "slug": "job-fair-company",
     "privacy": "public",
     "sdkVersion": "23.0.0",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "icon": "./assets/icons/app.png",
@@ -23,11 +23,28 @@
       ]
     },
     "android": {
-      "package": "org.kset.jobfairCompany"
+      "package": "org.kset.jobfairCompany",
+      "permissions": ["CAMERA"],
+      "versionCode": 2,
+      "splash": {
+        "backgroundColor": "#191938",
+        "resizeMode": "cover",
+        "ldpi": "./assets/splash.png",
+        "mdpi": "./assets/splash.png",
+        "hdpi": "./assets/splash.png",
+        "xhdpi": "./assets/splash.png",
+        "xxhdpi": "./assets/splash.png",
+        "xxxhdpi": "./assets/splash.png"
+      }
     },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "org.kset.jobfairCompany"
+      "bundleIdentifier": "org.kset.jobfairCompany",
+      "splash": {
+        "backgroundColor": "#191938",
+        "resizeMode": "cover",
+        "image": "./assets/splash.png"
+      }
     }
   }
 }
