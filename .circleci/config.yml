@@ -14,6 +14,10 @@ jobs:
           key: node-v1-{{ checksum "package.json" }}-{{ arch }}
 
       - run:
+          name: Update npm
+          command: sudo npm i -g npm
+
+      - run:
           name: Install expo globally
           command: sudo npm i -g exp
 
