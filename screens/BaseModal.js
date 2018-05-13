@@ -37,17 +37,13 @@ export default class BaseModal extends React.Component {
     this.setState({ modalVisible: false });
   }
 
-  _toggleModal = () =>
-    this.setState({ modalVisible: !this.state.modalVisible },
-    )
-
   render() {
     return (
       <Modal
         isVisible={this.state.modalVisible}
-        onSwipe={this._toggleModal}
-        onBackdropPress={this._toggleModal}
-        onBackButtonPress={this._toggleModal}
+        onSwipe={() => this.closeModal()}
+        onBackdropPress={() => this.closeModal()}
+        onBackButtonPress={() => this.closeModal()}
         onModalHide={this.props.onClose}
         swipeDirection="up"
       >

@@ -11,12 +11,19 @@ export default class WaterModal extends BaseModal {
     super(props);
     this.state = {
       value: 1,
+      isVisible: this.props.isVisible,
     };
     this.requestWaterAction.bind(this);
   }
 
+  componentWillReceiveProps(props) {
+    if (props.isVisible !== this.state.isVisible) {
+      this.setState({ isVisible: props.isVisible });
+    }
+  }
+
   requestWaterAction() {
-    this.props.closeModal();
+    this.setState({ isVisible: false });
     Toast.show('Your water is on it\'s way!', {
       duration: Toast.durations.SHORT,
       position: Toast.positions.BOTTOM,
@@ -25,7 +32,7 @@ export default class WaterModal extends BaseModal {
 
   render() {
     return (
-      <BaseModal isVisible={this.props.isVisible} onClose={this.props.onClose}>
+      <BaseModal isVisible={this.state.isVisible} onClose={this.props.onClose}>
         <Text>How many bottles do you need?</Text>
         <NumericInput
           value={this.state.value}

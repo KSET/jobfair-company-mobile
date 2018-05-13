@@ -12,12 +12,19 @@ export default class CoffeeModal extends BaseModal {
     this.state = {
       espresso: 0,
       macchiato: 0,
+      isVisible: this.props.isVisible,
     };
     this.requestCoffeeAction.bind(this);
   }
 
+  componentWillReceiveProps(props) {
+    if (props.isVisible !== this.state.isVisible) {
+      this.setState({ isVisible: props.isVisible });
+    }
+  }
+
   requestCoffeeAction() {
-    this.props.closeModal();
+    this.setState({ isVisible: false });
     Toast.show('Your coffee is on it\'s way!', {
       duration: Toast.durations.SHORT,
       position: Toast.positions.BOTTOM,
@@ -28,7 +35,7 @@ export default class CoffeeModal extends BaseModal {
 
   render() {
     return (
-      <BaseModal isVisible={this.props.isVisible} onClose={this.props.onClose}>
+      <BaseModal isVisible={this.state.isVisible} onClose={this.props.onClose}>
         <Text>Please select coffee you prefer:</Text>
         <List style={{ width: '100%' }}>
           <ListItem
