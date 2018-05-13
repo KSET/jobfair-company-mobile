@@ -19,7 +19,7 @@ const styles = {
     backgroundColor: '#000022',
     'shoutem.ui.Text': {
       color: '#FFFFFF',
-    }
+    },
   },
 
   formContainer: {
@@ -47,7 +47,7 @@ class ChangePasswordScreen extends React.Component {
   }
 
   onPress() {
-    const {oldPassword, password, repeatPassword} = this.state;
+    const { oldPassword, password, repeatPassword } = this.state;
     Keyboard.dismiss();
 
     if (oldPassword === '' || password === '') {
@@ -80,7 +80,7 @@ class ChangePasswordScreen extends React.Component {
 
     return (
       <Screen styleName="paper">
-        <NavigationBar styleName="flexible" title="Set password" hasHistory navigateBack={this.goBack}/>
+        <NavigationBar styleName="flexible" title="Set password" hasHistory navigateBack={this.goBack} />
 
         <View style={styles.formContainer}>
           <TextInput
@@ -90,10 +90,10 @@ class ChangePasswordScreen extends React.Component {
             keyboardAppearance="dark"
             secureTextEntry
             returnKeyType="done"
-            onChangeText={oldPassword => this.setState({oldPassword})}
+            onChangeText={oldPassword => this.setState({ oldPassword })}
           />
 
-          <Divider styleName="line"/>
+          <Divider styleName="line" />
 
           <TextInput
             placeholder="New Password"
@@ -102,10 +102,10 @@ class ChangePasswordScreen extends React.Component {
             keyboardAppearance="dark"
             secureTextEntry
             returnKeyType="done"
-            onChangeText={password => this.setState({password})}
+            onChangeText={password => this.setState({ password })}
           />
 
-          <Divider styleName="line"/>
+          <Divider styleName="line" />
 
           <TextInput
             placeholder="Repeat Password"
@@ -114,11 +114,11 @@ class ChangePasswordScreen extends React.Component {
             keyboardAppearance="dark"
             secureTextEntry
             returnKeyType="done"
-            onChangeText={repeatPassword => this.setState({repeatPassword})}
+            onChangeText={repeatPassword => this.setState({ repeatPassword })}
           />
 
-          <Divider styleName="line"/>
-          <Divider/>
+          <Divider styleName="line" />
+          <Divider />
 
           <Button
             title="Change"
@@ -129,9 +129,9 @@ class ChangePasswordScreen extends React.Component {
             <Text>SUBMIT</Text>
           </Button>
         </View>
-        <Toast ref="toast" position="bottom"/>
+        <Toast ref="toast" position="bottom" />
       </Screen>
-    )
+    );
   }
 }
 

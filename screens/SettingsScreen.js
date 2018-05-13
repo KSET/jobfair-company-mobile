@@ -18,7 +18,7 @@ const styles = {
 
   'shoutem.ui.Screen': {
     marginTop: (Platform.OS === 'android') ? 20 : 0,
-  }
+  },
 };
 
 

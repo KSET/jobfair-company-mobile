@@ -13,8 +13,8 @@ export default class AuthService {
       return new Promise((resolve) => {
         resolve({
           debug: true,
-        })
-      })
+        });
+      });
     }
     return fetch(LOGIN_URL, {
       method: 'POST',

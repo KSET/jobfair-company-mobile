@@ -12,8 +12,8 @@ export default (variables = variable) => {
     },
     'NativeBase.IconNB': {
       color: variables.brandDark,
-    }
-  }
+    },
+  };
   const lightCommon = {
     'NativeBase.Text': {
       color: variables.brandLight,
@@ -23,8 +23,8 @@ export default (variables = variable) => {
     },
     'NativeBase.IconNB': {
       color: variables.brandLight,
-    }
-  }
+    },
+  };
   const primaryCommon = {
     'NativeBase.Text': {
       color: variables.btnPrimaryBg,
@@ -34,8 +34,8 @@ export default (variables = variable) => {
     },
     'NativeBase.IconNB': {
       color: variables.btnPrimaryBg,
-    }
-  }
+    },
+  };
   const successCommon = {
     'NativeBase.Text': {
       color: variables.btnSuccessBg,
@@ -45,8 +45,8 @@ export default (variables = variable) => {
     },
     'NativeBase.IconNB': {
       color: variables.btnSuccessBg,
-    }
-  }
+    },
+  };
   const infoCommon = {
     'NativeBase.Text': {
       color: variables.btnInfoBg,
@@ -56,8 +56,8 @@ export default (variables = variable) => {
     },
     'NativeBase.IconNB': {
       color: variables.btnInfoBg,
-    }
-  }
+    },
+  };
   const warningCommon = {
     'NativeBase.Text': {
       color: variables.btnWarningBg,
@@ -67,8 +67,8 @@ export default (variables = variable) => {
     },
     'NativeBase.IconNB': {
       color: variables.btnWarningBg,
-    }
-  }
+    },
+  };
   const dangerCommon = {
     'NativeBase.Text': {
       color: variables.btnDangerBg,
@@ -78,29 +78,29 @@ export default (variables = variable) => {
     },
     'NativeBase.IconNB': {
       color: variables.btnDangerBg,
-    }
-  }
+    },
+  };
   const buttonTheme = {
     '.disabled': {
       '.transparent': {
         backgroundColor: null,
         'NativeBase.Text': {
-          color: variables.btnDisabledBg
+          color: variables.btnDisabledBg,
         },
         'NativeBase.Icon': {
-          color: variables.btnDisabledBg
+          color: variables.btnDisabledBg,
         },
         'NativeBase.IconNB': {
-          color: variables.btnDisabledBg
-        }
+          color: variables.btnDisabledBg,
+        },
       },
       'NativeBase.Icon': {
-        color: variables.brandLight
+        color: variables.brandLight,
       },
       'NativeBase.IconNB': {
-        color: variables.brandLight
+        color: variables.brandLight,
       },
-      backgroundColor: variables.btnDisabledBg
+      backgroundColor: variables.btnDisabledBg,
     },
     '.bordered': {
       '.dark': {
@@ -183,7 +183,7 @@ export default (variables = variable) => {
 
     '.primary': {
       '.bordered': {
-        ...primaryCommon
+        ...primaryCommon,
       },
       backgroundColor: variables.btnPrimaryBg,
     },
@@ -197,7 +197,7 @@ export default (variables = variable) => {
 
     '.info': {
       '.bordered': {
-        ...infoCommon
+        ...infoCommon,
       },
       backgroundColor: variables.btnInfoBg,
     },
@@ -280,23 +280,23 @@ export default (variables = variable) => {
         },
         'NativeBase.IconNB': {
           color: variables.btnDisabledBg,
-        }
-      }
+        },
+      },
     },
 
     '.small': {
       height: 30,
       'NativeBase.Text': {
-        fontSize: 14
+        fontSize: 14,
       },
       'NativeBase.Icon': {
         fontSize: 20,
-        lineHeight: 17
+        lineHeight: 17,
       },
       'NativeBase.IconNB': {
         fontSize: 20,
-        lineHeight: 17
-      }
+        lineHeight: 17,
+      },
     },
 
     '.large': {
@@ -386,7 +386,7 @@ export default (variables = variable) => {
     elevation: 2,
     shadowColor: platformStyle === 'material' ? variables.brandDark : undefined,
     shadowOffset:
-      platformStyle === 'material' ? {width: 0, height: 2} : undefined,
+      platformStyle === 'material' ? { width: 0, height: 2 } : undefined,
     shadowOpacity: platformStyle === 'material' ? 0.2 : undefined,
     shadowRadius: platformStyle === 'material' ? 1.2 : undefined,
     alignItems: 'center',

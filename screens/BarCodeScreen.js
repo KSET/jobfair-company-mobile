@@ -1,6 +1,6 @@
 import React from 'react';
 import { BarCodeScanner, Permissions } from 'expo';
-import { PropTypes } from 'prop-types'
+import { PropTypes } from 'prop-types';
 import {
   Body,
   Button,
@@ -11,7 +11,7 @@ import {
   Right, Text,
   Title,
 } from 'native-base';
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native';
 
 export default class BarCodeScreen extends React.Component {
   constructor(props) {
@@ -25,8 +25,8 @@ export default class BarCodeScreen extends React.Component {
   }
 
   async componentWillMount() {
-    const {status} = await Permissions.askAsync(Permissions.CAMERA)
-    this.setState({hasCameraPermission: status === 'granted'})
+    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    this.setState({ hasCameraPermission: status === 'granted' });
   }
 
   onBarCodeRead(data) {
@@ -34,36 +34,36 @@ export default class BarCodeScreen extends React.Component {
       return;
     }
     this.hasScanned = true;
-    this.props.navigation.navigate('Review', {data})
+    this.props.navigation.navigate('Review', { data });
   }
 
   goBack() {
-    this.props.navigation.goBack()
+    this.props.navigation.goBack();
   }
 
   render() {
-    const {hasCameraPermission} = this.state
+    const { hasCameraPermission } = this.state;
     return (
       <Container>
         <Header>
           <Left>
             <Button
-              style={{paddingLeft: 10}}
+              style={{ paddingLeft: 10 }}
               transparent title="Back"
               onPress={() => this.goBack()}
             >
               <Icon
                 type="FontAwesome" name="angle-left"
-                style={{color: 'white'}}
+                style={{ color: 'white' }}
               />
             </Button>
           </Left>
           <Body>
-          <Title>Scan QR code</Title>
+            <Title>Scan QR code</Title>
           </Body>
-          <Right/>
+          <Right />
         </Header>
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           {
             hasCameraPermission === null ? (
               <Text>No access to camera</Text>

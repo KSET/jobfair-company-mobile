@@ -7,7 +7,7 @@ export default (variables = variable) => {
       shadowOffset: null,
       shadowOpacity: null,
       shadowRadius: null,
-      elevation: null
+      elevation: null,
     },
     marginVertical: 5,
     marginHorizontal: 2,
@@ -18,10 +18,10 @@ export default (variables = variable) => {
     flexWrap: 'nowrap',
     backgroundColor: variables.cardDefaultBg,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 1.5,
-    elevation: 3
+    elevation: 3,
   };
 
   return cardTheme;

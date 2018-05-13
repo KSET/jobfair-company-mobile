@@ -1,5 +1,5 @@
-import React from 'react'
-import { StyleSheet } from 'react-native'
+import React from 'react';
+import { StyleSheet } from 'react-native';
 import {
   Body,
   Button,
@@ -12,11 +12,11 @@ import {
   Thumbnail,
   Title,
 } from 'native-base';
-import { PropTypes } from 'prop-types'
-import Toast from 'react-native-root-toast'
+import { PropTypes } from 'prop-types';
+import Toast from 'react-native-root-toast';
 
-import WaterModal from './WaterModal'
-import CoffeeModal from './CoffeeModal'
+import WaterModal from './WaterModal';
+import CoffeeModal from './CoffeeModal';
 
 const styles = StyleSheet.create({
   horizontalCenter: {
@@ -32,43 +32,43 @@ const styles = StyleSheet.create({
 
 export default class HomeScreen extends React.Component {
 
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       waterModalVisible: false,
       coffeeModalVisible: false,
     };
-    this.requestWaterAction.bind(this)
-    this.requestCoffeeAction.bind(this)
-    this.scanQRCodeAction.bind(this)
-    this.closeModals.bind(this)
+    this.requestWaterAction.bind(this);
+    this.requestCoffeeAction.bind(this);
+    this.scanQRCodeAction.bind(this);
+    this.closeModals.bind(this);
   }
 
-  componentDidMount () {
-    const message = this.props.navigation.getParam('message')
+  componentDidMount() {
+    const message = this.props.navigation.getParam('message');
     if (message) {
-      this.props.navigation.setParams({message: ''})
+      this.props.navigation.setParams({ message: '' });
       Toast.show(message, {
         duration: Toast.durations.SHORT,
         position: Toast.positions.BOTTOM,
-      })
+      });
     }
   }
 
-  requestWaterAction () {
-    this.setState({waterModalVisible: true})
+  requestWaterAction() {
+    this.setState({ waterModalVisible: true });
   }
 
-  requestCoffeeAction () {
-    this.setState({coffeeModalVisible: true})
+  requestCoffeeAction() {
+    this.setState({ coffeeModalVisible: true });
   }
 
-  scanQRCodeAction () {
-    this.props.navigation.navigate('BarCode')
+  scanQRCodeAction() {
+    this.props.navigation.navigate('BarCode');
   }
 
   closeModals = () => {
-    this.setState({coffeeModalVisible: false, waterModalVisible: false})
+    this.setState({ coffeeModalVisible: false, waterModalVisible: false });
   }
 
   render() {
@@ -76,22 +76,22 @@ export default class HomeScreen extends React.Component {
       <Container>
         <Header>
           <Body>
-          <Title>{this.props.navigation.state.routeName}</Title>
+            <Title>{this.props.navigation.state.routeName}</Title>
           </Body>
-          <Right/>
+          <Right />
         </Header>
         <Grid>
           <Row
             size={3}
-            style={{alignItems: 'center', justifyContent: 'center'}}
+            style={{ alignItems: 'center', justifyContent: 'center' }}
           >
             <Button
-              style={{height: 200, width: 200, alignSelf: 'center'}}
+              style={{ height: 200, width: 200, alignSelf: 'center' }}
               transparent
               onPress={() => this.scanQRCodeAction()} title="Scan QR code"
             >
               <Thumbnail
-                style={{height: 200, width: 200}}
+                style={{ height: 200, width: 200 }}
                 source={require('../../assets/icons/app-qr-icon.png')}
               />
             </Button>

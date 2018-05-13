@@ -1,8 +1,8 @@
-import React from 'react'
-import { StyleSheet } from 'react-native'
-import { PropTypes } from 'prop-types'
-import Modal from 'react-native-modal'
-import { Container } from 'native-base'
+import React from 'react';
+import { StyleSheet } from 'react-native';
+import { PropTypes } from 'prop-types';
+import Modal from 'react-native-modal';
+import { Container } from 'native-base';
 
 const styles = StyleSheet.create({
   modal: {
@@ -19,24 +19,24 @@ const styles = StyleSheet.create({
 
 export default class BaseModal extends React.Component {
 
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       modalVisible: this.props.isVisible,
     };
   }
 
-  componentWillReceiveProps (props) {
+  componentWillReceiveProps(props) {
     if (props.isVisible !== this.state.isVisible) {
-      this.setState({modalVisible: props.isVisible})
+      this.setState({ modalVisible: props.isVisible });
     }
   }
 
   _toggleModal = () =>
-    this.setState({modalVisible: !this.state.modalVisible},
+    this.setState({ modalVisible: !this.state.modalVisible },
     )
 
-  render () {
+  render() {
     return (
       <Modal
         isVisible={this.state.modalVisible}

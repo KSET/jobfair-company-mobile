@@ -244,5 +244,5 @@ export default {
   deviceWidth,
   deviceHeight,
   isIphoneX,
-  inputGroupRoundedBorderRadius: 30
+  inputGroupRoundedBorderRadius: 30,
 };

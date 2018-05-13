@@ -1,13 +1,13 @@
-import React from 'react'
-import { PropTypes } from 'prop-types'
-import NumericInput from 'react-native-numeric-input'
-import { Button, List, ListItem, Text } from 'native-base'
-import BaseModal from '../BaseModal'
+import React from 'react';
+import { PropTypes } from 'prop-types';
+import NumericInput from 'react-native-numeric-input';
+import { Button, List, ListItem, Text } from 'native-base';
+import BaseModal from '../BaseModal';
 
 export default class CoffeeModal extends BaseModal {
 
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       espresso: 0,
       macchiato: 0,
@@ -16,11 +16,11 @@ export default class CoffeeModal extends BaseModal {
 
   canOrder = () => (this.state.espresso + this.state.macchiato) <= 0
 
-  render () {
+  render() {
     return (
       <BaseModal isVisible={this.props.isVisible} onClose={this.props.onClose}>
         <Text>Please select coffee you prefer:</Text>
-        <List style={{width: '100%'}}>
+        <List style={{ width: '100%' }}>
           <ListItem
             style={{
               display: 'flex',
@@ -32,7 +32,7 @@ export default class CoffeeModal extends BaseModal {
             <Text>Espresso</Text>
             <NumericInput
               value={this.state.espresso}
-              onChange={espresso => this.setState({espresso})}
+              onChange={espresso => this.setState({ espresso })}
               iconSize={25}
               totalHeight={40}
               step={1}
@@ -40,7 +40,7 @@ export default class CoffeeModal extends BaseModal {
               maxValue={5}
               valueType="integer"
               textColor="black"
-              iconStyle={{color: 'white'}}
+              iconStyle={{ color: 'white' }}
               rightButtonBackgroundColor="#3F51B5"
               leftButtonBackgroundColor="#3F51B5"
             />
@@ -56,7 +56,7 @@ export default class CoffeeModal extends BaseModal {
             <Text>Macchiato</Text>
             <NumericInput
               value={this.state.macchiato}
-              onChange={macchiato => this.setState({macchiato})}
+              onChange={macchiato => this.setState({ macchiato })}
               iconSize={25}
               totalHeight={40}
               step={1}
@@ -64,7 +64,7 @@ export default class CoffeeModal extends BaseModal {
               maxValue={5}
               valueType="integer"
               textColor="black"
-              iconStyle={{color: 'white'}}
+              iconStyle={{ color: 'white' }}
               rightButtonBackgroundColor="#3F51B5"
               leftButtonBackgroundColor="#3F51B5"
             />

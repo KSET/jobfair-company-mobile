@@ -26,12 +26,12 @@ class App extends React.Component {
 
     const isAuthenticated = await this.auth.isAuthenticated();
     if (isAuthenticated) {
-      this.setState({initialRoute: 'home'});
+      this.setState({ initialRoute: 'home' });
     } else {
-      this.setState({initialRoute: 'login'});
+      this.setState({ initialRoute: 'login' });
     }
 
-    this.setState({fontsAreLoaded: true});
+    this.setState({ fontsAreLoaded: true });
   }
 
   render() {

@@ -1,25 +1,25 @@
-import React from 'react'
-import { PropTypes } from 'prop-types'
-import NumericInput from 'react-native-numeric-input'
-import { Button, Text } from 'native-base'
-import BaseModal from '../BaseModal'
+import React from 'react';
+import { PropTypes } from 'prop-types';
+import NumericInput from 'react-native-numeric-input';
+import { Button, Text } from 'native-base';
+import BaseModal from '../BaseModal';
 
 export default class WaterModal extends BaseModal {
 
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       value: 1,
     };
   }
 
-  render () {
+  render() {
     return (
       <BaseModal isVisible={this.props.isVisible} onClose={this.props.onClose}>
         <Text>How many bottles do you need?</Text>
         <NumericInput
           value={this.state.value}
-          onChange={value => this.setState({value})}
+          onChange={value => this.setState({ value })}
           totalWidth={240}
           totalHeight={50}
           iconSize={25}
@@ -28,7 +28,7 @@ export default class WaterModal extends BaseModal {
           maxValue={9}
           valueType="integer"
           textColor="black"
-          iconStyle={{color: 'white'}}
+          iconStyle={{ color: 'white' }}
           rightButtonBackgroundColor="#3F51B5"
           leftButtonBackgroundColor="#3F51B5"
         />
