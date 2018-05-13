@@ -1,0 +1,47 @@
+version: 2
+jobs:
+  publish-staging:
+    working_directory: ~/app
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: npm-v1-{{ checksum "package-lock.json" }}-{{ arch }}
+
+      - restore_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+
+      - run:
+          name: Install expo globally
+          command: npm i -g exp
+
+      - run:
+          name: Install dependencies
+          command: npm ci
+
+      - save_cache:
+          key: npm-v1-{{ checksum "package-lock.json" }}-{{ arch }}
+          paths:
+            - ~/.npm
+
+      - save_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+          paths:
+            - node_modules
+
+      - run:
+          name: Login to expo
+          command: |
+            exp login -u kset -p $EXP_KSET_PASSWORD
+
+      - run:
+          name: Publish code files to expo server
+          command: |
+            npx run publish staging
+workflows:
+  version: 2
+  node-android-ios:
+    jobs:
+      - publish-staging

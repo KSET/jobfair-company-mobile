@@ -20,7 +20,7 @@
     "react-native-star-rating": "^1.0.9",
     "react-navigation": "^1.5.11",
     "redux": "^4.0.0",
-      "runjs": "^4.3.2"
+    "runjs": "^4.3.2"
   },
   "devDependencies": {
     "babel-eslint": "^6.1.2",
