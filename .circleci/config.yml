@@ -46,6 +46,6 @@ jobs:
             npx run publish staging
 workflows:
   version: 2
-  node-android-ios:
+  exp-react-native:
     jobs:
       - publish-staging
