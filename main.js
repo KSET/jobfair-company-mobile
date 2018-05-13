@@ -1,4 +1,4 @@
-import Expo from 'expo';
+import Expo, { AppLoading } from 'expo';
 import React from 'react';
 import { Root, StyleProvider } from 'native-base';
 import Router from './navigation/Router';
@@ -36,7 +36,7 @@ class App extends React.Component {
 
   render() {
     if (!this.state.fontsAreLoaded) {
-      return <Expo.AppLoading />;
+      return <AppLoading />;
     }
 
     return (
