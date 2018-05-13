@@ -10,7 +10,7 @@ import {
   Left,
   Right, Text,
   Title,
-} from 'native-base'
+} from 'native-base';
 import { StyleSheet, View } from 'react-native'
 
 export default class BarCodeScreen extends React.Component {
@@ -34,7 +34,7 @@ export default class BarCodeScreen extends React.Component {
       return;
     }
     this.hasScanned = true;
-    this.props.navigation.navigate('Review', data)
+    this.props.navigation.navigate('Review', {data})
   }
 
   goBack() {
@@ -71,7 +71,58 @@ export default class BarCodeScreen extends React.Component {
               <BarCodeScanner
                 onBarCodeRead={this.onBarCodeRead}
                 style={StyleSheet.absoluteFill}
-              />
+              >
+                <Container style={{
+                  width: 200,
+                  marginVertical: 150,
+                  alignSelf: 'center'
+                }}>
+                  <Container style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: 20,
+                    height: 20,
+                    borderTopWidth: 5,
+                    borderTopColor: 'white',
+                    borderLeftColor: 'white',
+                    borderLeftWidth: 5
+                  }}/>
+                  <Container style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    width: 20,
+                    height: 20,
+                    borderBottomWidth: 5,
+                    borderBottomColor: 'white',
+                    borderLeftColor: 'white',
+                    borderLeftWidth: 5
+                  }}/>
+                  <Container style={{
+                    position: 'absolute',
+                    top: 0,
+                    right: 0,
+                    width: 20,
+                    height: 20,
+                    borderTopWidth: 5,
+                    borderTopColor: 'white',
+                    borderRightColor: 'white',
+                    borderRightWidth: 5
+                  }}/>
+                  <Container style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    right: 0,
+                    width: 20,
+                    height: 20,
+                    borderBottomWidth: 5,
+                    borderBottomColor: 'white',
+                    borderRightColor: 'white',
+                    borderRightWidth: 5
+                  }}/>
+                </Container>
+              </BarCodeScanner>
             )
           }
         </View>
