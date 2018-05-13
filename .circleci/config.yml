@@ -15,7 +15,7 @@ jobs:
 
       - run:
           name: Install expo globally
-          command: npm i -g exp
+          command: sudo npm i -g exp
 
       - run:
           name: Install dependencies
