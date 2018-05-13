@@ -24,12 +24,17 @@ export default class BaseModal extends React.Component {
     this.state = {
       modalVisible: this.props.isVisible,
     };
+    this.closeModal.bind(this);
   }
 
   componentWillReceiveProps(props) {
     if (props.isVisible !== this.state.isVisible) {
       this.setState({ modalVisible: props.isVisible });
     }
+  }
+
+  closeModal() {
+    this.setState({ modalVisible: false });
   }
 
   _toggleModal = () =>

@@ -2,6 +2,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import NumericInput from 'react-native-numeric-input';
 import { Button, Text } from 'native-base';
+import Toast from 'react-native-root-toast';
 import BaseModal from '../BaseModal';
 
 export default class WaterModal extends BaseModal {
@@ -11,6 +12,15 @@ export default class WaterModal extends BaseModal {
     this.state = {
       value: 1,
     };
+    this.requestWaterAction.bind(this);
+  }
+
+  requestWaterAction() {
+    this.props.closeModal();
+    Toast.show('Your water is on it\'s way!', {
+      duration: Toast.durations.SHORT,
+      position: Toast.positions.BOTTOM,
+    });
   }
 
   render() {
@@ -34,7 +44,7 @@ export default class WaterModal extends BaseModal {
         />
         <Button
           title="Request water"
-          onPress={() => console.log('requesting water')} block
+          onPress={() => this.requestWaterAction()} block
         >
           <Text>Request water</Text>
         </Button>

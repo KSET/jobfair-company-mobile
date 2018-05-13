@@ -2,6 +2,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import NumericInput from 'react-native-numeric-input';
 import { Button, List, ListItem, Text } from 'native-base';
+import Toast from 'react-native-root-toast';
 import BaseModal from '../BaseModal';
 
 export default class CoffeeModal extends BaseModal {
@@ -12,6 +13,15 @@ export default class CoffeeModal extends BaseModal {
       espresso: 0,
       macchiato: 0,
     };
+    this.requestCoffeeAction.bind(this);
+  }
+
+  requestCoffeeAction() {
+    this.props.closeModal();
+    Toast.show('Your coffee is on it\'s way!', {
+      duration: Toast.durations.SHORT,
+      position: Toast.positions.BOTTOM,
+    });
   }
 
   canOrder = () => (this.state.espresso + this.state.macchiato) <= 0
@@ -73,7 +83,7 @@ export default class CoffeeModal extends BaseModal {
         <Button
           disabled={this.canOrder()}
           title="Request coffee"
-          onPress={() => console.log('requesting coffee')} block
+          onPress={() => this.requestCoffeeAction()} block
         >
           <Text>Request coffee</Text>
         </Button>

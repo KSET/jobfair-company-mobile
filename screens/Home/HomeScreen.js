@@ -62,6 +62,13 @@ export default class HomeScreen extends React.Component {
     this.setState({ coffeeModalVisible: true });
   }
 
+  requestAssistanceAction() {
+    Toast.show('Help is on their way!', {
+      duration: Toast.durations.SHORT,
+      position: Toast.positions.BOTTOM,
+    });
+  }
+
   scanQRCodeAction() {
     this.props.navigation.navigate('BarCode');
   }
@@ -138,7 +145,7 @@ export default class HomeScreen extends React.Component {
               <Button
                 style={styles.horizontalCenter, styles.smallIcons}
                 transparent
-                onPress={() => this.requestWaterAction()}
+                onPress={() => this.requestAssistanceAction()}
                 title="Request assistance"
               >
                 <Thumbnail
