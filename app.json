@@ -49,7 +49,7 @@
         {
           "file": "@mpetrunic/sentry-expo/upload-sourcemaps",
           "config": {
-            "organization": "SS FER",
+            "organization": "ss-fer",
             "project": "job-fair-company"
           }
         }

@@ -1,4 +1,8 @@
-import { JOBFAIR_URL } from '../env';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const JOBFAIR_URL = process.env.JOBFAIR_URL;
 
 const API_URL = `${JOBFAIR_URL}/api/v1`;
 export const LOGIN_URL = `${API_URL}/sessions`;
