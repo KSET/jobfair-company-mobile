@@ -23,7 +23,7 @@
     "android": {
       "package": "org.kset.jobfairCompany",
       "permissions": ["CAMERA"],
-      "versionCode": 2,
+      "versionCode": 10,
       "splash": {
         "backgroundColor": "#000022",
         "resizeMode": "cover",
@@ -43,6 +43,17 @@
         "resizeMode": "cover",
         "image": "./assets/splash.xxxhdpi.png"
       }
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "@mpetrunic/sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "SS FER",
+            "project": "job-fair-company"
+          }
+        }
+      ]
     }
   }
 }
