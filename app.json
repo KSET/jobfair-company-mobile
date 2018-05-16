@@ -8,7 +8,7 @@
     "version": "2.0.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
-    "icon": "./assets/icons/app.png",
+    "icon": "./assets/JobFair-square-icon.png",
     "androidStatusBarColor": "#191938",
     "androidStatusBar": {
       "barStyle": "light-content",
@@ -27,8 +27,8 @@
       "splash": {
         "backgroundColor": "#000022",
         "resizeMode": "cover",
-        "ldpi": "./assets/splash.ldpi.png",
-        "mdpi": "./assets/splash.mdpi.png",
+        "ldpi": "./assets/splash.hdpi.png",
+        "mdpi": "./assets/splash.hdpi.png",
         "hdpi": "./assets/splash.hdpi.png",
         "xhdpi": "./assets/splash.xhdpi.png",
         "xxhdpi": "./assets/splash.xxhdpi.png",
@@ -41,7 +41,7 @@
       "splash": {
         "backgroundColor": "#000022",
         "resizeMode": "cover",
-        "image": "./assets/splash.xxxhdpi.png"
+        "image": "./assets/splash.ios.png"
       }
     },
     "hooks": {
