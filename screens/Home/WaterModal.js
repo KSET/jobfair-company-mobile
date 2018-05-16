@@ -42,6 +42,7 @@ export default class WaterModal extends BaseModal {
           iconSize={25}
           step={1}
           minValue={1}
+          editable={false}
           maxValue={9}
           valueType="integer"
           textColor="black"

@@ -51,8 +51,9 @@ export default class CoffeeModal extends BaseModal {
               value={this.state.espresso}
               onChange={espresso => this.setState({ espresso })}
               iconSize={25}
-              totalHeight={40}
+              totalHeight={50}
               step={1}
+              editable={false}
               minValue={0}
               maxValue={5}
               valueType="integer"
@@ -75,10 +76,11 @@ export default class CoffeeModal extends BaseModal {
               value={this.state.macchiato}
               onChange={macchiato => this.setState({ macchiato })}
               iconSize={25}
-              totalHeight={40}
+              totalHeight={50}
               step={1}
               minValue={0}
               maxValue={5}
+              editable={false}
               valueType="integer"
               textColor="black"
               iconStyle={{ color: 'white' }}

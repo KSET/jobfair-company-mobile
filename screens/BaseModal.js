@@ -2,18 +2,14 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { PropTypes } from 'prop-types';
 import Modal from 'react-native-modal';
-import { Container } from 'native-base';
+import { Container, View } from 'native-base';
 
 const styles = StyleSheet.create({
   modal: {
     flex: 1,
-    justifyContent: 'space-between',
+    flexDirection: 'column',
+    justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 30,
-    marginVertical: 100,
-    padding: 25,
-    backgroundColor: 'white',
-    borderRadius: 10,
   },
 });
 
@@ -38,20 +34,31 @@ export default class BaseModal extends React.Component {
   }
 
   render() {
-    return (
-      <Modal
-        isVisible={this.state.modalVisible}
-        onSwipe={() => this.closeModal()}
-        onBackdropPress={() => this.closeModal()}
-        onBackButtonPress={() => this.closeModal()}
-        onModalHide={this.props.onClose}
-        swipeDirection="up"
-      >
-        <Container style={styles.modal}>
+    return (<Modal
+      isVisible={this.state.modalVisible}
+      onSwipe={() => this.closeModal()}
+      onBackdropPress={() => this.closeModal()}
+      onBackButtonPress={() => this.closeModal()}
+      onModalHide={this.props.onClose}
+      avoidKeyboard
+      swipeDirection="up"
+    >
+      <View style={styles.modal}>
+        <View
+          style={{
+            padding: 25,
+            backgroundColor: 'white',
+            borderRadius: 10,
+            height: '70%',
+            width: '80%',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
           {this.props.children}
-        </Container>
-      </Modal>
-    );
+        </View>
+      </View>
+    </Modal>);
   }
 }
 
