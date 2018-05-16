@@ -42,6 +42,8 @@ jobs:
 
       - run: cp .env.ci .env
       - run: echo "SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}" >> .env
+      - run: echo "JOBFAIR_URL=${JOBFAIR_STAGING_URL}" >> .env
+      - run: echo "SLACK_HOOK_URL=${SLACK_HOOK_URL}" >> .env
       - run:
           name: Publish code files to expo server
           command: |
