@@ -1,5 +1,6 @@
-import Expo, { AppLoading } from 'expo';
+import Expo, { AppLoading, Asset } from 'expo';
 import React from 'react';
+import Image from 'react-native';
 import { Root, StyleProvider } from 'native-base';
 import Sentry from '@mpetrunic/sentry-expo';
 import Router from './navigation/Router';
@@ -7,9 +8,18 @@ import AuthService from './services/AuthService';
 import getTheme from './native-base-theme/components';
 
 // Remove this once Sentry is correctly setup.
-Sentry.enableInExpoDevelopment = true;
+Sentry.enableInExpoDevelopment = false;
 
 Sentry.config('https://290322b7e0554cce9b783cad053e633e@sentry.io/1207215').install();
+
+function cacheImages(images) {
+  return images.map((image) => {
+    if (typeof image === 'string') {
+      return Image.prefetch(image);
+    }
+    return Asset.fromModule(image).downloadAsync();
+  });
+}
 
 class App extends React.Component {
   constructor(props) {
@@ -33,6 +43,15 @@ class App extends React.Component {
   }
 
   async loadAssets() {
+    const imageAssets = cacheImages([
+      require('./assets/jobfair.png'),
+      require('./assets/jobfair-negative.png'),
+      require('./assets/icons/app-water-icon.png'),
+      require('./assets/icons/app-qr-icon.png'),
+      require('./assets/icons/app-assistance-icon.png'),
+      require('./assets/icons/app-coffee-icon.png'),
+    ]);
+    await Promise.all([...imageAssets]);
     await Expo.Font.loadAsync({
       Roboto: require('native-base/Fonts/Roboto.ttf'),
       Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
