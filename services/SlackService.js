@@ -1,8 +1,4 @@
-import dotenv from 'dotenv';
-
-dotenv.config();
-
-const SLACK_HOOK_URL = process.env.SLACK_HOOK_URL;
+import { SLACK_HOOK_URL } from 'react-native-dotenv';
 
 export default class SlackService {
   requestWater(company) {

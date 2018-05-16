@@ -1,17 +1,15 @@
 /* eslint-disable no-undef */
 import { AsyncStorage } from 'react-native';
-import dotenv from 'dotenv';
+import { DEBUG } from 'react-native-dotenv';
 
 import { LOGIN_URL, USERS_URL } from './routes';
-
-dotenv.config();
 
 const AUTH = '@jfCardSharing:auth';
 
 export default class AuthService {
 
   async login(email, password) {
-    if (process.env.DEBUG) {
+    if (DEBUG) {
       AsyncStorage.setItem(AUTH, JSON.stringify('debug'));
       return new Promise((resolve) => {
         resolve({
