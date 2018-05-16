@@ -40,7 +40,8 @@ jobs:
           command: |
             exp login -u kset -p $EXP_KSET_PASSWORD
 
-      - run: cp env.sample.js env.js
+      - run: cp .env.ci .env
+      - run: echo "SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}" >> .env
       - run:
           name: Publish code files to expo server
           command: |
