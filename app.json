@@ -22,7 +22,7 @@
     },
     "android": {
       "package": "org.kset.jobfairCompany",
-      "permissions": [],
+      "permissions": ["CAMERA"],
       "versionCode": 10,
       "splash": {
         "backgroundColor": "#000022",
@@ -42,6 +42,9 @@
         "backgroundColor": "#000022",
         "resizeMode": "cover",
         "image": "./assets/splash.ios.png"
+      },
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to scan QR codes on event tickets."
       }
     },
     "hooks": {
