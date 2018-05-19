@@ -104,7 +104,7 @@ workflows:
           filters:
             branches:
               only:
-                - staging
+                - master
       - publish-production
           filters:
             branches:
