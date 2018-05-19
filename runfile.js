@@ -29,7 +29,7 @@ function ios(env) {
   if (!channel) {
     channel = 'staging';
   }
-  run(`exp build:ios --release-channel ${channel} --no-publish`);
+  run(`exp build:ios --release-channel ${channel} --no-publish -c `);
 }
 
 help(dev, 'Starts expo server for hosting application code');

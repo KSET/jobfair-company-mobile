@@ -1,11 +1,12 @@
 import Expo, { AppLoading, Asset } from 'expo';
 import React from 'react';
 import Image from 'react-native';
-import { Root, StyleProvider } from 'native-base';
+import { Drawer, Root, StyleProvider } from 'native-base';
 import Sentry from '@mpetrunic/sentry-expo';
 import { ApolloProvider } from 'react-apollo';
 import Router from './navigation/Router';
 import getTheme from './native-base-theme/components';
+import Sidebar from './screens/Home/SideBar';
 import JobFairApiClient from './services/JobFairApiClient';
 
 // Remove this once Sentry is correctly setup.
