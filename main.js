@@ -3,9 +3,11 @@ import React from 'react';
 import Image from 'react-native';
 import { Root, StyleProvider } from 'native-base';
 import Sentry from '@mpetrunic/sentry-expo';
+import { ApolloProvider } from 'react-apollo';
 import Router from './navigation/Router';
 import AuthService from './services/AuthService';
 import getTheme from './native-base-theme/components';
+import JobFairApiClient from './services/JobFairApiClient';
 
 // Remove this once Sentry is correctly setup.
 Sentry.enableInExpoDevelopment = false;
@@ -24,8 +26,6 @@ function cacheImages(images) {
 class App extends React.Component {
   constructor(props) {
     super(props);
-
-    this.auth = new AuthService();
     this.state = {
       isReady: false,
       initialRoute: null,
@@ -33,12 +33,6 @@ class App extends React.Component {
   }
 
   async initApp() {
-    const isAuthenticated = await this.auth.isAuthenticated();
-    if (isAuthenticated) {
-      this.setState({ initialRoute: 'home' });
-    } else {
-      this.setState({ initialRoute: 'login' });
-    }
     this.setState({ isReady: true });
   }
 
@@ -71,7 +65,9 @@ class App extends React.Component {
     return (
       <Root>
         <StyleProvider style={getTheme()}>
-          <Router />
+          <ApolloProvider client={JobFairApiClient}>
+            <Router />
+          </ApolloProvider>
         </StyleProvider>
       </Root>
     );
