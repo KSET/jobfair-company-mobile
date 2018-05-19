@@ -1,7 +1,11 @@
 const { run, help } = require('runjs');
 
-function dev() {
-  run('exp start --lan --dev --no-minify');
+function dev(clearCache = false) {
+  if(clearCache) {
+    run('exp start --lan --dev --no-minify --clear');
+  } else {
+    run('exp start --lan --dev --no-minify');
+  }
 }
 
 function publish(env) {
