@@ -17,6 +17,7 @@ import Toast from 'react-native-root-toast';
 import WaterModal from './WaterModal';
 import CoffeeModal from './CoffeeModal';
 import Sidebar from './SideBar';
+import HelpModal from './HelpModal';
 
 const styles = StyleSheet.create({
   horizontalCenter: {
@@ -37,9 +38,11 @@ export default class HomeScreen extends React.Component {
     this.state = {
       waterModalVisible: false,
       coffeeModalVisible: false,
+      helpModalVisible: false,
     };
     this.requestWaterAction.bind(this);
     this.requestCoffeeAction.bind(this);
+    this.requestAssistanceAction.bind(this);
     this.scanQRCodeAction.bind(this);
     this.closeModals.bind(this);
   }
@@ -64,10 +67,7 @@ export default class HomeScreen extends React.Component {
   }
 
   requestAssistanceAction() {
-    Toast.show('Help is on their way!', {
-      duration: Toast.durations.SHORT,
-      position: Toast.positions.BOTTOM,
-    });
+    this.setState({ helpModalVisible: true });
   }
 
   scanQRCodeAction() {
@@ -75,7 +75,7 @@ export default class HomeScreen extends React.Component {
   }
 
   closeModals = () => {
-    this.setState({ coffeeModalVisible: false, waterModalVisible: false });
+    this.setState({ coffeeModalVisible: false, waterModalVisible: false, helpModalVisible: false });
   }
 
   closeDrawer = () => {
@@ -188,6 +188,10 @@ export default class HomeScreen extends React.Component {
           />
           <CoffeeModal
             isVisible={this.state.coffeeModalVisible}
+            onClose={this.closeModals}
+          />
+          <HelpModal
+            isVisible={this.state.helpModalVisible}
             onClose={this.closeModals}
           />
         </Container>
