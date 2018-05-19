@@ -5,7 +5,6 @@ import { Root, StyleProvider } from 'native-base';
 import Sentry from '@mpetrunic/sentry-expo';
 import { ApolloProvider } from 'react-apollo';
 import Router from './navigation/Router';
-import AuthService from './services/AuthService';
 import getTheme from './native-base-theme/components';
 import JobFairApiClient from './services/JobFairApiClient';
 
