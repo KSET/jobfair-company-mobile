@@ -23,7 +23,7 @@ function android(env) {
 function ios(env) {
   let channel = env;
   if (!channel) {
-    channel = 'staging';
+    channel = 'default';
   }
   run(`exp build:ios --release-channel ${channel} --no-publish`);
 }
