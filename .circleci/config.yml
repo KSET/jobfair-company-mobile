@@ -100,12 +100,12 @@ workflows:
   version: 2
   exp-react-native:
     jobs:
-      - publish-staging
+      - publish-staging:
           filters:
             branches:
               only:
                 - master
-      - publish-production
+      - publish-production:
           filters:
             branches:
               only:
