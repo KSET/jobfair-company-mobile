@@ -6,10 +6,13 @@ const LoginMutation = gql`
       user {
         id,
         email,
-        first_name,
-        last_name,
-        name,
-        slack_mention
+        companies {
+          id,
+          booth {
+            id,
+            location
+          }
+        }
       }
       token
     }

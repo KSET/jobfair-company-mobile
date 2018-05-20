@@ -8,7 +8,6 @@
   "dependencies": {
     "@expo/vector-icons": "^6.3.1",
     "@mpetrunic/sentry-expo": "^1.10.0",
-    "apollo-boost": "^0.1.6",
     "apollo-cache-inmemory": "^1.2.1",
     "apollo-client": "^2.3.1",
     "apollo-link": "^1.2.2",
