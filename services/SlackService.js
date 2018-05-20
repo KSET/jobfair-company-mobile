@@ -3,8 +3,8 @@ import { SLACK_HOOK_URL } from 'react-native-dotenv';
 import JobFairService from './JobFairService';
 
 const WATER_REQUESTED_TIMESTAMP = '@jf-company:water-requested-timestamp';
-const COFFEE_REQUESTED_TIMESTAMP = '@jf-company:water-requested-timestamp';
-const HELP_REQUESTED_TIMESTAMP = '@jf-company:water-requested-timestamp';
+const COFFEE_REQUESTED_TIMESTAMP = '@jf-company:coffee-requested-timestamp';
+const HELP_REQUESTED_TIMESTAMP = '@jf-company:help-requested-timestamp';
 
 export default class SlackService {
 
@@ -30,7 +30,7 @@ export default class SlackService {
 
   async requestCoffee(amounts) {
     const company = await JobFairService.getUserCompany();
-    if (SlackService.checkSpam(COFFEE_REQUESTED_TIMESTAMP)) {
+    if (await SlackService.checkSpam(COFFEE_REQUESTED_TIMESTAMP)) {
       return Promise.reject('You can only request coffee once every 30 minutes!');
     }
     if (!company) {
@@ -49,11 +49,18 @@ export default class SlackService {
     return true;
   }
 
-  requestAssistance(company) {
-    if (SlackService.checkSpam(HELP_REQUESTED_TIMESTAMP)) return false;
+  async requestAssistance() {
+    const company = await JobFairService.getUserCompany();
+    if (await SlackService.checkSpam(HELP_REQUESTED_TIMESTAMP)) {
+      return Promise.reject('You can only request assistance once every 10 minutes!');
+    }
+    if (!company) {
+      return Promise.reject('You don\'t have attached company');
+    }
     SlackService.sendRequest(
-      company.name, `${company.contact}, ${company.name} želi pomoć?! na štandu ${company.location}!`,
+      company.name, `@mpetrunic, ${company.name} želi pomoć?! na štandu ${company.booth.location}!`,
     );
+    AsyncStorage.setItem(HELP_REQUESTED_TIMESTAMP, Date.now().toString());
     return true;
   }
 
@@ -81,7 +88,9 @@ export default class SlackService {
   }
 
   static async checkSpam(type) {
-    return parseInt(await AsyncStorage.getItem(type), 10) + this.getTimeout(type) > Date.now();
+    const lastCall = await AsyncStorage.getItem(type);
+    if (!lastCall) return false;
+    return parseInt(lastCall, 10) + this.getTimeout(type) > Date.now();
   }
 
 }

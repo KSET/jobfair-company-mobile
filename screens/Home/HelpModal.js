@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import { Button, Text } from 'native-base';
 import Toast from 'react-native-root-toast';
 import BaseModal from '../BaseModal';
+import SlackService from '../../services/SlackService';
 
 export default class WaterModal extends BaseModal {
 
@@ -12,6 +13,7 @@ export default class WaterModal extends BaseModal {
       value: 1,
       isVisible: this.props.isVisible,
     };
+    this.slack = new SlackService();
     this.requestHelpAction.bind(this);
   }
 
@@ -22,10 +24,18 @@ export default class WaterModal extends BaseModal {
   }
 
   requestHelpAction() {
-    this.setState({ isVisible: false });
-    Toast.show('Your help is on it\'s way!', {
-      duration: Toast.durations.SHORT,
-      position: Toast.positions.BOTTOM,
+    this.slack.requestAssistance().then(() => {
+      this.setState({ isVisible: false });
+      Toast.show('Your help is on it\'s way!', {
+        duration: Toast.durations.SHORT,
+        position: Toast.positions.BOTTOM,
+      });
+    }).catch((err) => {
+      this.setState({ isVisible: false });
+      Toast.show(err, {
+        duration: Toast.durations.SHORT,
+        position: Toast.positions.BOTTOM,
+      });
     });
   }
 
