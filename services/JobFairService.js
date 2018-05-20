@@ -27,7 +27,6 @@ export default class JobFairService {
 
   static async storeManagers(company) {
     const id = company.id;
-    console.log(`SToring managers for company: ${id}`);
     return await JobFairApiClient.query({
       query: CompanyManagersQuery,
       variables: {
@@ -35,14 +34,17 @@ export default class JobFairService {
       },
     }).then((result) => {
       const managers = result.data.company.managers;
-      console.log('managers: ', managers);
+      console.log('Managers:', managers);
       if (!managers) return;
-      AsyncStorage.setItem(MANAGERS_KEY, JSON.stringify(managers));
+      if (Array.isArray(managers)) {
+        const managerList = managers.map(manager => `@${manager.slack_mention}`).join(', ');
+        AsyncStorage.setItem(MANAGERS_KEY, managerList);
+      }
     }).catch(err => console.log(err));
   }
 
   static async getManagers() {
-    return await JSON.parse(AsyncStorage.getItem(MANAGERS_KEY));
+    return await AsyncStorage.getItem(MANAGERS_KEY);
   }
 
   static async getUserCompany() {
