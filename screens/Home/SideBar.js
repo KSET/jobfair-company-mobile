@@ -8,8 +8,22 @@ import {
   Thumbnail,
 } from 'native-base';
 import { Text } from 'react-native';
+import { PropTypes } from 'prop-types';
+import AuthService from '../../services/AuthService';
 
 export default class Sidebar extends Component {
+
+  constructor(props) {
+    super(props);
+    this.logoutAction.bind(this);
+  }
+
+  logoutAction() {
+    AuthService.logout().then(() => {
+      this.props.navigation.navigate('Login');
+    });
+  }
+
   render() {
     return (
       <Container style={{ backgroundColor: 'white' }}>
@@ -21,7 +35,7 @@ export default class Sidebar extends Component {
           <List>
             <ListItem
               button
-              onPress={() => console.log('logout')}
+              onPress={() => this.logoutAction()}
             >
               <Icon
                 type="FontAwesome" name="sign-out"
@@ -34,3 +48,9 @@ export default class Sidebar extends Component {
     );
   }
 }
+
+Sidebar.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};

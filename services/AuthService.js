@@ -40,6 +40,7 @@ export default class AuthService {
 
   static async isAuthenticated() {
     const auth = await this.getAuthToken();
+    console.log('Auth token: ', auth);
     return auth !== null;
   }
 
@@ -54,13 +55,8 @@ export default class AuthService {
     };
   }
 
-  static redirectToLogin() {
-    this.props.navigation.navigate('Login');
-  }
-
-  static logout() {
-    AsyncStorage.removeItem(AUTH_KEY);
-    AuthService.redirectToLogin();
+  static async logout() {
+    await Expo.SecureStore.deleteItemAsync(AUTH_KEY);
   }
 
   static async changePassword(oldPassword, newPassword) {
