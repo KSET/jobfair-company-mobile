@@ -45,7 +45,7 @@ export default class AuthService {
 
   static async logout() {
     await Expo.SecureStore.deleteItemAsync(AUTH_KEY);
-    await JobFairService.removeUser();
+    JobFairService.removeUser();
   }
 
 }
