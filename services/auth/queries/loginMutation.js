@@ -8,6 +8,7 @@ const LoginMutation = gql`
         email,
         companies {
           id,
+          name,
           booth {
             id,
             location

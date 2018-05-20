@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native';
 import { SLACK_HOOK_URL } from 'react-native-dotenv';
+import JobFairService from './JobFairService';
 
 const WATER_REQUESTED_TIMESTAMP = '@jf-company:water-requested-timestamp';
 const COFFEE_REQUESTED_TIMESTAMP = '@jf-company:water-requested-timestamp';
@@ -13,14 +14,25 @@ const timeouts = {
 
 export default class SlackService {
 
-  async requestWater(company, amount) {
-    if (await SlackService.checkSpam(WATER_REQUESTED_TIMESTAMP)) return false;
-    let message = `${company.contact}, ${company.name} želi ${amount} bočica vode na štandu ${company.location}!`;
+  constructor() {
+    this.company = JobFairService.getUserCompany();
+  }
+
+  async requestWater(amount) {
+    this.company = await this.company;
+    console.log('Company: ', this.company);
+    if (await SlackService.checkSpam(WATER_REQUESTED_TIMESTAMP)) {
+      return Promise.reject('You can only request water once every 30 minutes!');
+    }
+    if (!this.company) {
+      return Promise.reject('You don\'t have attached company');
+    }
+    let message = `@mpetrunic, ${this.company.name} želi ${amount} bočice vode na štandu ${this.company.booth.location}!`;
     if (amount < 2) {
-      message = `${company.contact}, ${company.name} želi ${amount} bočicu vode na štandu ${company.location}!`;
+      message = `@mpetrunic, ${this.company.name} želi ${amount} bočicu vode na štandu ${this.company.booth.location}!`;
     }
     await SlackService.sendRequest(
-      company.name,
+      this.company.name,
       message,
     );
     AsyncStorage.setItem(WATER_REQUESTED_TIMESTAMP, Date.now().toString());

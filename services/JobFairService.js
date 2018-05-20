@@ -9,7 +9,7 @@ export default class JobFairService {
   }
 
   static async getUser() {
-    return await AsyncStorage.getItem(USER_KEY);
+    return JSON.parse(await AsyncStorage.getItem(USER_KEY));
   }
 
   static async removeUser() {
