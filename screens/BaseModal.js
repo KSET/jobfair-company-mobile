@@ -49,7 +49,7 @@ export default class BaseModal extends React.Component {
             padding: 25,
             backgroundColor: 'white',
             borderRadius: 10,
-            height: '70%',
+            height: this.props.height,
             width: '80%',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -69,8 +69,10 @@ BaseModal.propTypes = {
   ]),
   isVisible: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  height: PropTypes.string,
 };
 
 BaseModal.defaultProps = {
   children: [],
+  height: '70%',
 };

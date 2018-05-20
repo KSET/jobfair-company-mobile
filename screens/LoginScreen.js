@@ -3,29 +3,29 @@ import { Keyboard } from 'react-native';
 import * as _ from 'lodash';
 import { PropTypes } from 'prop-types';
 import {
-  Container,
-  Header,
-  Title,
-  Content,
-  Right,
   Body,
-  Text,
+  Button,
+  Container,
+  Content,
   Form,
+  Header,
   Input,
   Item,
-  Label, Button, Thumbnail,
-} from 'native-base'
+  Label,
+  Right,
+  Text,
+  Thumbnail,
+  Title,
+} from 'native-base';
 import Toast from 'react-native-root-toast';
 
 import AuthService from '../services/AuthService';
-
 
 class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
     this.performLogin = this.performLogin.bind(this);
     this.redirectHome = this.redirectHome.bind(this);
-    this.auth = new AuthService();
     this.state = {
       email: '',
       password: '',
@@ -33,12 +33,15 @@ class LoginScreen extends React.Component {
   }
 
 
-  componentWillUnmount() {
-    // Toast.toastInstance = null;
+  async componentWillMount() {
+    const isAuthenticated = await AuthService.isAuthenticated();
+    if (isAuthenticated) {
+      this.props.navigation.navigate('Home');
+    }
   }
 
 
-  performLogin() {
+  async performLogin() {
     const { email, password } = this.state;
 
     // hide keyboard so alerts are visible
@@ -51,16 +54,27 @@ class LoginScreen extends React.Component {
       });
       return;
     }
-    this.auth.login(email, password)
-      .then(() => {
-        this.redirectHome();
-      })
-      .catch(() => {
-        Toast.show('Username or password is incorrect!', {
+    AuthService.login(email, password)
+      .then(
+        (result) => {
+          if (!result) {
+            Toast.show('Username or password is incorrect!', {
+              duration: Toast.durations.LONG,
+              position: Toast.positions.BOTTOM,
+            });
+          } else {
+            this.redirectHome();
+          }
+        },
+    ).catch(
+      (error) => {
+        console.log(error);
+        Toast.show('Internal error!', {
           duration: Toast.durations.LONG,
           position: Toast.positions.BOTTOM,
         });
-      }).done();
+      },
+    );
   }
 
   redirectHome() {

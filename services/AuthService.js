@@ -1,15 +1,20 @@
 /* eslint-disable no-undef */
 import { AsyncStorage } from 'react-native';
+import Expo from 'expo';
 import { DEBUG } from 'react-native-dotenv';
 
-import { LOGIN_URL, USERS_URL } from './routes';
+import { USERS_URL } from './routes';
+import JobFairApiClient from './JobFairApiClient';
+import LoginMutation from './auth/queries/loginMutation';
 
-const AUTH = '@jfCardSharing:auth';
+const AUTH_KEY = 'jfCardSharing-token';
+const USER_KEY = 'jfCardSharing-user';
 
 export default class AuthService {
 
-  async login(email, password) {
-    if (DEBUG) {
+  static async login(email, password) {
+    if (DEBUG === 'true') {
+      console.log('fake authentication!');
       AsyncStorage.setItem(AUTH, JSON.stringify('debug'));
       return new Promise((resolve) => {
         resolve({
@@ -17,46 +22,35 @@ export default class AuthService {
         });
       });
     }
-    return fetch(LOGIN_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+    return await JobFairApiClient.mutate({
+      mutation: LoginMutation,
+      variables: {
         email,
         password,
-      }),
-    })
-      .then(response => response.json())
-      .then((response) => {
-        if ('user' in response) {
-          try {
-            AsyncStorage.setItem(AUTH, JSON.stringify(response.user));
-          } catch (error) {
-            console.log(error);
-          }
-        } else {
-          return Promise.reject('Incorrect username or password');
-        }
-        return response;
-      });
+      },
+    }).then((result) => {
+      const login = result.data.login;
+      console.log('login: ', login);
+      if (!login) return false;
+      Expo.SecureStore.setItemAsync(AUTH_KEY, login.token);
+      AsyncStorage.setItem(USER_KEY, JSON.stringify(login.user));
+      return true;
+    });
   }
 
-  async isAuthenticated() {
-    const auth = await this.getAuthDetails();
+  static async isAuthenticated() {
+    const auth = await this.getAuthToken();
     return auth !== null;
   }
 
-  async getAuthDetails() {
-    const auth = await AsyncStorage.getItem(AUTH);
-    return JSON.parse(auth);
+  static async getAuthToken() {
+    return await Expo.SecureStore.getItemAsync(AUTH_KEY);
   }
 
-  async getAuthHeader() {
-    const auth = await this.getAuthDetails();
+  static async getAuthHeader() {
+    const token = await this.getAuthToken();
     return {
-      'X-User-Token': auth.auth_token,
-      'X-User-Email': auth.email,
+      Authorization: `Bearer ${token}`,
     };
   }
 
@@ -65,11 +59,11 @@ export default class AuthService {
   }
 
   static logout() {
-    AsyncStorage.removeItem(AUTH);
+    AsyncStorage.removeItem(AUTH_KEY);
     AuthService.redirectToLogin();
   }
 
-  async changePassword(oldPassword, newPassword) {
+  static async changePassword(oldPassword, newPassword) {
     const headers = await this.getAuthHeader();
 
     return fetch(USERS_URL, {
