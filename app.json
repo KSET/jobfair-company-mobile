@@ -45,7 +45,8 @@
       },
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to scan QR codes on event tickets."
-      }
+      },
+      "icon": "./assets/JobFair-square-icon-ios.png"
     },
     "hooks": {
       "postPublish": [
