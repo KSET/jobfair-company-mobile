@@ -6,46 +6,46 @@ const WATER_REQUESTED_TIMESTAMP = '@jf-company:water-requested-timestamp';
 const COFFEE_REQUESTED_TIMESTAMP = '@jf-company:water-requested-timestamp';
 const HELP_REQUESTED_TIMESTAMP = '@jf-company:water-requested-timestamp';
 
-const timeouts = {
-  WATER_REQUESTED_TIMESTAMP: 1000 * 30 * 60,
-  COFFEE_REQUESTED_TIMESTAMP: 1000 * 30 * 60,
-  HELP_REQUESTED_TIMESTAMP: 1000 * 10 * 60,
-};
-
 export default class SlackService {
 
-  constructor() {
-    this.company = JobFairService.getUserCompany();
-  }
-
   async requestWater(amount) {
-    this.company = await this.company;
-    console.log('Company: ', this.company);
+    const company = await JobFairService.getUserCompany();
     if (await SlackService.checkSpam(WATER_REQUESTED_TIMESTAMP)) {
       return Promise.reject('You can only request water once every 30 minutes!');
     }
-    if (!this.company) {
+    if (!company) {
       return Promise.reject('You don\'t have attached company');
     }
-    let message = `@mpetrunic, ${this.company.name} želi ${amount} bočice vode na štandu ${this.company.booth.location}!`;
+    let message = `@mpetrunic, ${company.name} želi ${amount} bočice vode na štandu ${company.booth.location}!`;
     if (amount < 2) {
-      message = `@mpetrunic, ${this.company.name} želi ${amount} bočicu vode na štandu ${this.company.booth.location}!`;
+      message = `@mpetrunic, ${company.name} želi ${amount} bočicu vode na štandu ${company.booth.location}!`;
     }
     await SlackService.sendRequest(
-      this.company.name,
+      company.name,
       message,
     );
     AsyncStorage.setItem(WATER_REQUESTED_TIMESTAMP, Date.now().toString());
     return true;
   }
 
-  requestCoffee(company, amounts) {
-    if (SlackService.checkSpam(COFFEE_REQUESTED_TIMESTAMP)) return false;
-    const requestedCoffeeMessage = Object.keys(amounts).map(key => `${amounts[key]} ${key}`).join(',');
+  async requestCoffee(amounts) {
+    const company = await JobFairService.getUserCompany();
+    if (SlackService.checkSpam(COFFEE_REQUESTED_TIMESTAMP)) {
+      return Promise.reject('You can only request coffee once every 30 minutes!');
+    }
+    if (!company) {
+      return Promise.reject('You don\'t have attached company');
+    }
+    const requestedCoffeeMessage = Object.keys(amounts)
+      .filter(key => amounts[key] > 0)
+      .map(key => `${amounts[key]} ${key}`)
+      .join(', ');
+    const message = `@mpetrunic, ${company.name} želi ${requestedCoffeeMessage} kave na štandu ${company.booth.location}!`;
     SlackService.sendRequest(
       company.name,
-      `${company.contact}, ${company.name} želi ${requestedCoffeeMessage} kave na štandu ${company.location}!`,
-    );
+      message,
+    ).catch(err => console.log(err));
+    AsyncStorage.setItem(COFFEE_REQUESTED_TIMESTAMP, Date.now().toString());
     return true;
   }
 
@@ -71,8 +71,17 @@ export default class SlackService {
     });
   }
 
+  static getTimeout(type) {
+    switch (type) {
+      case WATER_REQUESTED_TIMESTAMP: return 30 * 60 * 1000;
+      case COFFEE_REQUESTED_TIMESTAMP: return 30 * 60 * 1000;
+      case HELP_REQUESTED_TIMESTAMP: return 10 * 60 * 1000;
+      default: return 0;
+    }
+  }
+
   static async checkSpam(type) {
-    return parseInt(await AsyncStorage.getItem(type), 10) + timeouts[type] < Date.now();
+    return parseInt(await AsyncStorage.getItem(type), 10) + this.getTimeout(type) > Date.now();
   }
 
 }

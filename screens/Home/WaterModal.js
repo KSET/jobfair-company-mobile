@@ -25,14 +25,12 @@ export default class WaterModal extends BaseModal {
   }
 
   requestWaterAction() {
-    this.setState({ isVisible: false });
     this.slack.requestWater(this.state.value).then(() => {
       this.setState({ isVisible: false, value: 1 });
       Toast.show('Your water is on it\'s way!', {
         duration: Toast.durations.SHORT,
         position: Toast.positions.BOTTOM,
       });
-      this.setState({ isVisible: false, value: 1 });
     }).catch((err) => {
       this.setState({ isVisible: false });
       Toast.show(err, {

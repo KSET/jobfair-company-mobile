@@ -4,6 +4,7 @@ import NumericInput from 'react-native-numeric-input';
 import { Button, List, ListItem, Text } from 'native-base';
 import Toast from 'react-native-root-toast';
 import BaseModal from '../BaseModal';
+import SlackService from '../../services/SlackService';
 
 export default class CoffeeModal extends BaseModal {
 
@@ -14,6 +15,7 @@ export default class CoffeeModal extends BaseModal {
       macchiato: 0,
       isVisible: this.props.isVisible,
     };
+    this.slack = new SlackService();
     this.requestCoffeeAction.bind(this);
   }
 
@@ -24,10 +26,22 @@ export default class CoffeeModal extends BaseModal {
   }
 
   requestCoffeeAction() {
-    this.setState({ isVisible: false });
-    Toast.show('Your coffee is on it\'s way!', {
-      duration: Toast.durations.SHORT,
-      position: Toast.positions.BOTTOM,
+    this.slack.requestCoffee({
+      Espresso: this.state.espresso,
+      Macchiato: this.state.macchiato,
+    }).then(() => {
+      this.setState({ isVisible: false, espresso: 0, macchiato: 0 });
+      Toast.show('Your coffee is on it\'s way!', {
+        duration: Toast.durations.SHORT,
+        position: Toast.positions.BOTTOM,
+      });
+    }).catch((err) => {
+      console.log('err', err);
+      this.setState({ isVisible: false });
+      Toast.show(err, {
+        duration: Toast.durations.SHORT,
+        position: Toast.positions.BOTTOM,
+      });
     });
   }
 
