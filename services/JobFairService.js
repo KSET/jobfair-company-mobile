@@ -1,37 +1,25 @@
-import AuthService from '../services/AuthService';
-import { COMPANY_URL, REVIEW_URL } from './routes';
+import { AsyncStorage } from 'react-native';
 
+const USER_KEY = '@jf-company:user';
 
 export default class JobFairService {
 
-  constructor() {
-    this.authService = new AuthService();
-    this.sendReview = this.sendReview.bind(this);
+  static async storeUser(user) {
+    await AsyncStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 
-  async sendReview(uid, note) {
-    const headers = await this.authService.getAuthHeader();
-    return fetch(REVIEW_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...headers,
-      },
-      body: JSON.stringify({
-        resume_uid: uid,
-        note,
-      }),
-    });
+  static async getUser() {
+    return await AsyncStorage.getItem(USER_KEY);
   }
 
-  async getCompanyDetails() {
-    const headers = await this.authService.getAuthHeader();
-    return fetch(COMPANY_URL, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        ...headers,
-      },
-    });
+  static async removeUser() {
+    await AsyncStorage.removeItem(USER_KEY);
   }
+
+  static async getUserCompany() {
+    const user = await this.getUser();
+    if (!user) return null;
+    return user.companies[0];
+  }
+
 }
