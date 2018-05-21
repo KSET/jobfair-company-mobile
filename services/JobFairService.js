@@ -1,6 +1,8 @@
 import { AsyncStorage } from 'react-native';
 import JobFairApiClient from './JobFairApiClient';
 import CompanyManagersQuery from './queries/companyManagerQuery';
+import CompanyStudentReviewMutation
+  from './mutations/companyStudentReviewMutation';
 
 const USER_KEY = '@jf-company:user';
 const MANAGERS_KEY = '@jf-company:managers';
@@ -51,6 +53,34 @@ export default class JobFairService {
     const user = await this.getUser();
     if (!user) return null;
     return user.companies[0];
+  }
+
+  static async submitReview(resume, social, ambition, notes) {
+    const user = await this.getUser();
+    if (!user) return null;
+    console.log({
+      owner: user.id,
+      resume,
+      social,
+      ambition,
+      notes,
+    });
+    return await JobFairApiClient.mutate({
+      mutation: CompanyStudentReviewMutation,
+      variables: {
+        owner: user.id,
+        resume,
+        social,
+        ambition,
+        notes,
+      },
+    }).then((result) => {
+      console.log('Review:', result);
+      return result;
+    }).catch((err) => {
+      console.log('Review error', err);
+      return null;
+    });
   }
 
 }

@@ -2,7 +2,7 @@
 import Expo from 'expo';
 import { DEBUG } from 'react-native-dotenv';
 import JobFairApiClient from './JobFairApiClient';
-import LoginMutation from './auth/queries/loginMutation';
+import LoginMutation from './mutations/loginMutation';
 import JobFairService from './JobFairService';
 
 const AUTH_KEY = 'jfCardSharing-token';
