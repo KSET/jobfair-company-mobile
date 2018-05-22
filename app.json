@@ -23,7 +23,7 @@
     "android": {
       "package": "org.kset.jobfairCompany",
       "permissions": ["CAMERA"],
-      "versionCode": 10,
+      "versionCode": 11,
       "splash": {
         "backgroundColor": "#000022",
         "resizeMode": "cover",
