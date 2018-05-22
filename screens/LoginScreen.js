@@ -20,6 +20,7 @@ import {
 import Toast from 'react-native-root-toast';
 
 import AuthService from '../services/AuthService';
+import Spinner from 'react-native-loading-spinner-overlay'
 
 class LoginScreen extends React.Component {
   constructor(props) {
@@ -29,6 +30,7 @@ class LoginScreen extends React.Component {
     this.state = {
       email: '',
       password: '',
+      visible: false,
     };
   }
 
@@ -54,9 +56,11 @@ class LoginScreen extends React.Component {
       });
       return;
     }
+    this.setState({ visible: true });
     AuthService.login(email, password)
       .then(
         (result) => {
+          this.setState({ visible: false });
           if (!result) {
             Toast.show('Username or password is incorrect!', {
               duration: Toast.durations.LONG,
@@ -68,6 +72,7 @@ class LoginScreen extends React.Component {
         },
     ).catch(
       (error) => {
+        this.setState({ visible: false });
         console.log(error);
         Toast.show('Internal error!', {
           duration: Toast.durations.LONG,
@@ -106,6 +111,7 @@ class LoginScreen extends React.Component {
             </Button>
           </Form>
         </Content>
+        <Spinner visible={this.state.visible} overlayColor={'rgba(0, 0, 0, 0.5)'} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
       </Container>
     );
   }
