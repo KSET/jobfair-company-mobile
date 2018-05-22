@@ -15,15 +15,9 @@ const Router = StackNavigator(
     BarCode: {
       screen: BarCodeScreen,
     },
-    // ChangePassword: {
-    //   screen: ChangePasswordScreen,
-    // },
     Review: {
       screen: ReviewScreen,
     },
-    // Settngs: {
-    //   screen: SettingsScreen,
-    // },
   },
   {
     initialRouteName: 'Login',

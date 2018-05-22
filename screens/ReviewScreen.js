@@ -15,6 +15,7 @@ import {
 } from 'native-base';
 import { PropTypes } from 'prop-types';
 import StarRating from 'react-native-star-rating';
+import JobFairService from '../services/JobFairService';
 
 export default class ReviewScreen extends React.Component {
   constructor(props) {
@@ -22,9 +23,13 @@ export default class ReviewScreen extends React.Component {
 
     this.state = {
       note: '',
-      intelligent: 0,
-      likeable: 0,
+      social: 0,
+      ambition: 0,
     };
+
+    const { data } = this.props.navigation.getParam('data');
+    const { uid: resume } = JSON.parse(data);
+    this.resume = resume;
 
     this.goBack = this.goBack.bind(this);
     this.submitReview = this.submitReview.bind(this);
@@ -34,7 +39,10 @@ export default class ReviewScreen extends React.Component {
     this.props.navigation.goBack();
   }
 
-  submitReview() {
+  async submitReview() {
+    await JobFairService.submitReview(
+      this.resume, this.state.social, this.state.ambition, this.state.note,
+    );
     this.props.navigation.navigate('Home', { message: 'Successfully submitted review!' });
   }
 
@@ -64,23 +72,23 @@ export default class ReviewScreen extends React.Component {
         </Header>
         <Container style={{ justifyContent: 'space-between', padding: 20 }}>
           <Text>Student: {firstName} {lastName}</Text>
-          <Label>Likeable:</Label>
+          <Label>Social:</Label>
           <StarRating
             disabled={false}
             maxStars={5}
-            rating={this.state.likeable}
+            rating={this.state.social}
             emptyStarColor="#191938"
             fullStarColor="#191938"
-            selectedStar={likeable => this.setState({ likeable })}
+            selectedStar={social => this.setState({ social })}
           />
-          <Label>Intelligent:</Label>
+          <Label>Ambition:</Label>
           <StarRating
             disabled={false}
             maxStars={5}
-            rating={this.state.intelligent}
+            rating={this.state.ambition}
             emptyStarColor="#191938"
             fullStarColor="#191938"
-            selectedStar={intelligent => this.setState({ intelligent })}
+            selectedStar={ambition => this.setState({ ambition })}
           />
           <Form style={{ width: '100%' }}>
             <Textarea

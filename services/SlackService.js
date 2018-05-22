@@ -1,23 +1,25 @@
 import { AsyncStorage } from 'react-native';
 import { SLACK_HOOK_URL } from 'react-native-dotenv';
+import JobFairService from './JobFairService';
 
 const WATER_REQUESTED_TIMESTAMP = '@jf-company:water-requested-timestamp';
-const COFFEE_REQUESTED_TIMESTAMP = '@jf-company:water-requested-timestamp';
-const HELP_REQUESTED_TIMESTAMP = '@jf-company:water-requested-timestamp';
-
-const timeouts = {
-  WATER_REQUESTED_TIMESTAMP: 1000 * 30 * 60,
-  COFFEE_REQUESTED_TIMESTAMP: 1000 * 30 * 60,
-  HELP_REQUESTED_TIMESTAMP: 1000 * 10 * 60,
-};
+const COFFEE_REQUESTED_TIMESTAMP = '@jf-company:coffee-requested-timestamp';
+const HELP_REQUESTED_TIMESTAMP = '@jf-company:help-requested-timestamp';
 
 export default class SlackService {
 
-  async requestWater(company, amount) {
-    if (await SlackService.checkSpam(WATER_REQUESTED_TIMESTAMP)) return false;
-    let message = `${company.contact}, ${company.name} želi ${amount} bočica vode na štandu ${company.location}!`;
+  async requestWater(amount) {
+    const company = await JobFairService.getUserCompany();
+    if (await SlackService.checkSpam(WATER_REQUESTED_TIMESTAMP)) {
+      return Promise.reject('You can only request water once every 30 minutes!');
+    }
+    if (!company) {
+      return Promise.reject('You don\'t have attached company');
+    }
+    const managerList = await JobFairService.getManagers();
+    let message = `${managerList}, ${company.name} želi ${amount} bočice vode na štandu ${company.booth.location}!`;
     if (amount < 2) {
-      message = `${company.contact}, ${company.name} želi ${amount} bočicu vode na štandu ${company.location}!`;
+      message = `${managerList}, ${company.name} želi ${amount} bočicu vode na štandu ${company.booth.location}!`;
     }
     await SlackService.sendRequest(
       company.name,
@@ -27,21 +29,41 @@ export default class SlackService {
     return true;
   }
 
-  requestCoffee(company, amounts) {
-    if (SlackService.checkSpam(COFFEE_REQUESTED_TIMESTAMP)) return false;
-    const requestedCoffeeMessage = Object.keys(amounts).map(key => `${amounts[key]} ${key}`).join(',');
+  async requestCoffee(amounts) {
+    const company = await JobFairService.getUserCompany();
+    if (await SlackService.checkSpam(COFFEE_REQUESTED_TIMESTAMP)) {
+      return Promise.reject('You can only request coffee once every 30 minutes!');
+    }
+    if (!company) {
+      return Promise.reject('You don\'t have attached company');
+    }
+    const managerList = await JobFairService.getManagers();
+    const requestedCoffeeMessage = Object.keys(amounts)
+      .filter(key => amounts[key] > 0)
+      .map(key => `${amounts[key]} ${key}`)
+      .join(', ');
+    const message = `${managerList}, ${company.name} želi ${requestedCoffeeMessage} kave na štandu ${company.booth.location}!`;
     SlackService.sendRequest(
       company.name,
-      `${company.contact}, ${company.name} želi ${requestedCoffeeMessage} kave na štandu ${company.location}!`,
-    );
+      message,
+    ).catch(err => console.log(err));
+    AsyncStorage.setItem(COFFEE_REQUESTED_TIMESTAMP, Date.now().toString());
     return true;
   }
 
-  requestAssistance(company) {
-    if (SlackService.checkSpam(HELP_REQUESTED_TIMESTAMP)) return false;
+  async requestAssistance() {
+    const company = await JobFairService.getUserCompany();
+    if (await SlackService.checkSpam(HELP_REQUESTED_TIMESTAMP)) {
+      return Promise.reject('You can only request assistance once every 10 minutes!');
+    }
+    if (!company) {
+      return Promise.reject('You don\'t have attached company');
+    }
+    const managerList = await JobFairService.getManagers();
     SlackService.sendRequest(
-      company.name, `${company.contact}, ${company.name} želi pomoć?! na štandu ${company.location}!`,
+      company.name, `${managerList}, ${company.name} želi pomoć?! na štandu ${company.booth.location}!`,
     );
+    AsyncStorage.setItem(HELP_REQUESTED_TIMESTAMP, Date.now().toString());
     return true;
   }
 
@@ -59,8 +81,19 @@ export default class SlackService {
     });
   }
 
+  static getTimeout(type) {
+    switch (type) {
+      case WATER_REQUESTED_TIMESTAMP: return 30 * 60 * 1000;
+      case COFFEE_REQUESTED_TIMESTAMP: return 30 * 60 * 1000;
+      case HELP_REQUESTED_TIMESTAMP: return 10 * 60 * 1000;
+      default: return 0;
+    }
+  }
+
   static async checkSpam(type) {
-    return parseInt(await AsyncStorage.getItem(type), 10) + timeouts[type] < Date.now();
+    const lastCall = await AsyncStorage.getItem(type);
+    if (!lastCall) return false;
+    return parseInt(lastCall, 10) + this.getTimeout(type) > Date.now();
   }
 
 }

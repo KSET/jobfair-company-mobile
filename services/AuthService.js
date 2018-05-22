@@ -1,27 +1,15 @@
 /* eslint-disable no-undef */
-import { AsyncStorage } from 'react-native';
 import Expo from 'expo';
 import { DEBUG } from 'react-native-dotenv';
-
-import { USERS_URL } from './routes';
 import JobFairApiClient from './JobFairApiClient';
-import LoginMutation from './auth/queries/loginMutation';
+import LoginMutation from './mutations/loginMutation';
+import JobFairService from './JobFairService';
 
 const AUTH_KEY = 'jfCardSharing-token';
-const USER_KEY = 'jfCardSharing-user';
 
 export default class AuthService {
 
   static async login(email, password) {
-    if (DEBUG === 'true') {
-      console.log('fake authentication!');
-      AsyncStorage.setItem(AUTH, JSON.stringify('debug'));
-      return new Promise((resolve) => {
-        resolve({
-          debug: true,
-        });
-      });
-    }
     return await JobFairApiClient.mutate({
       mutation: LoginMutation,
       variables: {
@@ -33,7 +21,7 @@ export default class AuthService {
       console.log('login: ', login);
       if (!login) return false;
       Expo.SecureStore.setItemAsync(AUTH_KEY, login.token);
-      AsyncStorage.setItem(USER_KEY, JSON.stringify(login.user));
+      JobFairService.storeUser(login.user);
       return true;
     });
   }
@@ -57,21 +45,7 @@ export default class AuthService {
 
   static async logout() {
     await Expo.SecureStore.deleteItemAsync(AUTH_KEY);
+    JobFairService.removeUser();
   }
 
-  static async changePassword(oldPassword, newPassword) {
-    const headers = await this.getAuthHeader();
-
-    return fetch(USERS_URL, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        ...headers,
-      },
-      body: JSON.stringify({
-        old_password: oldPassword,
-        password: newPassword,
-      }),
-    });
-  }
 }

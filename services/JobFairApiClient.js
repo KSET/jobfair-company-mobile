@@ -1,28 +1,23 @@
 import ApolloClient from 'apollo-client';
 import { JOBFAIR_URL } from 'react-native-dotenv';
 import { createHttpLink } from 'apollo-link-http';
-import { onError } from 'apollo-link-error';
+import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import AuthService from './AuthService';
 
-const httpLink = createHttpLink({ uri: JOBFAIR_URL, credentials: 'same-origin' });
+const httpLink = createHttpLink({ uri: JOBFAIR_URL });
 
-const errorLink = onError(({ networkError = {}, graphQLErrors }) => {
-  if (graphQLErrors) {
-    graphQLErrors.map(({ message, locations, path }) =>
-      console.log(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-      ),
-    );
-  }
-
-  if (networkError) console.log(`[Network error]: ${networkError}`);
-});
-
-// use with apollo-client
-const link = errorLink.concat(httpLink);
+const authLink = setContext((_, { headers }) =>
+  AuthService.getAuthToken().then(token => ({
+    headers: {
+      ...headers,
+      authorization: token ? `jwt ${token}` : '',
+    },
+  })),
+);
 
 const JobFairApiClient = new ApolloClient({
-  link,
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 
 });
