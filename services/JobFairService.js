@@ -56,10 +56,7 @@ export default class JobFairService {
   }
 
   static async submitReview(resume, social, ambition, notes) {
-    const user = await this.getUser();
-    if (!user) return null;
     console.log({
-      owner: user.id,
       resume,
       social,
       ambition,
@@ -68,7 +65,6 @@ export default class JobFairService {
     return await JobFairApiClient.mutate({
       mutation: CompanyStudentReviewMutation,
       variables: {
-        owner: user.id,
         resume,
         social,
         ambition,
