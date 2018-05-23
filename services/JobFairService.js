@@ -7,7 +7,7 @@ import Expo from 'expo';
 
 const USER_KEY = '@jf-company:user';
 const MANAGERS_KEY = '@jf-company:managers';
-const AUTH_DETAILS_KEY = '@jf-company:auth_details';
+const AUTH_DETAILS_KEY = 'jf-company-auth_details';
 
 export default class JobFairService {
 
@@ -18,7 +18,7 @@ export default class JobFairService {
         password,
       }));
     } catch (e) {
-
+      console.log(e);
     }
   }
 
@@ -26,6 +26,7 @@ export default class JobFairService {
     try {
       return JSON.parse(await Expo.SecureStore.getItemAsync(AUTH_DETAILS_KEY));
     } catch (e) {
+      console.log(e);
       return null;
     }
   }
@@ -53,6 +54,7 @@ export default class JobFairService {
   }
 
   static async storeManagers(company) {
+    if (!company || !company.id) return;
     const id = company.id;
     return await JobFairApiClient.query({
       query: CompanyManagersQuery,

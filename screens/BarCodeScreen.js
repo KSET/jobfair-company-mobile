@@ -18,6 +18,7 @@ export default class BarCodeScreen extends React.Component {
     super(props);
     this.state = {
       hasCameraPermission: null,
+      showCamera: 1,
     };
     this.hasScanned = false;
     this.onBarCodeRead = this.onBarCodeRead.bind(this);
@@ -29,6 +30,10 @@ export default class BarCodeScreen extends React.Component {
     this.setState({ hasCameraPermission: status === 'granted' });
   }
 
+  componentWillUnmount() {
+    this.setState({ showCamera: 0 });
+  }
+
   onBarCodeRead(data) {
     if (this.hasScanned) {
       return;
@@ -38,6 +43,7 @@ export default class BarCodeScreen extends React.Component {
   }
 
   goBack() {
+    this.setState({ showCamera: 0 });
     this.props.navigation.goBack();
   }
 
@@ -66,74 +72,86 @@ export default class BarCodeScreen extends React.Component {
         <View style={{ flex: 1 }}>
           {
             hasCameraPermission === null ? (
-              <Text>No access to camera</Text>
-            ) : (
-              <BarCodeScanner
-                onBarCodeRead={this.onBarCodeRead}
-                style={StyleSheet.absoluteFill}
-              >
-                <Container
-                  style={{
-                    width: 200,
-                    marginVertical: 150,
-                    alignSelf: 'center',
-                  }}
-                >
-                  <Container
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: 20,
-                      height: 20,
-                      borderTopWidth: 5,
-                      borderTopColor: 'white',
-                      borderLeftColor: 'white',
-                      borderLeftWidth: 5,
-                    }}
-                  />
-                  <Container
-                    style={{
-                      position: 'absolute',
-                      bottom: 0,
-                      left: 0,
-                      width: 20,
-                      height: 20,
-                      borderBottomWidth: 5,
-                      borderBottomColor: 'white',
-                      borderLeftColor: 'white',
-                      borderLeftWidth: 5,
-                    }}
-                  />
-                  <Container
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      right: 0,
-                      width: 20,
-                      height: 20,
-                      borderTopWidth: 5,
-                      borderTopColor: 'white',
-                      borderRightColor: 'white',
-                      borderRightWidth: 5,
-                    }}
-                  />
-                  <Container
-                    style={{
-                      position: 'absolute',
-                      bottom: 0,
-                      right: 0,
-                      width: 20,
-                      height: 20,
-                      borderBottomWidth: 5,
-                      borderBottomColor: 'white',
-                      borderRightColor: 'white',
-                      borderRightWidth: 5,
-                    }}
-                  />
-                </Container>
-              </BarCodeScanner>
-            )
+              <View />
+              )
+              :
+              hasCameraPermission === 'false' ? (
+                <Text>No access to camera</Text>
+                )
+                :
+                this.state.showCamera ?
+                  (
+                    <BarCodeScanner
+                      onBarCodeRead={this.onBarCodeRead}
+                      barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
+                      style={StyleSheet.absoluteFill}
+                    >
+                      <Container
+                        style={{
+                          width: 200,
+                          marginVertical: 150,
+                          alignSelf: 'center',
+                        }}
+                      >
+                        <Container
+                          style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: 20,
+                            height: 20,
+                            borderTopWidth: 5,
+                            borderTopColor: 'white',
+                            borderLeftColor: 'white',
+                            borderLeftWidth: 5,
+                          }}
+                        />
+                        <Container
+                          style={{
+                            position: 'absolute',
+                            bottom: 0,
+                            left: 0,
+                            width: 20,
+                            height: 20,
+                            borderBottomWidth: 5,
+                            borderBottomColor: 'white',
+                            borderLeftColor: 'white',
+                            borderLeftWidth: 5,
+                          }}
+                        />
+                        <Container
+                          style={{
+                            position: 'absolute',
+                            top: 0,
+                            right: 0,
+                            width: 20,
+                            height: 20,
+                            borderTopWidth: 5,
+                            borderTopColor: 'white',
+                            borderRightColor: 'white',
+                            borderRightWidth: 5,
+                          }}
+                        />
+                        <Container
+                          style={{
+                            position: 'absolute',
+                            bottom: 0,
+                            right: 0,
+                            width: 20,
+                            height: 20,
+                            borderBottomWidth: 5,
+                            borderBottomColor: 'white',
+                            borderRightColor: 'white',
+                            borderRightWidth: 5,
+                          }}
+                        />
+                      </Container>
+                    </BarCodeScanner>
+                  )
+                  :
+                  (
+                    <View />
+                  )
           }
         </View>
       </Container>

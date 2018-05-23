@@ -37,8 +37,8 @@ class LoginScreen extends React.Component {
 
 
   async componentWillMount() {
-    const user = JobFairService.getAuthDetails();
-    if (!user && !user.email && !user.password) {
+    const user = await JobFairService.getAuthDetails();
+    if (user.email && user.password) {
       this.setState({
         email: user.email,
         password: user.password,
@@ -108,11 +108,11 @@ class LoginScreen extends React.Component {
           <Form style={{ padding: 10 }}>
             <Item floatingLabel>
               <Label>Username</Label>
-              <Input onChangeText={email => this.setState({ email })} />
+              <Input value={this.state.email} onChangeText={email => this.setState({ email })} />
             </Item>
             <Item floatingLabel style={{ marginBottom: 20 }}>
               <Label>Password</Label>
-              <Input secureTextEntry onChangeText={password => this.setState({ password })} />
+              <Input value={this.state.password} secureTextEntry onChangeText={password => this.setState({ password })} />
             </Item>
             <Button title="login" onPress={() => this.performLogin()} block>
               <Text>Login</Text>
