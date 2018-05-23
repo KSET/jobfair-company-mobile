@@ -14,7 +14,7 @@ export default class AuthService {
       mutation: LoginMutation,
       variables: {
         email,
-        password,
+        password: password.trim(),
       },
     }).then((result) => {
       const login = result.data.login;
