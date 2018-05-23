@@ -34,10 +34,10 @@ class LoginScreen extends React.Component {
 
 
   async componentWillMount() {
-    const isAuthenticated = await AuthService.isAuthenticated();
-    if (isAuthenticated) {
-      this.props.navigation.navigate('Home');
-    }
+    // const isAuthenticated = await AuthService.isAuthenticated();
+    // if (isAuthenticated) {
+    //   this.props.navigation.navigate('Home');
+    // }
   }
 
 

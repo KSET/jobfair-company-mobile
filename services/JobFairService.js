@@ -21,6 +21,10 @@ export default class JobFairService {
   static async removeUser() {
     try {
       await AsyncStorage.removeItem(USER_KEY);
+    } catch (e) {
+      console.log(e);
+    }
+    try {
       await AsyncStorage.removeItem(MANAGERS_KEY);
     } catch (e) {
       console.log(e);
@@ -39,7 +43,7 @@ export default class JobFairService {
       console.log('Managers:', managers);
       if (!managers) return;
       if (Array.isArray(managers)) {
-        const managerList = managers.map(manager => `@${manager.slack_mention}`).join(', ');
+        const managerList = managers.map(manager => `${manager.slack_mention}`).join(', ');
         AsyncStorage.setItem(MANAGERS_KEY, managerList);
       }
     }).catch(err => console.log(err));

@@ -44,8 +44,16 @@ export default class AuthService {
   }
 
   static async logout() {
-    await Expo.SecureStore.deleteItemAsync(AUTH_KEY);
-    JobFairService.removeUser();
+    try {
+      await Expo.SecureStore.deleteItemAsync(AUTH_KEY);
+    } catch (e) {
+      console.log(e);
+    }
+    try {
+      await JobFairService.removeUser();
+    } catch (e) {
+      console.log(e);
+    }
   }
 
 }
