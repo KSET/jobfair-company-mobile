@@ -3,11 +3,32 @@ import JobFairApiClient from './JobFairApiClient';
 import CompanyManagersQuery from './queries/companyManagerQuery';
 import CompanyStudentReviewMutation
   from './mutations/companyStudentReviewMutation';
+import Expo from 'expo';
 
 const USER_KEY = '@jf-company:user';
 const MANAGERS_KEY = '@jf-company:managers';
+const AUTH_DETAILS_KEY = '@jf-company:auth_details';
 
 export default class JobFairService {
+
+  static async storeAuthDetails(email, password) {
+    try {
+      await Expo.SecureStore.setItemAsync(AUTH_DETAILS_KEY, JSON.stringify({
+        email,
+        password,
+      }));
+    } catch (e) {
+
+    }
+  }
+
+  static async getAuthDetails() {
+    try {
+      return JSON.parse(await Expo.SecureStore.getItemAsync(AUTH_DETAILS_KEY));
+    } catch (e) {
+      return null;
+    }
+  }
 
   static async storeUser(user) {
     await AsyncStorage.setItem(USER_KEY, JSON.stringify(user));

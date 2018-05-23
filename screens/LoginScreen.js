@@ -20,7 +20,8 @@ import {
 import Toast from 'react-native-root-toast';
 
 import AuthService from '../services/AuthService';
-import Spinner from 'react-native-loading-spinner-overlay'
+import Spinner from 'react-native-loading-spinner-overlay';
+import JobFairService from '../services/JobFairService';
 
 class LoginScreen extends React.Component {
   constructor(props) {
@@ -36,6 +37,13 @@ class LoginScreen extends React.Component {
 
 
   async componentWillMount() {
+    const user = JobFairService.getAuthDetails();
+    if (!user && !user.email && !user.password) {
+      this.setState({
+        email: user.email,
+        password: user.password,
+      });
+    }
     // const isAuthenticated = await AuthService.isAuthenticated();
     // if (isAuthenticated) {
     //   this.props.navigation.navigate('Home');

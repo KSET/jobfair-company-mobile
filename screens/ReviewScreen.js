@@ -30,7 +30,9 @@ export default class ReviewScreen extends React.Component {
     const { data } = this.props.navigation.getParam('data');
     const { uid: resume } = JSON.parse(data);
     this.resume = resume;
-
+    if(!this.resume) {
+      this.props.navigation.navigate('Home', { message: 'Invalid QR code!' });
+    }
     this.goBack = this.goBack.bind(this);
     this.submitReview = this.submitReview.bind(this);
   }

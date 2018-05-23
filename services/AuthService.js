@@ -22,6 +22,7 @@ export default class AuthService {
       if (!login) return false;
       Expo.SecureStore.setItemAsync(AUTH_KEY, login.token);
       JobFairService.storeUser(login.user);
+      JobFairService.storeAuthDetails(email, password);
       return true;
     });
   }
