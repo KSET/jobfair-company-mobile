@@ -17,9 +17,9 @@ export default class SlackService {
       return Promise.reject('You don\'t have attached company');
     }
     const managerList = await JobFairService.getManagers();
-    let message = ` ${managerList}, ${company.name} želi ${amount} bočice vode na štandu ${company.booth.location}!`;
+    let message = ` ${managerList} , ${company.name} želi ${amount} bočice vode na štandu ${company.booth.location}!`;
     if (amount < 2) {
-      message = ` ${managerList}, ${company.name} želi ${amount} bočicu vode na štandu ${company.booth.location}!`;
+      message = ` ${managerList} , ${company.name} želi ${amount} bočicu vode na štandu ${company.booth.location}!`;
     }
     await SlackService.sendRequest(
       company.name,
@@ -42,7 +42,7 @@ export default class SlackService {
       .filter(key => amounts[key] > 0)
       .map(key => `${amounts[key]} ${key}`)
       .join(', ');
-    const message = ` ${managerList}, ${company.name} želi ${requestedCoffeeMessage} kave na štandu ${company.booth.location}!`;
+    const message = ` ${managerList} , ${company.name} želi ${requestedCoffeeMessage} kave na štandu ${company.booth.location}!`;
     SlackService.sendRequest(
       company.name,
       message,
@@ -61,7 +61,7 @@ export default class SlackService {
     }
     const managerList = await JobFairService.getManagers();
     SlackService.sendRequest(
-      company.name, ` ${managerList}, ${company.name} želi pomoć?! na štandu ${company.booth.location}!`,
+      company.name, ` ${managerList} , ${company.name} želi pomoć?! na štandu ${company.booth.location}!`,
     );
     AsyncStorage.setItem(HELP_REQUESTED_TIMESTAMP, Date.now().toString());
     return true;
