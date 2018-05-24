@@ -39,7 +39,7 @@ export default class BarCodeScreen extends React.Component {
       return;
     }
     this.hasScanned = true;
-    this.props.navigation.navigate('Review', { data });
+    this.props.navigation.replace('Review', { data });
   }
 
   goBack() {
@@ -162,6 +162,7 @@ export default class BarCodeScreen extends React.Component {
 BarCodeScreen.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
+    replace: PropTypes.func.isRequired,
     state: PropTypes.shape({
       routeName: PropTypes.string,
     }),
